@@ -1,3 +1,6 @@
 library(devtools)
 library(usethis)
-devtools::use_git()
+# use_git()
+# usethis::defunct()
+# devtools::build("/Users/doedmond.sanou/Rmglasso/Rmglasso-main")
+# devtools::check("/Users/doedmond.sanou/Rmglasso/Rmglasso-main")
