@@ -1,7 +1,7 @@
 # library(Rmglasso)
 
-library(Matrix)
-library(mvtnorm)
+# library(Matrix)
+# library(mvtnorm)
 
 n = 50
 K = 3
