@@ -1,17 +1,24 @@
-Package: Rmglasso
+Package: mglasso
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Multiscale Graphical Lasso
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author@R: person("Edmond", "Sanou", email = "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
+          person("Tung","Lee", role = "ctb")
+Description: Inference of multiscale graphical models with neighborhood selection approach. 
+We used a lasso penalty for sparsity and a group-fused lasso penalty for clustering the variables. 
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Imports:
+    reticulate,
+    vegan,
 Suggests: 
     knitr,
     rmarkdown,
+    simone,
+    Matrix,
+    mvtnorm,
     testthat (>= 3.0.0)
+BugReports: https://github.com/desanou/Rmglasso/issues 
 VignetteBuilder: knitr
 Config/testthat/edition: 3
