@@ -1,4 +1,3 @@
-# devtools::install_github('tungle92/Rmglasso', INSTALL_opts = "--no-multiarch")
 # library(Rmglasso)
 
 library(Matrix)
