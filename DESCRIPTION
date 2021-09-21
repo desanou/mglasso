@@ -5,7 +5,7 @@ Version: 0.1.0
 Author@R: person("Edmond", "Sanou", email = "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
           person("Tung","Lee", role = "ctb")
 Description: Inference of multiscale graphical models with neighborhood selection approach. 
-We used a lasso penalty for sparsity and a group-fused lasso penalty for clustering the variables. 
+    We used a lasso penalty for sparsity and a group-fused lasso penalty for clustering the variables. 
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
