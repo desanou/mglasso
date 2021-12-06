@@ -1,4 +1,4 @@
-library(testthat)
-library(Rmglasso)
-
-test_check("Rmglasso")
+# library(testthat)
+# library(Rmglasso)
+#
+# test_check("Rmglasso")
