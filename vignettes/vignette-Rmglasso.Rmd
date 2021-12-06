@@ -1,5 +1,5 @@
 ---
-title: "Rmglasso"
+title: "Mglasso"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-Rmglasso}
@@ -15,5 +15,5 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(Rmglasso)
+
 ```
