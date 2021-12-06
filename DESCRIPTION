@@ -2,8 +2,11 @@ Package: mglasso
 Type: Package
 Title: Multiscale Graphical Lasso
 Version: 0.1.0
-Author@R: person("Edmond", "Sanou", email = "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
-          person("Tung","Lee", role = "ctb")
+Author@R: c(person("Edmond", "Sanou", 
+                    email = "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
+          person("Tung","Lee", role = "ctb"))
+Author: Ed [aut, cre]
+Maintainer: Ed <doedmond.sanou@univ-evry.fr>
 Description: Inference of multiscale graphical models with neighborhood selection approach. 
     We used a lasso penalty for sparsity and a group-fused lasso penalty for clustering the variables. 
 License: GPL-2
@@ -11,14 +14,20 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     reticulate,
+    ROCR,
     vegan,
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = c("scipy", "pandas", "numpy", "matplotlib", "sklearn.preprocessing", "parsimony.estimators" ))
+    )
+  )
 Suggests: 
     knitr,
     rmarkdown,
-    simone,
     Matrix,
     mvtnorm,
     testthat (>= 3.0.0)
-BugReports: https://github.com/desanou/Rmglasso/issues 
+BugReports: https://github.com/desanou/mglasso/issues 
 VignetteBuilder: knitr
 Config/testthat/edition: 3
