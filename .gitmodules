@@ -1,0 +1,3 @@
+[submodule "inst/python/pylearn-parsimony"]
+	path = inst/python/pylearn-parsimony
+	url = https://github.com/neurospin/pylearn-parsimony.git
