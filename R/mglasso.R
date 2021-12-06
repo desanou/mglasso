@@ -345,3 +345,39 @@ merge_labels <- function(merged_pair, labels, level) {
   labels    <- labels[-j]
   labels
 }
+
+precision_to_regression <- function(K){
+  p <-  ncol(K)
+  mat <- matrix(0,p,p)
+
+  for (i in 1:p) {
+    for (j in 1:p) {
+      if(i != j)
+        mat[i, j] <- - K[i,j]/K[i,i]
+    }
+  }
+
+  mat
+}
+
+#'
+expand_beta <- function(beta_level, clusters){
+  beta_level = as.matrix(beta_level)
+  beta_exp <- t(sapply(1:nrow(beta_level), function(i){rep(beta_level[i,], table(clusters))}))
+
+  rep.row<-function(x,n){
+    matrix(rep(x,each=n),nrow=n)
+  }
+
+  if(nrow(beta_exp) == 1){
+    beta_exp = rep.row(beta_exp[1,], table(clusters)[1])
+    return(beta_exp)
+  }else{
+    beta_exp <- sapply(1:nrow(beta_exp), function(i){rep.row(beta_exp[i,], table(clusters)[i])})
+  }
+
+  if(!is.list(beta_exp)){
+    beta_exp = list(beta_exp)
+  }
+  do.call(rbind, beta_exp)
+}
