@@ -6,11 +6,11 @@ conesta_rwrapper <- NULL
   path <- system.file("python", package = "mglasso")
 
   if (!reticulate::py_module_available("scipy")) {
-    reticulate::py_install("scipy")
+    reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE)
   }
 
   if (!reticulate::py_module_available("scikit-learn")) {
-    reticulate::py_install("scikit-learn")
+    reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE)
   }
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
