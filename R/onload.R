@@ -1,12 +1,6 @@
 conesta_rwrapper <- NULL
 
-# .onLoad <- function(libname, pkgname) {
-#
-#
-#
-# }
-
-install_conesta() <- function(){
+.onLoad <- function(libname, pkgname) {
   # setup environment
   reticulate::py_config()
   path <- system.file("python", package = "mglasso")
@@ -31,7 +25,6 @@ install_conesta() <- function(){
   the_module <- reticulate::import_from_path("conesta_solver", path = path)
   conesta_rwrapper <<- the_module$conesta_rwrapper
 }
-
 
 ## git submodule add https://github.com/neurospin/pylearn-parsimony.git ./inst/python/pylearn-parsimony
 
