@@ -49,6 +49,11 @@ jobs:
         run: |
           Rscript -e "try(reticulate::py_config())"
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.config.python }}
+
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
