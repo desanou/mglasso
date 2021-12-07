@@ -12,6 +12,7 @@ Description: Inference of multiscale graphical models with neighborhood selectio
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+ByteCompile: true
 Imports:
     Matrix,
     mvtnorm,
