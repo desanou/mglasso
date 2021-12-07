@@ -5,7 +5,11 @@
 #'
 #' @param i integer scalar. Indice of the first vector.
 #' @param j integer scalar. Indice of the second vector.
+#' @param fun
+#' @param ni
+#' @param nj
 #' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.
+#'
 #' @fun function. Applied on lines.
 #' @ni integer scalar. Weight for vector `i`.
 #' @nj integer scalar. Wweight for vector `j`.
@@ -38,31 +42,7 @@ fun_lines <- function(i, j, beta, fun = `-`, ni = 1, nj = 1) {
 #' @param lambda2 numeric scalar. Fused-group Lasso penalization parameter.
 #'
 #' @return numeric scalar. The cost.
-#'
-#' @examples
-#'
-#'## Generation of K block partitions
-#'n = 50
-#'K = 3
-#'p = 6
-#'rho = 0.85
-#'blocs <- list()
-#'for (j in 1:K) {
-#'    bloc <- matrix(rho, nrow = p/K, ncol = p/K)
-#'    for(i in 1:(p/K)) { bloc[i,i] <- 1 }
-#'    blocs[[j]] <- bloc
-#'    }
-#'mat.covariance <- bdiag(blocs)
-#'set.seed(11)
-#'X <- rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
-#'X <- scale(X)
-#'
-#'## Initialization for beta
-#'beta1 <- matrix(0, nrow = p, ncol = p)
-#'for(i in 1:p){
-#'   beta1[i,-i] <- solve(t(X[,-i])%*%X[,-i]) %*% t(X[,-i]) %*% X[,i]
-#'   }
-#'cost(beta, X, 0, 0)
+
 cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
   p <- ncol(x)
   l2_norm <- 0
@@ -120,11 +100,11 @@ cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
 #'   blocs[[j]] <- bloc
 #' }
 #'
-#' mat.covariance <- bdiag(blocs)
+#' mat.covariance <- Matrix::bdiag(blocs)
 #' mat.covariance
 #'
 #' set.seed(11)
-#' X <- rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
+#' X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 #' X <- scale(X)
 #'
 #' res <- mglasso(X, 0.1, lambda2_start = 0.1)
@@ -231,6 +211,16 @@ mglasso <- function(x,
 }
 
 #' merge clusters from table
+#'
+#' @param to_merge
+#' @param clusters
+#' @param x
+#' @param beta
+#' @param level
+#' @param gain_level
+#' @param gains
+#' @param labels
+#' @param merge
 merge_proc <- function(to_merge,
                        clusters,
                        x,
@@ -280,6 +270,9 @@ merge_proc <- function(to_merge,
 }
 
 #' distances beta
+#'
+#' @param beta
+#' @param distance
 dist_beta <- function(beta, distance = "euclidean") {
   k <- ncol(beta)
   if (k != 1) {
@@ -310,6 +303,10 @@ dist_beta <- function(beta, distance = "euclidean") {
 #' Merge x
 #'
 #' weighted mean
+#'
+#' @param x
+#' @param pair_to_merge
+#' @param clusters
 merge_x <- function(x, pair_to_merge, clusters) {
   i        <- min(pair_to_merge)
   j        <- max(pair_to_merge)
@@ -324,6 +321,10 @@ merge_x <- function(x, pair_to_merge, clusters) {
 }
 
 #' Merge beta lines
+#'
+#' @param beta
+#' @param pair_to_merge
+#' @param clusters
 merge_beta <- function(beta, pair_to_merge, clusters) {
   i        <- min(pair_to_merge)
   j        <- max(pair_to_merge)
@@ -338,6 +339,10 @@ merge_beta <- function(beta, pair_to_merge, clusters) {
 }
 
 #' Merge labels
+#'
+#' @param merged_pair
+#' @param labels
+#' @param level
 merge_labels <- function(merged_pair, labels, level) {
   i         <- min(merged_pair)
   j         <- max(merged_pair)
@@ -346,6 +351,15 @@ merge_labels <- function(merged_pair, labels, level) {
   labels
 }
 
+
+#' Title
+#'
+#' @param K
+#'
+#' @return
+#' @export
+#'
+#' @examples
 precision_to_regression <- function(K){
   p <-  ncol(K)
   mat <- matrix(0,p,p)
@@ -360,7 +374,16 @@ precision_to_regression <- function(K){
   mat
 }
 
+
+#' Title
 #'
+#' @param beta_level
+#' @param clusters
+#'
+#' @return
+#' @export
+#'
+#' @examples
 expand_beta <- function(beta_level, clusters){
   beta_level = as.matrix(beta_level)
   beta_exp <- t(sapply(1:nrow(beta_level), function(i){rep(beta_level[i,], table(clusters))}))
