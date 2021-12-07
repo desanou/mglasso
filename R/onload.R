@@ -1,16 +1,22 @@
 conesta_rwrapper <- NULL
 
 .onLoad <- function(libname, pkgname) {
+  # Check for anaconda
+  if (is.null(reticulate::conda_binary())) {
+    stop("You need to install Anaconda or add it in the system path.")
+  }
+
   # setup environment
   reticulate::py_config()
-  path <- system.file("python", package = "mglasso")
+  #path <- system.file("python", package = "mglasso") ### !!!!!!!!!
+  path <- "./inst/python/"
 
   if (!reticulate::py_module_available("scipy")) {
-    reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE)
+    reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
   if (!reticulate::py_module_available("scikit-learn")) {
-    reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE)
+    reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
