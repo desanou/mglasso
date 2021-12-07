@@ -9,12 +9,13 @@ Author: Ed [aut, cre]
 Maintainer: Ed <doedmond.sanou@univ-evry.fr>
 Description: Inference of multiscale graphical models with neighborhood selection approach. 
     We used a lasso penalty for sparsity and a group-fused lasso penalty for clustering the variables. 
-License: GPL-2
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    Matrix,
+    mvtnorm,
     reticulate,
-    ROCR,
     vegan,
 Config/reticulate:
   list(
@@ -25,9 +26,8 @@ Config/reticulate:
 Suggests: 
     knitr,
     rmarkdown,
-    Matrix,
-    mvtnorm,
     testthat (>= 3.0.0)
 BugReports: https://github.com/desanou/mglasso/issues 
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+RoxygenNote: 7.1.2
