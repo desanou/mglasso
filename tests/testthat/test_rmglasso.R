@@ -3,9 +3,9 @@
 # library(Matrix)
 # library(mvtnorm)
 
-n = 50
-K = 3
-p = 9
+n = 30
+K = 2
+p = 4
 rho = 0.85
 blocs <- list()
 for (j in 1:K) {
@@ -14,12 +14,12 @@ for (j in 1:K) {
   blocs[[j]] <- bloc
 }
 
-mat.covariance <- bdiag(blocs)
+mat.covariance <- Matrix::bdiag(blocs)
 mat.covariance
 ## Sparsity
 ## Sim
 set.seed(11)
-X <- rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
+X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 X <- scale(X)
 
 res <- conesta_rwrapper(X, 0.1, 0.1)
