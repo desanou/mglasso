@@ -11,12 +11,39 @@ conesta_rwrapper <- NULL
   #path <- system.file("python", package = "mglasso") ### !!!!!!!!!
   path <- "./inst/python/"
 
+  ##########################
+  ######################
+  #### source https://github.com/Azure/azureml-sdk-for-r/blob/master/R/install.R
+
+  envname = "r-reticulate"
+
+  # remove the conda environment if needed
+  envs <- reticulate::conda_list()
+  env_exists <- envname %in% envs$name
+  if (env_exists && remove_existing_env) {
+    msg <- sprintf(paste("Environment \"%s\" already exists.",
+                         "Remove the environment..."),
+                   envname)
+    message(msg)
+    reticulate::conda_remove(envname)
+    env_exists <- FALSE
+  }
+
+  if (!env_exists) {
+    msg <- paste("Creating environment: ", envname)
+    message(msg)
+    py_version <- paste("python=", conda_python_version, sep = "")
+    reticulate::conda_create(envname, packages = py_version)
+  }
+  ########################
+  ##########################
+
   if (!reticulate::py_module_available("scipy")) {
-    reticulate::py_install("scipy")
+    reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
   if (!reticulate::py_module_available("scikit-learn")) {
-    reticulate::py_install("scikit-learn")
+    reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
