@@ -21,6 +21,21 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install Python
+        run: |
+          Rscript -e "try(remotes::install_github('rstudio/reticulate'))"
+          Rscript -e "try(reticulate::install_miniconda())"
+          Rscript -e "try(reticulate::conda_create('r-reticulate'))"
+
+      - name: Confirm Python
+        run: |
+          Rscript -e "try(reticulate::py_config())"
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.config.python }}
+
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rcmdcheck
@@ -38,21 +53,6 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-      - name: Install Python
-        run: |
-          Rscript -e "try(remotes::install_github('rstudio/reticulate'))"
-          Rscript -e "try(reticulate::install_miniconda())"
-          Rscript -e "try(reticulate::conda_create('r-reticulate'))"
-
-      - name: Confirm Python
-        run: |
-          Rscript -e "try(reticulate::py_config())"
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.config.python }}
 
       - name: Check
         env:
