@@ -12,11 +12,11 @@ conesta_rwrapper <- NULL
   path <- "./inst/python/"
 
   if (!reticulate::py_module_available("scipy")) {
-    reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
+    reticulate::py_install("scipy")
   }
 
   if (!reticulate::py_module_available("scikit-learn")) {
-    reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
+    reticulate::py_install("scikit-learn")
   }
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
