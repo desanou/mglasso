@@ -2,5 +2,5 @@
 
 language: R
 cache: packages
-sudo: false
+sudo: true
 warnings_are_errors: false
