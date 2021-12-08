@@ -32,8 +32,8 @@ conesta_rwrapper <- NULL
   if (!env_exists) {
     msg <- paste("Creating environment: ", envname)
     message(msg)
-    py_version <- paste("python=", conda_python_version, sep = "")
-    reticulate::conda_create(envname, packages = py_version)
+    #py_version <- paste("python=", conda_python_version, sep = "")
+    reticulate::conda_create(envname)
   }
   ########################
   ##########################
