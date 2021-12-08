@@ -59,7 +59,7 @@ conesta_rwrapper <- NULL
     rstudioapi::restartSession()
 
   # loading conesta solver
-  the_module <- reticulate::import_from_path("conesta_solver", path = path)
+  the_module <- reticulate::import_from_path("conesta_solver", path = path, delay_load = TRUE)
   conesta_rwrapper <<- the_module$conesta_rwrapper
 }
 
