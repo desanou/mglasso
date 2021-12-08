@@ -16,6 +16,7 @@ conesta_rwrapper <- NULL
   #### source https://github.com/Azure/azureml-sdk-for-r/blob/master/R/install.R
 
   envname = "r-reticulate"
+  remove_existing_env = FALSE
 
   # remove the conda environment if needed
   envs <- reticulate::conda_list()
@@ -35,6 +36,7 @@ conesta_rwrapper <- NULL
     #py_version <- paste("python=", conda_python_version, sep = "")
     reticulate::conda_create(envname)
   }
+  use_condaenv("r-reticulate")
   ########################
   ##########################
 
