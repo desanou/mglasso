@@ -1,9 +1,10 @@
-from scipy import sparse
 import numpy as np
 import parsimony.estimators as estimators
 import parsimony.algorithms as algorithms
 import parsimony.functions.nesterov.tv as tv
 import sklearn.preprocessing 
+from scipy import sparse
+
 
 def Ak_from_pairs(k,p):
     Ak = sparse.lil_matrix((int(p*(p-1)/2),p*p))
