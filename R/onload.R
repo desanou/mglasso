@@ -36,7 +36,7 @@ conesta_rwrapper <- NULL
     #py_version <- paste("python=", conda_python_version, sep = "")
     reticulate::conda_create(envname)
   }
-  use_condaenv("r-reticulate")
+  reticulate::use_condaenv("r-reticulate")
   ########################
   ##########################
 
