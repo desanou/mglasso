@@ -38,21 +38,25 @@ conesta_rwrapper <- NULL
   ########################
   ##########################
 
-  if (!reticulate::py_module_available("scipy")) {
-    reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
-  }
+  #if (!reticulate::py_module_available("scipy")) {
+  reticulate::py_install("scipy", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
+  #}
 
-  if (!reticulate::py_module_available("scikit-learn")) {
-    reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
-  }
+  #if (!reticulate::py_module_available("scikit-learn")) {
+  reticulate::py_install("scikit-learn", method = "auto", conda = "auto", pip=TRUE, envname = "r-reticulate")
+  #}
 
-  if (!reticulate::py_module_available("parsimony.estimators")) {
-    text <- paste("sys.path.insert(0,'", path, "/pylearn-parsimony')",
-                  sep = "",
-                  collapse = NULL)
-    reticulate::py_run_string("import sys")
-    reticulate::py_run_string(text)
-  }
+  #if (!reticulate::py_module_available("parsimony.estimators")) {
+  text <- paste("sys.path.insert(0,'", path, "/pylearn-parsimony')",
+                sep = "",
+                collapse = NULL)
+  reticulate::py_run_string("import sys")
+  reticulate::py_run_string(text)
+  #}
+
+  if (rstudioapi::isAvailable() &&
+      rstudioapi::hasFun("restartSession"))
+    rstudioapi::restartSession()
 
   # loading conesta solver
   the_module <- reticulate::import_from_path("conesta_solver", path = path)
