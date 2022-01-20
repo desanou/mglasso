@@ -29,8 +29,8 @@ install_libs <- function(path) {
 
   miniconda = TRUE
   remove_existing_env = TRUE
-  #path <- system.file("python", package = "mglasso")
-  path <- "./inst/python/"
+  path <- system.file("python", package = "mglasso")
+  #path <- "/inst/python/"
   envname = "mglasso"
 
   if (is.null(reticulate::conda_binary())) { # Check for anaconda
@@ -69,8 +69,10 @@ install_libs <- function(path) {
 
   install_libs(path)
 
-  #reticulate::source_python(paste0(path,"conesta_solver.py"), envir = globalenv())
+  #
   reticulate::py_config()
+  #reticulate::source_python(paste0(path,"conesta_solver.py"))
+  # reticulate::source_python("conesta_solver.py")
   # loading conesta solver
   the_module <- reticulate::import_from_path("conesta_solver", path = path)
   conesta_rwrapper <<- the_module$conesta_rwrapper
