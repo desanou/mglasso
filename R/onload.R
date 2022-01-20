@@ -11,6 +11,11 @@ install_libs <- function(path) {
                            conda = "auto", pip=TRUE, envname = "mglasso")
   }
 
+  if (!reticulate::py_module_available("six")) {
+    reticulate::py_install("six", method = "auto",
+                           conda = "auto", pip=TRUE, envname = "mglasso")
+  }
+
   if (!reticulate::py_module_available("parsimony.estimators")) {
     # text <- paste("sys.path.insert(0,'", path, "/pylearn-parsimony')",
     #               sep = "",
