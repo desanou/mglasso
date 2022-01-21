@@ -21,7 +21,7 @@ Imports:
 Config/reticulate:
   list(
     packages = list(
-      list(package = c("scipy", "pandas", "numpy", "matplotlib", "sklearn.preprocessing", "parsimony.estimators" ))
+      list(package = c("scipy", "pandas", "numpy", "matplotlib", "sklearn.preprocessing", "parsimony.estimators", "six"))
     )
   )
 Suggests: 
