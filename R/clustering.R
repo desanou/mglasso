@@ -149,19 +149,26 @@ merge_labels <- function(merged_pair, labels, level) {
 }
 
 #'
-#' TO DO: Fill upper triangular matrix then sum up with the transpose to have full matrix
-expand_beta <- function(beta_level, clusters){
-  p <- length(clusters)
-  beta_level = as.matrix(beta_level)
-  beta_exp <- matrix(NA, p, p)
+merge_clusters <- function(pairs_to_merge,
+                           clusters){
 
-  for (i in 1:p) {
-    for (j in 1:p) {
-      ilevel <- clusters[i]
-      jlevel <- clusters[j]
-      beta_exp[i, j] <- beta_level[ilevel, jlevel]
+  for (l in 1:nrow(pairs_to_merge)) {
+    pair_to_merge <- pairs_to_merge[l,]
+
+    # can also take the 1st element cause it's always the min for a upper-triangular matrix
+    i         <- min(pair_to_merge)
+    j         <- max(pair_to_merge)
+
+    if(i != j){
+      # merge clusters
+      clusters[clusters == j] <- i
+      clusters[clusters > j] <- clusters[clusters > j] - 1
+
+      # update the rest of the table with the new clusters
+      pairs_to_merge[pairs_to_merge == j] <- i
+      pairs_to_merge[pairs_to_merge > j] <- pairs_to_merge[pairs_to_merge > j] - 1
     }
   }
 
-  return(beta_exp)
+  return(clusters)
 }
