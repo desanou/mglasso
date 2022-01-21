@@ -18,7 +18,6 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", legend_ = TRUE,
     plt
 }
 
-
 #' fonction qui affiche les matrices d'adjacence à chaque niveau de la hiérarchie
 #' à automatiser
 #' utiliser niveau de legende commune
@@ -50,7 +49,6 @@ plot_mglasso <- function(mglasso_, beta_true_, true_clusters_, levels_ = NULL,
         })
     }
 
-    # pt <- image_sparse(beta_true_, true_clusters_, 'true')
     pt <- image_sparse(beta_true_, "", "true")
 
     pl[[len + 1]] <- pt

@@ -101,3 +101,46 @@ precision_to_regression <- function(K) {
 
     mat
 }
+
+FUN_lines_wr <- function(i, j, Beta, FUN = `-`, ni = 1, nj = 1){
+  Y_coeffs <- Beta[i,]
+  X_coeffs <- Beta[j,]
+  Y_coeffs[j] <- 0
+  X_coeffs[i] <- 0
+  X_i <- X_coeffs[i]
+  X_coeffs[i] <- X_coeffs[j]
+  X_coeffs[j] <- X_i
+
+  FUN(ni*Y_coeffs, nj*X_coeffs)
+}
+
+#' vectorize beta matrix
+beta_to_vector <- function(beta_mat){
+  beta_mat <- as.matrix(beta_mat)
+  diag(beta_mat) <- NA
+  beta_mat <- as.vector(t(beta_mat))
+  beta_mat <- beta_mat[which(!is.na(beta_mat))]
+  beta_mat
+}
+
+#' Init Beta via OLS
+beta_ols <- function(X){
+  X <- as.matrix(X)
+  p <- ncol(X)
+  Beta <- matrix(0, nrow = p, ncol = p)
+
+  # if(p <= nrow(X)){
+  #   f <- function(i){
+  #     bi <- as.vector(solve(t(X[,-i])%*%X[,-i]) %*% t(X[,-i]) %*% X[,i])
+  #     R.utils::insert(bi, ats = i, values = 0)
+  #   }
+  # }else{
+  foo <- function(i){
+    bi <- as.vector(corpcor::pseudoinverse(t(X[,-i])%*%X[,-i]) %*% t(X[,-i]) %*% X[,i])
+    R.utils::insert(bi, ats = i, values = 0)
+  }
+  # }
+
+  Beta <- sapply(1:p, foo)
+  t(Beta)
+}

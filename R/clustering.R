@@ -49,34 +49,34 @@ merge_proc <- function(to_merge, clusters, x, beta, level, gain_level,
 #'
 #' @param beta
 #' @param distance
-dist_beta <- function(Beta, distance = "euclidean") {
-    K <- ncol(Beta)
+dist_beta <- function(beta, distance = "euclidean") {
+    k <- ncol(beta)
 
     if (distance == "wr") {
-        diffs <- matrix(NA, nrow = K, ncol = K)
-        for (i in 1:(K - 1)) {
-            for (j in (i + 1):K) {
-                diffs[i, j] <- norm(FUN_lines_wr(i, j, Beta, `-`), type = "2")
+        diffs <- matrix(NA, nrow = k, ncol = k)
+        for (i in 1:(k - 1)) {
+            for (j in (i + 1):k) {
+                diffs[i, j] <- norm(FUN_lines_wr(i, j, beta, `-`), type = "2")
             }
         }
     } else {
-        if (K != 1) {
-            diffs <- matrix(NA, nrow = K, ncol = K)
-            for (i in 1:(K - 1)) {
-                for (j in (i + 1):K) {
-                  diffs[i, j] <- norm(FUN_lines(i, j, Beta, `-`), type = "2")
+        if (k != 1) {
+            diffs <- matrix(NA, nrow = k, ncol = k)
+            for (i in 1:(k - 1)) {
+                for (j in (i + 1):k) {
+                  diffs[i, j] <- norm(FUN_lines(i, j, beta, `-`), type = "2")
                 }
             }
 
             if (distance == "relative") {
-                Dsum <- matrix(NA, nrow = K, ncol = K)
-                for (i in 1:(K - 1)) {
-                  for (j in (i + 1):K) {
-                    Dsum[i, j] <- norm(Beta[i, ], type = "2") + norm(Beta[j,
+                dsum <- matrix(NA, nrow = k, ncol = k)
+                for (i in 1:(k - 1)) {
+                  for (j in (i + 1):k) {
+                    dsum[i, j] <- norm(beta[i, ], type = "2") + norm(beta[j,
                       ], type = "2")
                   }
                 }
-                diffs <- diffs/Dsum
+                diffs <- diffs/dsum
             }
         } else {
             diffs <- matrix(0, nrow = 1, ncol = 1)
