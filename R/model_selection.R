@@ -1,83 +1,37 @@
-#' Title
-#'
-#' @param out_simone
-#' @param gamma
-#'
-#' @return
-#' @export
-#'
-#' @examples
-ebic <- function(out_simone, gamma = 0.5){
-  n_penalties = length(out_simone$penalties)
-  # df <- numeric(n_penalties)
-  bic <- out_simone$BIC
-  p <- ncol(out_simone$networks[[1]])
+neighbor_select <- function(data = data$X, config, lambda_min_ratio = 1e-2, nlambda = 10,
+                            nresamples = 20, lambdas = NULL, model = NULL,
+                            verbose = FALSE, estim_var = NULL){
 
-  # for(i in 1:n_penalties){
-  #   Theta <- out_simone$networks[[i]]
-  #   df[i] <- sum(abs(Theta)>0) - sum(abs(diag(Theta))>0)
-  # }
-
-  ebic_vec = bic - (4*gamma*log(p)*out_simone$n.edges)/2
-  ebic_vec
-  out_simone$networks[[which.max(ebic_vec)]]
-}
-
-#' Title
-#'
-#' @param out_simone
-#' @param X
-#' @param ...
-#'
-#' @return
-#' @export
-#'
-#' @examples
-ggmselect <- function(out_simone, X, ...){
-  n = nrow(X)
-  p = ncol(X)
-  n_penalties = length(out_simone$penalties)
-  MyFamily <- out_simone$networks
-
-  if (length(MyFamily) == 1) {
-    MyFamily = list(MyFamily)
+  p = ncol(data)
+  if(is.null(lambdas)) {
+    S <- cov(scale(data))
+    lambda_max = max(max(S-diag(p)), -min(S-diag(p)))
+    lambda_min = lambda_min_ratio*lambda_max
+    lambdas = exp(seq(log(lambda_max), log(lambda_min), length = nlambda))
   }
 
-  for(i in 1:n_penalties){
-    MyFamily[[i]] <- abs(sign(MyFamily[[i]]))
-    diag(MyFamily[[i]]) <- 0
+  if (is.null(estim_var)) {
+    if(!is.null(model)) {
+      estim_var <- estimate_variability(nresamples, config$n, config$p, config$dnsty,
+                                        config$pi, config$alpha, config$rho, model)
+    }
   }
 
-  degrr <- function(g){
-    deg <- max(apply(g,2,sum))
-    dmax <- max(deg)
-    dmax
-  }
+  mb_out <- huge.select(est       = huge(x       = scale(data),
+                                         method  = "mb",
+                                         verbose = verbose,
+                                         sym     = "and",
+                                         lambda = lambdas
+  ),
+  criterion = "stars",
+  verbose   = verbose,
+  stars.thresh = estim_var,
+  rep.num = nresamples)
 
-  all_deg <- sapply(MyFamily, degrr)
-  MyFamily <- MyFamily[- which(all_deg >= n - 4)]
+  lambda1 <- mb_out$opt.lambda
 
-  if(max(all_deg != 0) && length(MyFamily) != 0){
-    GMF <- selectMyFam(X, MyFamily, K = 1)
-    out = GMF$G
-  }else{
-    out = matrix(0, p, p)
-  }
+  beta_glasso <- mb_out$beta[[which(mb_out$lambda == lambda1)]]
+  #beta_glasso <- symmetrize(beta_glasso, "and")
 
-  return(out)
-
-  # for (g in 1:length(MyFamily)) {
-  #   dmax = 0
-  #   G <- MyFamily[[g]]
-  #
-  #   # calculation of degree and maximum degree
-  #   deg <- max(apply(G,2,sum))
-  #   dmax <- max(dmax,deg)
-  #
-  #   if(dmax>=3){
-  #     MyFamily[[g]] <- NULL
-  #   }
-  # }
-
-
+  return(list(beta_glasso = beta_glasso, lambda_opt = lambda1, lambdas = lambdas))
 }
