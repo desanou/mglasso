@@ -9,92 +9,81 @@
 #' @param gains
 #' @param labels
 #' @param merge
-merge_proc <- function(to_merge,
-                       clusters,
-                       x,
-                       beta,
-                       level,
-                       gain_level,
-                       gains,
-                       labels,
-                       merge) {
-  for (l in seq_len(nrow(to_merge))) {
-    pair_to_merge <- to_merge[l, ]
+merge_proc <- function(to_merge, clusters, x, beta, level, gain_level,
+    gains, labels, merge) {
+    for (l in seq_len(nrow(to_merge))) {
+        pair_to_merge <- to_merge[l, ]
 
-    i         <- min(pair_to_merge)
-    j         <- max(pair_to_merge)
+        i <- min(pair_to_merge)
+        j <- max(pair_to_merge)
 
-    if (i != j) {
-      level <- level + 1
+        if (i != j) {
+            level <- level + 1
 
-      # merge lines/cols in beta and x
-      beta <- merge_beta(beta, pair_to_merge, clusters)
-      x <- merge_x(x, pair_to_merge, clusters)
+            # merge lines/cols in beta and x
+            beta <- merge_beta(beta, pair_to_merge, clusters)
+            x <- merge_x(x, pair_to_merge, clusters)
 
-      # update dendrogram
-      merge[level, ] <- c(labels[i], labels[j])
-      labels        <- merge_labels(pair_to_merge, labels, level)
-      gains[level] <- ifelse(l > 1, 0, NA)
+            # update dendrogram
+            merge[level, ] <- c(labels[i], labels[j])
+            labels <- merge_labels(pair_to_merge, labels, level)
+            gains[level] <- ifelse(l > 1, 0, NA)
 
-      # merge clusters
-      clusters[clusters == j] <- i
-      clusters[clusters > j] <- clusters[clusters > j] - 1
+            # merge clusters
+            clusters[clusters == j] <- i
+            clusters[clusters > j] <- clusters[clusters > j] - 1
 
-      # update the rest of the table with the new clusters
-      to_merge[to_merge == j] <- i
-      to_merge[to_merge > j] <- to_merge[to_merge > j] - 1
+            # update the rest of the table with the new clusters
+            to_merge[to_merge == j] <- i
+            to_merge[to_merge > j] <- to_merge[to_merge > j] - 1
+        }
+
     }
 
-  }
-
-  out_mergeproc <- list("clusters" = clusters,
-                        "beta" = beta,
-                        "x" = x,
-                        "level" = level,
-                        "gains" = gains,
-                        "merge" = merge,
-                        "labels" = labels)
-  return(out_mergeproc)
+    out_mergeproc <- list(clusters = clusters, beta = beta, x = x, level = level,
+        gains = gains, merge = merge, labels = labels)
+    return(out_mergeproc)
 }
 
 #' distances beta
 #'
 #' @param beta
 #' @param distance
-dist_beta <- function(Beta, distance = "euclidean"){
-  K <- ncol(Beta)
+dist_beta <- function(Beta, distance = "euclidean") {
+    K <- ncol(Beta)
 
-  if(distance == "wr"){
-    diffs <- matrix(NA, nrow = K, ncol =  K)
-    for(i in 1:(K-1)){
-      for(j in (i+1):K){
-        diffs[i,j] <- norm(FUN_lines_wr(i, j, Beta, `-`), type = "2")
-      }
-    }
-  }else{
-    if(K != 1){
-      diffs <- matrix(NA, nrow = K, ncol =  K)
-      for(i in 1:(K-1)){
-        for(j in (i+1):K){
-          diffs[i,j] <- norm(FUN_lines(i, j, Beta, `-`), type = "2")
+    if (distance == "wr") {
+        diffs <- matrix(NA, nrow = K, ncol = K)
+        for (i in 1:(K - 1)) {
+            for (j in (i + 1):K) {
+                diffs[i, j] <- norm(FUN_lines_wr(i, j, Beta, `-`), type = "2")
+            }
         }
-      }
+    } else {
+        if (K != 1) {
+            diffs <- matrix(NA, nrow = K, ncol = K)
+            for (i in 1:(K - 1)) {
+                for (j in (i + 1):K) {
+                  diffs[i, j] <- norm(FUN_lines(i, j, Beta, `-`), type = "2")
+                }
+            }
 
-      if(distance == "relative"){
-        Dsum <- matrix(NA, nrow = K, ncol = K)
-        for(i in 1:(K-1)){
-          for(j in (i+1):K){
-            Dsum[i,j] <- norm(Beta[i,], type = "2") + norm(Beta[j,], type = "2")
-          }
+            if (distance == "relative") {
+                Dsum <- matrix(NA, nrow = K, ncol = K)
+                for (i in 1:(K - 1)) {
+                  for (j in (i + 1):K) {
+                    Dsum[i, j] <- norm(Beta[i, ], type = "2") + norm(Beta[j,
+                      ], type = "2")
+                  }
+                }
+                diffs <- diffs/Dsum
+            }
+        } else {
+            diffs <- matrix(0, nrow = 1, ncol = 1)
         }
-        diffs <- diffs/Dsum
-      }
-    }else{
-      diffs <- matrix(0, nrow = 1, ncol = 1)
     }
-  }
 
-  return(diffs)
+    return(diffs)
 }
 
 #' Merge x
@@ -105,16 +94,16 @@ dist_beta <- function(Beta, distance = "euclidean"){
 #' @param pair_to_merge
 #' @param clusters
 merge_x <- function(x, pair_to_merge, clusters) {
-  i        <- min(pair_to_merge)
-  j        <- max(pair_to_merge)
+    i <- min(pair_to_merge)
+    j <- max(pair_to_merge)
 
-  ni       <- sum(clusters == i)
-  nj       <- sum(clusters == j)
+    ni <- sum(clusters == i)
+    nj <- sum(clusters == j)
 
-  x[, i] <- (ni * x[, i] + nj * x[, j]) / (ni + nj)
-  x <- x[, -j]
+    x[, i] <- (ni * x[, i] + nj * x[, j])/(ni + nj)
+    x <- x[, -j]
 
-  return(x)
+    return(x)
 }
 
 #' Merge beta lines
@@ -123,16 +112,16 @@ merge_x <- function(x, pair_to_merge, clusters) {
 #' @param pair_to_merge
 #' @param clusters
 merge_beta <- function(beta, pair_to_merge, clusters) {
-  i        <- min(pair_to_merge)
-  j        <- max(pair_to_merge)
+    i <- min(pair_to_merge)
+    j <- max(pair_to_merge)
 
-  ni       <- sum(clusters == i)
-  nj       <- sum(clusters == j)
+    ni <- sum(clusters == i)
+    nj <- sum(clusters == j)
 
-  beta[i, ] <- fun_lines(i, j, beta, `+`, ni, nj) / (ni + nj)
-  beta     <- beta[-j, -j]
+    beta[i, ] <- fun_lines(i, j, beta, `+`, ni, nj)/(ni + nj)
+    beta <- beta[-j, -j]
 
-  return(beta)
+    return(beta)
 }
 
 #' Merge labels
@@ -141,34 +130,35 @@ merge_beta <- function(beta, pair_to_merge, clusters) {
 #' @param labels
 #' @param level
 merge_labels <- function(merged_pair, labels, level) {
-  i         <- min(merged_pair)
-  j         <- max(merged_pair)
-  labels[i] <- level
-  labels    <- labels[-j]
-  labels
+    i <- min(merged_pair)
+    j <- max(merged_pair)
+    labels[i] <- level
+    labels <- labels[-j]
+    labels
 }
 
 #'
-merge_clusters <- function(pairs_to_merge,
-                           clusters){
+merge_clusters <- function(pairs_to_merge, clusters) {
 
-  for (l in 1:nrow(pairs_to_merge)) {
-    pair_to_merge <- pairs_to_merge[l,]
+    for (l in 1:nrow(pairs_to_merge)) {
+        pair_to_merge <- pairs_to_merge[l, ]
 
-    # can also take the 1st element cause it's always the min for a upper-triangular matrix
-    i         <- min(pair_to_merge)
-    j         <- max(pair_to_merge)
+        # can also take the 1st element cause it's always the min
+        # for a upper-triangular matrix
+        i <- min(pair_to_merge)
+        j <- max(pair_to_merge)
 
-    if(i != j){
-      # merge clusters
-      clusters[clusters == j] <- i
-      clusters[clusters > j] <- clusters[clusters > j] - 1
+        if (i != j) {
+            # merge clusters
+            clusters[clusters == j] <- i
+            clusters[clusters > j] <- clusters[clusters > j] - 1
 
-      # update the rest of the table with the new clusters
-      pairs_to_merge[pairs_to_merge == j] <- i
-      pairs_to_merge[pairs_to_merge > j] <- pairs_to_merge[pairs_to_merge > j] - 1
+            # update the rest of the table with the new clusters
+            pairs_to_merge[pairs_to_merge == j] <- i
+            pairs_to_merge[pairs_to_merge > j] <- pairs_to_merge[pairs_to_merge >
+                j] - 1
+        }
     }
-  }
 
-  return(clusters)
+    return(clusters)
 }

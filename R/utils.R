@@ -23,13 +23,13 @@
 #'fun_lines(1, 2, beta)
 #'fun_lines(2, 1, beta)
 fun_lines <- function(i, j, beta, fun = `-`, ni = 1, nj = 1) {
-  y_coeffs <- beta[i, ]
-  x_coeffs <- beta[j, ]
-  x_i <- x_coeffs[i]
-  x_coeffs[i] <- x_coeffs[j]
-  x_coeffs[j] <- x_i
+    y_coeffs <- beta[i, ]
+    x_coeffs <- beta[j, ]
+    x_i <- x_coeffs[i]
+    x_coeffs[i] <- x_coeffs[j]
+    x_coeffs[j] <- x_i
 
-  fun(ni * y_coeffs, nj * x_coeffs)
+    fun(ni * y_coeffs, nj * x_coeffs)
 }
 
 #' `Mglasso` cost function
@@ -44,40 +44,40 @@ fun_lines <- function(i, j, beta, fun = `-`, ni = 1, nj = 1) {
 #' @return numeric scalar. The cost.
 
 cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
-  p <- ncol(x)
-  l2_norm <- 0
-  least_squares <- 0
+    p <- ncol(x)
+    l2_norm <- 0
+    least_squares <- 0
 
-  if (length(p) != 0) {
-    least_squares <- sum(sapply(1:p,
-                                function(i) {
-                                  norm(x[, i] - x %*% beta[i, ],
-                                       type = "2")^2})
-    )
+    if (length(p) != 0) {
+        least_squares <- sum(sapply(1:p, function(i) {
+            norm(x[, i] - x %*% beta[i, ], type = "2")^2
+        }))
 
-    # I can vectorize it later
-    for (i in 1:(p - 1)) {
-      for (j in (i + 1):p) {
-        l2_norm <- l2_norm + norm(fun_lines(i, j, beta, `-`), type = "2")
-      }
-    } ## fuse-group lasso penalty
-  }
+        # I can vectorize it later
+        for (i in 1:(p - 1)) {
+            for (j in (i + 1):p) {
+                l2_norm <- l2_norm + norm(fun_lines(i, j, beta, `-`),
+                  type = "2")
+            }
+        }  ## fuse-group lasso penalty
+    }
 
 
-  l1_norm <- sum(abs(beta))  ## lasso penalty
+    l1_norm <- sum(abs(beta))  ## lasso penalty
 
-  return(least_squares + lambda1 * l1_norm + lambda2 * l2_norm)
+    return(least_squares + lambda1 * l1_norm + lambda2 * l2_norm)
 }
 
 #' symmetrize matrix of regression vectors pxp
-symmetrize <- function(mat, rule = "and"){
-  diag(mat) <- 0
-  if (rule == "and"){
-    mat <- sign(mat) * pmin(abs(mat),t(abs(mat)))
-  }else{ ## or rule
-    mat <- pmax(mat,t(mat)) - pmax(-mat,-t(mat))
-  }
-  return(mat)
+symmetrize <- function(mat, rule = "and") {
+    diag(mat) <- 0
+    if (rule == "and") {
+        mat <- sign(mat) * pmin(abs(mat), t(abs(mat)))
+    } else {
+        ## or rule
+        mat <- pmax(mat, t(mat)) - pmax(-mat, -t(mat))
+    }
+    return(mat)
 }
 
 #' Title
@@ -88,16 +88,16 @@ symmetrize <- function(mat, rule = "and"){
 #' @export
 #'
 #' @examples
-precision_to_regression <- function(K){
-  p <-  ncol(K)
-  mat <- matrix(0,p,p)
+precision_to_regression <- function(K) {
+    p <- ncol(K)
+    mat <- matrix(0, p, p)
 
-  for (i in 1:p) {
-    for (j in 1:p) {
-      if(i != j)
-        mat[i, j] <- - K[i,j]/K[i,i]
+    for (i in 1:p) {
+        for (j in 1:p) {
+            if (i != j)
+                mat[i, j] <- -K[i, j]/K[i, i]
+        }
     }
-  }
 
-  mat
+    mat
 }
