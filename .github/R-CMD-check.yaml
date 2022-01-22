@@ -45,13 +45,6 @@ jobs:
         with:
           python-version: ${{ matrix.config.python }}
 
-      - name: Install dependencies
-        run: |
-          devtools::install_deps(dependencies = TRUE)
-          devtools::install_cran(c("rcmdcheck", "devtools"))
-          devtools::install(".")
-        shell: Rscript {0}
-
       - uses: r-lib/actions/check-r-package@v1
 
       - name: Show testthat output
