@@ -1,20 +1,20 @@
 conesta_rwrapper <- NULL
 
 install_libs <- function(path) {
-  if (!reticulate::py_module_available("scipy")) {
-    reticulate::py_install("scipy", method = "auto",
-                           conda = "auto", pip=TRUE, envname = "mglasso")
-  }
+  # if (!reticulate::py_module_available("scipy")) {
+  #   reticulate::py_install("scipy", method = "auto",
+  #                          conda = "auto", pip=TRUE, envname = "r-reticulate")
+  # }
 
   if (!reticulate::py_module_available("scikit-learn")) {
     reticulate::py_install("scikit-learn", method = "auto",
-                           conda = "auto", pip=TRUE, envname = "mglasso")
+                           conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
-  if (!reticulate::py_module_available("six")) {
-    reticulate::py_install("six", method = "auto",
-                           conda = "auto", pip=TRUE, envname = "mglasso")
-  }
+  # if (!reticulate::py_module_available("six")) {
+  #   reticulate::py_install("six", method = "auto",
+  #                          conda = "auto", pip=TRUE, envname = "r-reticulate")
+  # }
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
     # text <- paste("sys.path.insert(0,'", path, "/pylearn-parsimony')",
@@ -23,6 +23,7 @@ install_libs <- function(path) {
 
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master"
     system(text)
+    system("pip install six")
 
     #reticulate::py_run_string("import sys")
     #reticulate::py_run_string(text)
@@ -33,10 +34,10 @@ install_libs <- function(path) {
 .onLoad <- function(libname, pkgname) {
 
   miniconda = TRUE
-  remove_existing_env = TRUE
+  remove_existing_env = FALSE
   path <- system.file("python", package = "mglasso")
   #path <- "/inst/python/"
-  envname = "mglasso"
+  envname = "r-reticulate"
 
   if (is.null(reticulate::conda_binary())) { # Check for anaconda
     stop("You need to install Anaconda or add it in the system path.")
@@ -50,8 +51,8 @@ install_libs <- function(path) {
 
   reticulate::py_config()
 
-  is_mglasso_env_installed = tryCatch(reticulate::use_miniconda(condaenv = 'mglasso', required = TRUE),
-                                      error = function (e) {'not installed'})
+  is_rreticulate_env_installed = tryCatch(reticulate::use_miniconda(condaenv = 'r-reticulate', required = TRUE),
+                                          error = function (e) {'not installed'})
 
   # remove the conda environment if needed
   envs <- reticulate::conda_list()
@@ -66,16 +67,16 @@ install_libs <- function(path) {
   }
 
   # setup environment
-  if (!is.null(is_mglasso_env_installed)) {
-    message('MGLasso requires the mglasso conda environment. Attempting to create...')
-    reticulate::conda_create(envname = 'mglasso')
+  if (!is.null(is_rreticulate_env_installed)) {
+    message('MGLasso requires the r-reticulate conda environment. Attempting to create...')
+    reticulate::conda_create(envname = 'r-reticulate')
   }
-  reticulate::use_condaenv(condaenv = 'mglasso')
-
+  reticulate::use_condaenv(condaenv = 'r-reticulate')
+  reticulate::py_config()
   install_libs(path)
 
   #
-  reticulate::py_config()
+
   #reticulate::source_python(paste0(path,"conesta_solver.py"))
   # reticulate::source_python("conesta_solver.py")
   # loading conesta solver

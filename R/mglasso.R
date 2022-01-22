@@ -1,74 +1,3 @@
-#' weighted sum/difference of two regression vectors
-#'
-#' `fun_lines` applies function `fun` to regression vectors while reordering the coefficients,
-#' such that the `j`-th coefficient in `beta[j, ]` is permuted with the `i`-th coefficient.
-#'
-#' @param i integer scalar. Indice of the first vector.
-#' @param j integer scalar. Indice of the second vector.
-#' @param fun
-#' @param ni
-#' @param nj
-#' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.
-#'
-#' @fun function. Applied on lines.
-#' @ni integer scalar. Weight for vector `i`.
-#' @nj integer scalar. Wweight for vector `j`.
-#'
-#' @return numeric scalar.
-#'
-#' @examples
-#'beta <- matrix(round(rnorm(9),2), ncol = 3)
-#'diag(beta) <- 0
-#'beta
-#'fun_lines(1, 2, beta)
-#'fun_lines(2, 1, beta)
-fun_lines <- function(i, j, beta, fun = `-`, ni = 1, nj = 1) {
-  y_coeffs <- beta[i, ]
-  x_coeffs <- beta[j, ]
-  x_i <- x_coeffs[i]
-  x_coeffs[i] <- x_coeffs[j]
-  x_coeffs[j] <- x_i
-
-  fun(ni * y_coeffs, nj * x_coeffs)
-}
-
-#' `Mglasso` cost function
-#'
-#' `cost` computes the cost function of `Mglasso` method.
-#'
-#' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.
-#' @param x n by p numeric matrix. Data with variables in columns.
-#' @param lambda1 numeric scalar. Lasso penalization parameter.
-#' @param lambda2 numeric scalar. Fused-group Lasso penalization parameter.
-#'
-#' @return numeric scalar. The cost.
-
-cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
-  p <- ncol(x)
-  l2_norm <- 0
-  least_squares <- 0
-
-  if (length(p) != 0) {
-    least_squares <- sum(sapply(1:p,
-                                function(i) {
-                                  norm(x[, i] - x %*% beta[i, ],
-                                       type = "2")^2})
-    )
-
-    # I can vectorize it later
-    for (i in 1:(p - 1)) {
-      for (j in (i + 1):p) {
-        l2_norm <- l2_norm + norm(fun_lines(i, j, beta, `-`), type = "2")
-      }
-    } ## fuse-group lasso penalty
-  }
-
-
-  l1_norm <- sum(abs(beta))  ## lasso penalty
-
-  return(least_squares + lambda1 * l1_norm + lambda2 * l2_norm)
-}
-
 #' Multiscale Graphical lasso
 #'
 #' Estimates a graphical model structure using Lasso and fused-group Lasso penalties.
@@ -79,9 +8,12 @@ cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
 #' @param fuse_thresh positive numeric scalar. Threshold for cluster fusion.
 #' @param maxit integer scalar. Maximum number of iterations.
 #' @param distance character. Distance between regression vectors. Default euclidean;
-#' @param solver character. Optimization algorithm. Default conesta.
 #' @param lambda2_start numeric scalar. starting value for fused-group Lasso penalty (clustering penalty).
 #' @param lambda2_factor numeric scalar. Step used to update fused-group Lasso penalty. `lambda2_factor*lambda2_start`.
+#' @param precision precision of estimation algorithm.
+#' @param weights_ matrix of weights
+#' @param type if "initial" use classical version of MGLasso without weights.
+#' @param compact if TRUE, only save results when previous clusters are different from current
 #'
 #' @return A list.
 #' \item{out}{list with matrix of regression vectors and clusters for each level.
@@ -89,6 +21,7 @@ cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
 #' \item{tree}{clustering tree}
 #'
 #' @examples
+#' \dontrun{
 #' n = 50
 #' K = 3
 #' p = 9
@@ -108,299 +41,92 @@ cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
 #' X <- scale(X)
 #'
 #' res <- mglasso(X, 0.1, lambda2_start = 0.1)
-#' print(res$tree)
-#' res$out$clusters
-#' res$out$beta
-mglasso <- function(x,
-                    lambda1 = 0,
-                    fuse_thresh = 10^-3,
-                    maxit = 1000,
-                    distance = "euclidean",
-                    solver = "conesta",
-                    lambda2_start = 1e-4,
-                    lambda2_factor = 1.5) {
+#' res$out[[1]]$clusters
+#' res$out[[1]]$beta
+#' }
 
-  ## Initialisations
-  p        <- ncol(x)
-  gains    <- rep(0, p - 1)
-  merge    <- matrix(0, nrow = (p - 1), ncol = 2) # clusters merged
-  level    <- 0
-  labels   <- -1:-p                         # vector of clusters labels
+
+mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
+                    distance = "euclidean", lambda2_start = 1e-04, lambda2_factor = 1.5,
+                    precision = 0.01, weights_ = NULL, type = "initial", compact = TRUE) {
+  p <- ncol(x)
+  x <- scale(x)
   clusters <- 1:p
 
-  lambda2     <- lambda2_start
-  old_lambda2 <- 0
-  beta <- conesta_rwrapper(x, lambda1, old_lambda2)
+  t <- 1  # index for the out list.
+  iter <- 0
+  out <- list()
+  clusters_prev <- NULL
 
-  old_costf <- costf <-  cost(beta, x, lambda1, old_lambda2)
-
-
-  t               <- 2 # index for the out list.
-  iter            <- 0
-  out             <- list()
-  out[[1]]        <- list("beta" = beta, "clusters" = clusters)
-  names(out)[[1]] <- "level0"
-  prev            <- length(unique(clusters))
-  ## End Initialisations
-
+  if (type == "pcor") {
+    weights_ <- weight_mat(x, "pcor")
+  } else if (type == "adapt") {
+    weights_ <- weight_mat(x, "adapt")
+  }
 
   ## Loop until all the variables merged
   while (length(unique(clusters)) > 1) {
-    iter <- iter + 1
+    clusters <- 1:p
 
-
-    beta <- conesta_rwrapper(x, lambda1, lambda2); print(lambda1)
-
-    ## Update distance matrix
-    diffs <- dist_beta(beta, distance = distance)
-
-    ## Clustering starts here
-    to_merge <- which(diffs <= fuse_thresh, arr.ind = TRUE)
-
-    if (nrow(to_merge) != 0) {
-      gain_level     <- costf - old_costf
-      out_mergeproc <- merge_proc(to_merge, clusters, x, beta,
-                                  level, gain_level, gains, labels,
-                                  merge)
-
-      x        <- out_mergeproc$x
-      beta     <- out_mergeproc$beta
-      clusters <- out_mergeproc$clusters
-
-      level    <- out_mergeproc$level
-      gains    <- out_mergeproc$gains
-      merge    <- out_mergeproc$merge
-      labels   <- out_mergeproc$labels
+    if (iter == 0) {
+      beta_old <- beta_to_vector(beta_ols(x))  ## init OLS
+      lambda2 <- 0
     }
-    ## Clustering ends here
+    if (iter == 1) {
+      lambda2 <- lambda2_start
+    }
 
-    costf <- cost(beta, x, lambda1, lambda2)
-    cat("nclusters =", length(unique(clusters)),
-        "lambda2", lambda2,
-        "cost =", costf, "\n")
+    beta <- conesta_rwrapper(x, lambda1, lambda2, beta_old, prec_ = precision,
+                             type_ = type, W_ = weights_)
+    print(lambda1)
+    beta_old <- beta_to_vector(beta)
 
-    gains[is.na(gains)] <- old_costf - costf
-    old_costf <- costf
+    diffs <- dist_beta(beta, distance = distance)  ## Update distance matrix
 
-    if (length(unique(clusters)) != prev) {
-      out[[t]] <- list("beta" = beta, "clusters" = clusters)
-      names(out)[[t]] <- paste0("level", (p - length(unique(clusters))))
-      prev <- length(unique(clusters))
+    pairs_to_merge <- which(diffs <= fuse_thresh, arr.ind = TRUE)  ## Clustering starts
+    if (nrow(pairs_to_merge) != 0)
+    {
+      clusters <- merge_clusters(pairs_to_merge, clusters)  # merge clusters
+    }  ## Clustering ends here
+
+    cost_ <- cost(beta, x)
+    cat("nclusters =", length(unique(clusters)), "lambda2", lambda2,
+        "cost =", cost_, "\n")
+
+    if (compact) {
+      if (!identical(clusters, clusters_prev)) {
+        out[[t]] <- list(beta = beta, clusters = clusters)
+        names(out)[[t]] <- paste0("level", length(unique(clusters)))
+        clusters_prev <- clusters
+        t <- t + 1
+      }
+    } else {
+      out[[t]] <- list(beta = beta, clusters = clusters)
+      names(out)[[t]] <- paste0("level", length(unique(clusters)))
       t <- t + 1
-
     }
-
-    old_lambda2 <- lambda2
 
     lambda2 <- lambda2 * lambda2_factor
+    iter <- iter + 1
   }
 
-  height      <- cumsum(gains)
-  tree        <- list(merge = merge,
-                      height = height,
-                      order = rev(clusters),
-                      labels = paste("", 1:p),
-                      gains = gains)
-  class(tree) <- "hclust"
-  tree <- vegan:::reorder.hclust(tree, 1:p)
-
-
-  result <- list("out" = out, "tree" = tree)
+  result <- list(out = out, l1 = lambda1)
+  cat("niter == ", iter)
 
   return(result)
 }
 
-#' merge clusters from table
-#'
-#' @param to_merge
-#' @param clusters
-#' @param x
-#' @param beta
-#' @param level
-#' @param gain_level
-#' @param gains
-#' @param labels
-#' @param merge
-merge_proc <- function(to_merge,
-                       clusters,
-                       x,
-                       beta,
-                       level,
-                       gain_level,
-                       gains,
-                       labels,
-                       merge) {
-  for (l in seq_len(nrow(to_merge))) {
-    pair_to_merge <- to_merge[l, ]
 
-    i         <- min(pair_to_merge)
-    j         <- max(pair_to_merge)
+#' Generate a weight matrix for fuse-group lasso term
+weight_mat <- function(x_, type_) {
+  beta <- beta_ols(x_)
 
-    if (i != j) {
-      level <- level + 1
-
-      # merge lines/cols in beta and x
-      beta <- merge_beta(beta, pair_to_merge, clusters)
-      x <- merge_x(x, pair_to_merge, clusters)
-
-      # update dendrogram
-      merge[level, ] <- c(labels[i], labels[j])
-      labels        <- merge_labels(pair_to_merge, labels, level)
-      gains[level] <- ifelse(l > 1, 0, NA)
-
-      # merge clusters
-      clusters[clusters == j] <- i
-      clusters[clusters > j] <- clusters[clusters > j] - 1
-
-      # update the rest of the table with the new clusters
-      to_merge[to_merge == j] <- i
-      to_merge[to_merge > j] <- to_merge[to_merge > j] - 1
-    }
-
+  if (type_ == "pcor") {
+    w <- (1/(1 - abs(beta)))^2  # squared because of conesta configuration
+  }
+  if (type_ == "adapt") {
+    w <- (1/dist_beta(beta))^2
   }
 
-  out_mergeproc <- list("clusters" = clusters,
-                        "beta" = beta,
-                        "x" = x,
-                        "level" = level,
-                        "gains" = gains,
-                        "merge" = merge,
-                        "labels" = labels)
-  return(out_mergeproc)
-}
-
-#' distances beta
-#'
-#' @param beta
-#' @param distance
-dist_beta <- function(beta, distance = "euclidean") {
-  k <- ncol(beta)
-  if (k != 1) {
-    diffs <- matrix(NA, nrow = k, ncol =  k)
-    for (i in 1:(k - 1)) {
-      for (j in (i + 1):k) {
-        diffs[i, j] <- norm(fun_lines(i, j, beta, `-`), type = "2")
-      }
-    }
-
-    if (distance == "relative") {
-      dsum <- matrix(NA, nrow = k, ncol = k)
-      for (i in 1:(k - 1)) {
-        for (j in (i + 1):k) {
-          dsum[i, j] <- norm(beta[i, ], type = "2") +
-            norm(beta[j, ], type = "2")
-        }
-      }
-      diffs <- diffs / dsum
-    }
-  }else{
-    diffs <- matrix(0, nrow = 1, ncol = 1)
-  }
-
-  return(diffs)
-}
-
-#' Merge x
-#'
-#' weighted mean
-#'
-#' @param x
-#' @param pair_to_merge
-#' @param clusters
-merge_x <- function(x, pair_to_merge, clusters) {
-  i        <- min(pair_to_merge)
-  j        <- max(pair_to_merge)
-
-  ni       <- sum(clusters == i)
-  nj       <- sum(clusters == j)
-
-  x[, i] <- (ni * x[, i] + nj * x[, j]) / (ni + nj)
-  x <- x[, -j]
-
-  return(x)
-}
-
-#' Merge beta lines
-#'
-#' @param beta
-#' @param pair_to_merge
-#' @param clusters
-merge_beta <- function(beta, pair_to_merge, clusters) {
-  i        <- min(pair_to_merge)
-  j        <- max(pair_to_merge)
-
-  ni       <- sum(clusters == i)
-  nj       <- sum(clusters == j)
-
-  beta[i, ] <- fun_lines(i, j, beta, `+`, ni, nj) / (ni + nj)
-  beta     <- beta[-j, -j]
-
-  return(beta)
-}
-
-#' Merge labels
-#'
-#' @param merged_pair
-#' @param labels
-#' @param level
-merge_labels <- function(merged_pair, labels, level) {
-  i         <- min(merged_pair)
-  j         <- max(merged_pair)
-  labels[i] <- level
-  labels    <- labels[-j]
-  labels
-}
-
-
-#' Title
-#'
-#' @param K
-#'
-#' @return
-#' @export
-#'
-#' @examples
-precision_to_regression <- function(K){
-  p <-  ncol(K)
-  mat <- matrix(0,p,p)
-
-  for (i in 1:p) {
-    for (j in 1:p) {
-      if(i != j)
-        mat[i, j] <- - K[i,j]/K[i,i]
-    }
-  }
-
-  mat
-}
-
-
-#' Title
-#'
-#' @param beta_level
-#' @param clusters
-#'
-#' @return
-#' @export
-#'
-#' @examples
-expand_beta <- function(beta_level, clusters){
-  beta_level = as.matrix(beta_level)
-  beta_exp <- t(sapply(1:nrow(beta_level), function(i){rep(beta_level[i,], table(clusters))}))
-
-  rep.row<-function(x,n){
-    matrix(rep(x,each=n),nrow=n)
-  }
-
-  if(nrow(beta_exp) == 1){
-    beta_exp = rep.row(beta_exp[1,], table(clusters)[1])
-    return(beta_exp)
-  }else{
-    beta_exp <- sapply(1:nrow(beta_exp), function(i){rep.row(beta_exp[i,], table(clusters)[i])})
-  }
-
-  if(!is.list(beta_exp)){
-    beta_exp = list(beta_exp)
-  }
-  do.call(rbind, beta_exp)
+  return(w)
 }
