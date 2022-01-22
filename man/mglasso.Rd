@@ -8,11 +8,14 @@ mglasso(
   x,
   lambda1 = 0,
   fuse_thresh = 10^-3,
-  maxit = 1000,
+  maxit = NULL,
   distance = "euclidean",
-  solver = "conesta",
   lambda2_start = 1e-04,
-  lambda2_factor = 1.5
+  lambda2_factor = 1.5,
+  precision = 0.01,
+  weights_ = NULL,
+  type = "initial",
+  compact = TRUE
 )
 }
 \arguments{
@@ -26,11 +29,17 @@ mglasso(
 
 \item{distance}{character. Distance between regression vectors. Default euclidean;}
 
-\item{solver}{character. Optimization algorithm. Default conesta.}
-
 \item{lambda2_start}{numeric scalar. starting value for fused-group Lasso penalty (clustering penalty).}
 
 \item{lambda2_factor}{numeric scalar. Step used to update fused-group Lasso penalty. `lambda2_factor*lambda2_start`.}
+
+\item{precision}{precision of estimation algorithm.}
+
+\item{weights_}{matrix of weights}
+
+\item{type}{if "initial" use classical version of MGLasso without weights.}
+
+\item{compact}{if TRUE, only save results when previous clusters are different from current}
 }
 \value{
 A list.
@@ -43,6 +52,7 @@ Estimates a graphical model structure using Lasso and fused-group Lasso penaltie
 Belongs to neighborhood selection inference methods.
 }
 \examples{
+\dontrun{
 n = 50
 K = 3
 p = 9
@@ -62,7 +72,7 @@ X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 X <- scale(X)
 
 res <- mglasso(X, 0.1, lambda2_start = 0.1)
-print(res$tree)
-res$out$clusters
-res$out$beta
+res$out[[1]]$clusters
+res$out[[1]]$beta
+}
 }
