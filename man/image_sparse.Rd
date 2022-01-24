@@ -8,6 +8,12 @@ image_sparse(matrix, main_ = "", sub_ = "", legend_ = TRUE, col_names = FALSE)
 }
 \arguments{
 \item{matrix}{matrix of regression coefficients}
+
+\item{main_}{title}
+
+\item{sub_}{subtitle}
+
+\item{col_names}{columns names}
 }
 \description{
 Plot the mage of a matrix

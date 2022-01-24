@@ -4,7 +4,14 @@
 \alias{plot_mglasso}
 \title{Plot mglasso output}
 \usage{
-plot_mglasso(mglasso_, beta_true_, levels_ = NULL, version = "no-merge")
+plot_mglasso(mglasso_, beta_true_ = NULL, levels_ = NULL)
+}
+\arguments{
+\item{mglasso_}{mglasso output}
+
+\item{beta_true_}{provide true regression vectors if simulation model}
+
+\item{levels_}{selected levels}
 }
 \description{
 Plot mglasso output
