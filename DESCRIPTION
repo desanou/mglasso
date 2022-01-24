@@ -2,7 +2,7 @@ Package: mglasso
 Type: Package
 Title: Multiscale Graphical Lasso
 Version: 0.1.0
-Author@R: c(person("Edmond", "Sanou", 
+Authors@R: c(person("Edmond", "Sanou", 
                     email = "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
           person("Tung","Lee", role = "ctb"))
 Author: Ed [aut, cre]
@@ -14,10 +14,13 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Imports:
+    corpcor,
+    gridExtra,
     Matrix,
     mvtnorm,
+    R.utils,
     reticulate,
-    vegan,
+    vegan
 Config/reticulate:
   list(
     packages = list(
@@ -28,7 +31,4 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
-BugReports: https://github.com/desanou/mglasso/issues 
-VignetteBuilder: knitr
-Config/testthat/edition: 3
 RoxygenNote: 7.1.2
