@@ -57,12 +57,6 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
   out <- list()
   clusters_prev <- NULL
 
-  if (type == "pcor") {
-    weights_ <- weight_mat(x, "pcor")
-  } else if (type == "adapt") {
-    weights_ <- weight_mat(x, "adapt")
-  }
-
   ## Loop until all the variables merged
   while (length(unique(clusters)) > 1) {
     clusters <- 1:p
@@ -113,19 +107,4 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
   cat("niter == ", iter)
 
   return(result)
-}
-
-
-#' Generate a weight matrix for fuse-group lasso term
-weight_mat <- function(x_, type_) {
-  beta <- beta_ols(x_)
-
-  if (type_ == "pcor") {
-    w <- (1/(1 - abs(beta)))^2  # squared because of conesta configuration
-  }
-  if (type_ == "adapt") {
-    w <- (1/dist_beta(beta))^2
-  }
-
-  return(w)
 }
