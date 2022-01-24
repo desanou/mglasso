@@ -8,7 +8,7 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
   main_ <- paste0(c(sub_, main_), collapse = " ")
 
   nn <- 100
-  plt <- image(as(matrix, "sparseMatrix"), main = main_, sub = "",
+  plt <- Matrix::image(methods::as(matrix, "sparseMatrix"), main = main_, sub = "",
                xlab = "", ylab = "", useAbs = FALSE)
 
   nn <- rownames(matrix)
@@ -16,7 +16,7 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
   nn <- nn[1:(length(nn) - 1)]
   labs <- c(nn, nn)
   if (col_names) {
-    update(plt, scales = list(labels = labs))
+    stats::update(plt, scales = list(labels = labs))
   }
 
   plt

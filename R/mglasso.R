@@ -106,5 +106,7 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
   result <- list(out = out, l1 = lambda1)
   cat("niter == ", iter)
 
+  class(result) <- "mglasso"
+
   return(result)
 }

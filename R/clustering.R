@@ -9,7 +9,7 @@ dist_beta <- function(beta, distance = "euclidean") {
     diffs <- matrix(NA, nrow = k, ncol = k)
     for (i in 1:(k - 1)) {
       for (j in (i + 1):k) {
-        diffs[i, j] <- norm(FUN_lines(i, j, beta, `-`), type = "2")
+        diffs[i, j] <- norm(fun_lines(i, j, beta, `-`), type = "2")
       }
     }
 

@@ -46,7 +46,7 @@ install_libs <- function() {
   }
 
   if (miniconda) {
-    message('Checking if miniconda is installed...')
+    packageStartupMessage('Checking if miniconda is installed...')
     tryCatch(reticulate::install_miniconda(),
              error = function (e) {return()})
   }
@@ -63,14 +63,14 @@ install_libs <- function() {
     msg <- sprintf(paste("Environment \"%s\" already exists.",
                          "Remove the environment..."),
                    envname)
-    message(msg)
+    packageStartupMessage(msg)
     reticulate::conda_remove(envname)
     env_exists <- FALSE
   }
 
   # setup environment
   if (!is.null(is_rreticulate_env_installed)) {
-    message('MGLasso requires the r-reticulate conda environment. Attempting to create...')
+    packageStartupMessage('MGLasso requires the r-reticulate conda environment. Attempting to create...')
     reticulate::conda_create(envname = 'r-reticulate')
   }
   reticulate::use_condaenv(condaenv = 'r-reticulate')
