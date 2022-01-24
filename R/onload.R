@@ -51,7 +51,7 @@ install_libs <- function() {
              error = function (e) {return()})
   }
 
-  reticulate::py_config()
+  #reticulate::py_config()
 
   is_rreticulate_env_installed = tryCatch(reticulate::use_miniconda(condaenv = 'r-reticulate', required = TRUE),
                                           error = function (e) {'not installed'})
@@ -74,7 +74,7 @@ install_libs <- function() {
     reticulate::conda_create(envname = 'r-reticulate')
   }
   reticulate::use_condaenv(condaenv = 'r-reticulate')
-  reticulate::py_config()
+  #reticulate::py_config()
   install_libs()
   #
   #reticulate::source_python(paste0(path,"conesta_solver.py"))
