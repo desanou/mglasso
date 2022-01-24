@@ -4,8 +4,7 @@
 #' @param main_ title
 #' @param sub_ subtitle
 #' @param col_names columns names
-image_sparse <- function(matrix, main_ = "", sub_ = "", legend_ = TRUE,
-                         col_names = FALSE) {
+image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
   main_ <- paste0(c(sub_, main_), collapse = " ")
 
   nn <- 100
