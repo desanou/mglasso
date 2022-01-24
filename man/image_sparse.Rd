@@ -4,7 +4,7 @@
 \alias{image_sparse}
 \title{Plot the mage of a matrix}
 \usage{
-image_sparse(matrix, main_ = "", sub_ = "", legend_ = TRUE, col_names = FALSE)
+image_sparse(matrix, main_ = "", sub_ = "", col_names = FALSE)
 }
 \arguments{
 \item{matrix}{matrix of regression coefficients}
