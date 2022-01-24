@@ -1,10 +1,9 @@
 #' Plot the mage of a matrix
 #'
 #' @param matrix matrix of regression coefficients
-#' @param main_
-#' @param sub_
-#' @param legend_
-#' @param col_names
+#' @param main_ title
+#' @param sub_ subtitle
+#' @param col_names columns names
 image_sparse <- function(matrix, main_ = "", sub_ = "", legend_ = TRUE,
                          col_names = FALSE) {
   main_ <- paste0(c(sub_, main_), collapse = " ")
@@ -26,12 +25,10 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", legend_ = TRUE,
 
 #'Plot mglasso output
 #'
-#' @param mglasso_
-#' @param beta_true_
-#' @param levels_
-#' @param version
-plot_mglasso <- function(mglasso_, beta_true_, levels_ = NULL,
-                         version = "no-merge") {
+#' @param mglasso_ mglasso output
+#' @param beta_true_ provide true regression vectors if simulation model
+#' @param levels_ selected levels
+plot_mglasso <- function(mglasso_, beta_true_ = NULL, levels_ = NULL) {
 
   len <- length(mglasso_$out)
   levels <- names(mglasso_$out)
@@ -46,9 +43,11 @@ plot_mglasso <- function(mglasso_, beta_true_, levels_ = NULL,
     image_sparse(mglasso_$out[[level]]$Beta, "", level)
   })
 
-  pt <- image_sparse(beta_true_, "", "true")
+  if(!is.null(beta_true_)){
+    pt <- image_sparse(beta_true_, "", "true")
+    pl[[len + 1]] <- pt
+  }
 
-  pl[[len + 1]] <- pt
   l1 <- mglasso_$l1
 
   do.call(gridExtra::grid.arrange, c(pl, nrow = 2, top = paste0("lambda1 = ",
