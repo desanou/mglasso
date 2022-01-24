@@ -1,4 +1,10 @@
 #' Plot the mage of a matrix
+#'
+#' @param matrix matrix of regression coefficients
+#' @param main_
+#' @param sub_
+#' @param legend_
+#' @param col_names
 image_sparse <- function(matrix, main_ = "", sub_ = "", legend_ = TRUE,
                          col_names = FALSE) {
   main_ <- paste0(c(sub_, main_), collapse = " ")
@@ -19,6 +25,11 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", legend_ = TRUE,
 }
 
 #'Plot mglasso output
+#'
+#' @param mglasso_
+#' @param beta_true_
+#' @param levels_
+#' @param version
 plot_mglasso <- function(mglasso_, beta_true_, levels_ = NULL,
                          version = "no-merge") {
 
