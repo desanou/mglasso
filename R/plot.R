@@ -27,7 +27,9 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
 #' @param mglasso_ mglasso output
 #' @param beta_true_ provide true regression vectors if simulation model
 #' @param levels_ selected levels
-plot_mglasso <- function(mglasso_, beta_true_ = NULL, levels_ = NULL) {
+plot.mglasso <- function(mglasso_, beta_true_ = NULL, levels_ = NULL) {
+
+  stopifnot(class(mglasso_) == "mglasso")
 
   len <- length(mglasso_$out)
   levels <- names(mglasso_$out)
