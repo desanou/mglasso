@@ -1,6 +1,8 @@
-conesta_rwrapper <- NULL
+#' conesta_rwrapper
+#conesta_rwrapper <- NULL
 
-install_libs <- function(path) {
+#' Install necessary libraries for conesta python algorithm
+install_libs <- function() {
   # if (!reticulate::py_module_available("scipy")) {
   #   reticulate::py_install("scipy", method = "auto",
   #                          conda = "auto", pip=TRUE, envname = "r-reticulate")
@@ -73,10 +75,8 @@ install_libs <- function(path) {
   }
   reticulate::use_condaenv(condaenv = 'r-reticulate')
   reticulate::py_config()
-  install_libs(path)
-
+  install_libs()
   #
-
   #reticulate::source_python(paste0(path,"conesta_solver.py"))
   # reticulate::source_python("conesta_solver.py")
   # loading conesta solver
