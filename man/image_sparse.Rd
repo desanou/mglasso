@@ -6,6 +6,9 @@
 \usage{
 image_sparse(matrix, main_ = "", sub_ = "", legend_ = TRUE, col_names = FALSE)
 }
+\arguments{
+\item{matrix}{matrix of regression coefficients}
+}
 \description{
 Plot the mage of a matrix
 }
