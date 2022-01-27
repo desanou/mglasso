@@ -37,5 +37,6 @@ jobs:
       with:
         extra-packages: rcmdcheck
 
-    - name: Check package
-      uses: r-lib/actions/check-r-package@v2
+    - name: Check
+      run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error")
+      shell: Rscript {0}
