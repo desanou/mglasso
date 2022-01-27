@@ -10,9 +10,9 @@ name: R
 
 on:
   push:
-    branches: [ master ]
+    branches: [ verified ]
   pull_request:
-    branches: [ master ]
+    branches: [ verified ]
 
 jobs:
   build:
