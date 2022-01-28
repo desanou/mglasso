@@ -1,0 +1,89 @@
+---
+title: "Multiscale Glasso"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multiscale Glasso}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  cache = TRUE
+)
+```
+Inference of Multiscale Gaussian Graphical Models.  
+
+## Installation  
+```{r eval = FALSE}
+remotes::install_github("desanou/mglasso")
+library(mglasso)
+```
+```{r}
+library(mglasso)
+```
+
+
+## Basic Usage
+
+1. Simulate some block diagonal model  
+```{r}
+library(Matrix)
+n = 50
+K = 3
+p = 9
+rho = 0.85
+blocs <- list()
+
+for (j in 1:K) {
+  bloc <- matrix(rho, nrow = p/K, ncol = p/K)
+  for(i in 1:(p/K)) { bloc[i,i] <- 1 }
+  blocs[[j]] <- bloc
+}
+
+mat.covariance <- Matrix::bdiag(blocs)
+Matrix::image(mat.covariance)
+```
+
+1.1 True cluster parition
+```{r}
+rep(1:3, each = 3)
+```
+
+
+2. Simulate gaussian data from the covariance matrix 
+```{r}
+set.seed(11)
+X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
+```
+
+
+2. Launch algorithm  
+```{r cache = TRUE}
+X <- scale(X)    
+res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
+```
+3. Plot results compact version
+
+3.1 Estimated regression vectors
+```{r fig.width=10, fig.height=10}
+mglasso::plot.mglasso(res)
+```
+
+`level9` denotes a partition with `9` clusters.
+We observe a shrinkage effect in the estimated coefficients due to the fuse-group lasso penalty parameter.
+
+3.2 Estimated clustering partitions  
+```{r}
+res$out$level9$clusters
+res$out$level7$clusters
+res$out$level4$clusters
+res$out$level3$clusters
+res$out$level1$clusters
+```
+The uncovered partition obtained while increasing $\lambda_2$ is a hierarchical partition under some constraints.
+
+# Reference 
+Inference of Multiscale Gaussian Graphical Model, preprint
