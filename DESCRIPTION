@@ -26,7 +26,7 @@ Imports:
 Config/reticulate:
   list(
     packages = list(
-      list(package = c("scipy", "pandas", "matplotlib", "six", "scikit-learn"))
+      list(package = c("pandas", "numpy", "scipy", "matplotlib", "six", "scikit-learn"))
     )
   )
 Suggests: 
