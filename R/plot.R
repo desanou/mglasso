@@ -41,7 +41,7 @@ plot.mglasso <- function(mglasso_, beta_true_ = NULL, levels_ = NULL) {
   }
 
   pl <- lapply(levels, function(level) {
-    image_sparse(mglasso_$out[[level]]$Beta, "", level)
+    image_sparse(mglasso_$out[[level]]$beta, "", level)
   })
 
   if(!is.null(beta_true_)){
