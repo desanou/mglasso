@@ -7,6 +7,11 @@ install_libs <- function() {
   #   reticulate::py_install("scipy", method = "auto",
   #                          conda = "auto", pip=TRUE, envname = "r-reticulate")
   # }
+  
+  if (!reticulate::py_module_available("scipy")) {
+    reticulate::py_install("pandas", method = "auto",
+                           conda = "auto", pip=TRUE, envname = "r-reticulate")
+  }
 
   if (!reticulate::py_module_available("scikit-learn")) {
     reticulate::py_install("scikit-learn", method = "auto",
