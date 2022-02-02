@@ -1,92 +1,66 @@
+# In this file, the python routine needed for MGLasso is set up.
+
 #' conesta_rwrapper
 #conesta_rwrapper <- NULL
 
 #' Install necessary libraries for conesta python algorithm
 install_libs <- function() {
-  # if (!reticulate::py_module_available("scipy")) {
-  #   reticulate::py_install("scipy", method = "auto",
-  #                          conda = "auto", pip=TRUE, envname = "r-reticulate")
-  # }
-  
   if (!reticulate::py_module_available("scipy")) {
+    message('scipy module not found. Installing scipy.')
+    reticulate::py_install("scipy", method = "auto",
+                           conda = "auto", pip=TRUE, envname = "r-reticulate")
+  }
+
+  if (!reticulate::py_module_available("pandas")) {
+    message('pandas module not found. Installing pandas')
     reticulate::py_install("pandas", method = "auto",
                            conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
   if (!reticulate::py_module_available("scikit-learn")) {
+    message('scikit-learn module not found. Installing scikit-learn.')
     reticulate::py_install("scikit-learn", method = "auto",
                            conda = "auto", pip=TRUE, envname = "r-reticulate")
   }
 
-  # if (!reticulate::py_module_available("six")) {
-  #   reticulate::py_install("six", method = "auto",
-  #                          conda = "auto", pip=TRUE, envname = "r-reticulate")
-  # }
+  if (!reticulate::py_module_available("six")) {
+    message('Six module not found. Installing six.')
+    system("pip install six")
+  }
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
-    # text <- paste("sys.path.insert(0,'", path, "/pylearn-parsimony')",
-    #               sep = "",
-    #               collapse = NULL)
-
+    message('Installing parsimony.estimators')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master"
     system(text)
-    system("pip install six")
-
-    #reticulate::py_run_string("import sys")
-    #reticulate::py_run_string(text)
-
   }
 }
 
 .onLoad <- function(libname, pkgname) {
 
-  miniconda = TRUE
-  remove_existing_env = FALSE
   path <- system.file("python", package = "mglasso")
-  #path <- "/inst/python/"
-  envname = "r-reticulate"
 
   if (is.null(reticulate::conda_binary())) { # Check for anaconda
     stop("You need to install Anaconda or add it in the system path.")
   }
 
-  if (miniconda) {
-    packageStartupMessage('Checking if miniconda is installed...')
-    tryCatch(reticulate::install_miniconda(),
-             error = function (e) {return()})
-  }
-
-  #reticulate::py_config()
-
-  is_rreticulate_env_installed = tryCatch(reticulate::use_miniconda(condaenv = 'r-reticulate', required = TRUE),
+  is_rreticulate_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE),
                                           error = function (e) {'not installed'})
-
-  # remove the conda environment if needed
-  envs <- reticulate::conda_list()
-  env_exists <- envname %in% envs$name
-  if (env_exists && remove_existing_env) {
-    msg <- sprintf(paste("Environment \"%s\" already exists.",
-                         "Remove the environment..."),
-                   envname)
-    packageStartupMessage(msg)
-    reticulate::conda_remove(envname)
-    env_exists <- FALSE
-  }
 
   # setup environment
   if (!is.null(is_rreticulate_env_installed)) {
     packageStartupMessage('MGLasso requires the r-reticulate conda environment. Attempting to create...')
     reticulate::conda_create(envname = 'r-reticulate')
   }
-  reticulate::use_condaenv(condaenv = 'r-reticulate')
+  reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
   #reticulate::py_config()
   install_libs()
-  #
-  #reticulate::source_python(paste0(path,"conesta_solver.py"))
-  # reticulate::source_python("conesta_solver.py")
-  # loading conesta solver
+
   the_module <- reticulate::import_from_path("conesta_solver", path = path)
   conesta_rwrapper <<- the_module$conesta_rwrapper
+}
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage("Welcome to MGLasso.")
 }
 
 # git submodule add https://github.com/neurospin/pylearn-parsimony.git ./inst/python/pylearn-parsimony
