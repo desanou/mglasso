@@ -2,54 +2,73 @@
 % Please edit documentation in R/mglasso.R
 \name{mglasso}
 \alias{mglasso}
-\title{Multiscale Graphical lasso}
+\title{Inference of Multiscale Gaussian Graphical Model.}
 \usage{
 mglasso(
   x,
   lambda1 = 0,
-  fuse_thresh = 10^-3,
+  fuse_thresh = 0.001,
   maxit = NULL,
-  distance = "euclidean",
+  distance = c("euclidean", "relative"),
   lambda2_start = 1e-04,
   lambda2_factor = 1.5,
   precision = 0.01,
   weights_ = NULL,
-  type = "initial",
+  type = c("initial"),
   compact = TRUE
 )
 }
 \arguments{
-\item{x}{n by p numeric matrix. p-multivariate normal sample with n independent observations.}
+\item{x}{Numeric matrix (nxp). Multivariate normal sample with n independent
+observations.}
 
-\item{lambda1}{positive numeric scalar. Lasso penalty.}
+\item{lambda1}{Positive numeric scalar. Lasso penalty.}
 
-\item{fuse_thresh}{positive numeric scalar. Threshold for cluster fusion.}
+\item{fuse_thresh}{Positive numeric scalar. Threshold for clusters fusion.}
 
-\item{maxit}{integer scalar. Maximum number of iterations.}
+\item{maxit}{Integer scalar. Maximum number of iterations.}
 
-\item{distance}{character. Distance between regression vectors. Default euclidean;}
+\item{distance}{Character. Distance between regression vectors with
+permutation on symmetric coefficients.}
 
-\item{lambda2_start}{numeric scalar. starting value for fused-group Lasso penalty (clustering penalty).}
+\item{lambda2_start}{Numeric scalar. Starting value for fused-group Lasso
+penalty (clustering penalty).}
 
-\item{lambda2_factor}{numeric scalar. Step used to update fused-group Lasso penalty. `lambda2_factor*lambda2_start`.}
+\item{lambda2_factor}{Numeric scalar. Step used to update fused-group Lasso
+penalty. `lambda2_factor*lambda2_start`.}
 
-\item{precision}{precision of estimation algorithm.}
+\item{precision}{Precision of estimation algorithm.}
 
-\item{weights_}{matrix of weights}
+\item{weights_}{Matrix of weights.}
 
-\item{type}{if "initial" use classical version of MGLasso without weights.}
+\item{type}{If "initial" use classical version of MGLasso without weights.}
 
-\item{compact}{if TRUE, only save results when previous clusters are different from current}
+\item{compact}{Logical scalar. If TRUE, only save results when previous
+clusters are different from current.}
 }
 \value{
 A list.
-\item{out}{list with matrix of regression vectors and clusters for each level.
-Each element of the list contains two elements: `beta` and `clusters`}
-\item{tree}{clustering tree}
+ \item{out}{list with matrix of regression vectors and
+  clusters for each level. Each element of the list contains two elements:
+  \code{beta} and \code{clusters}}.
+ \item{l1}{the sparsity penalty}.
 }
 \description{
-Estimates a graphical model structure using Lasso and fused-group Lasso penalties.
-Belongs to neighborhood selection inference methods.
+Estimates a gaussian graphical model structure while hierarchically grouping
+variables.
+}
+\details{
+Estimates a gaussian graphical model structure while hierarchically grouping
+variables by optimizing a pseudo-likelihood function combining Lasso and
+fuse-group Lasso penalties. The problem is solved via the COntinuation with
+NEsterov smoothing in a Shrinkage- Thresholding Algorithm (Hadj-selem et al.
+2018). Varying the parameter lambda_2 in a multiplicative fashion allow to
+uncover a seemingly hierarchical clustering structure. For \eqn{\lambda_2 = 0}, the
+approach is theoretically equivalent to the Meinshausen-BÜhlmann (2006)
+neighborhood selection as resuming to the optimization of pseudo-likelihood
+function with l1 penalty (Rocha et al., 2008). The algorithm stops when all
+the variables have merged into one cluster. The criterion used to merge
+clusters is the l2-norm distance between regression vectors.
 }
 \examples{
 \dontrun{
@@ -75,4 +94,8 @@ res <- mglasso(X, 0.1, lambda2_start = 0.1)
 res$out[[1]]$clusters
 res$out[[1]]$beta
 }
+}
+\seealso{
+\code{\link{conesta}} for the problem solver,
+  \code{\link{plot.mglasso}} for plotting the output of \code{mglasso}.
 }

@@ -2,17 +2,16 @@
 % Please edit documentation in R/plot.R
 \name{plot.mglasso}
 \alias{plot.mglasso}
-\title{Plot mglasso output}
+\title{Plot \code{mglasso} function output.}
 \usage{
-\method{plot}{mglasso}(mglasso_, beta_true_ = NULL, levels_ = NULL)
+\method{plot}{mglasso}(mglasso_, levels_ = NULL)
 }
 \arguments{
-\item{mglasso_}{mglasso output}
+\item{mglasso_}{Object of class \code{mglasso}.}
 
-\item{beta_true_}{provide true regression vectors if simulation model}
-
-\item{levels_}{selected levels}
+\item{levels_}{Character vector. Selected levels for which estimated matrices
+will be plot. If NULL plot all levels.}
 }
 \description{
-Plot mglasso output
+Plot the object returned by the \code{mglasso} function.
 }
