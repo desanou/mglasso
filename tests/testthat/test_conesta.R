@@ -1,7 +1,4 @@
-# library(Rmglasso)
-
-# library(Matrix)
-# library(mvtnorm)
+print("Testing conesta solver on a block diagonal model ..")
 
 n = 30
 K = 2
@@ -13,13 +10,10 @@ for (j in 1:K) {
   for(i in 1:(p/K)) { bloc[i,i] <- 1 }
   blocs[[j]] <- bloc
 }
-
 mat.covariance <- Matrix::bdiag(blocs)
-mat.covariance
-## Sparsity
-## Sim
+
 set.seed(11)
 X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 X <- scale(X)
 
-res <- conesta_rwrapper(X, 0.1, 0.1)
+res <- conesta(X = X, lam1 = 0.1, lam2 = 0.1, beta_warm = NULL, type_ = "initial", W_ = NULL)
