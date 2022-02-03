@@ -7,7 +7,7 @@ import parsimony.algorithms as algorithms
 import parsimony.functions.nesterov.tv as tv
 import sklearn.preprocessing 
 
-def conesta_rwrapper(X, lam1, lam2, beta_warm, type_, W_, mean_ = False, max_iter_=1e4, prec_=1e-2):
+def conesta(X, lam1, lam2, beta_warm, type_, W_, mean_ = False, max_iter_=1e4, prec_=1e-2):
   X=np.array(X)
   n=X.shape[0]
   p=X.shape[1]
