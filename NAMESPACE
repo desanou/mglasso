@@ -1,2 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-#export("conesta_rwrapper")
+export("conesta")

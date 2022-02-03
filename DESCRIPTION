@@ -8,7 +8,7 @@ Authors@R: c(person("Edmond", "Sanou",
 Author: Ed [aut, cre]
 Maintainer: Ed <doedmond.sanou@univ-evry.fr>
 Description: Inference of multiscale graphical models with neighborhood selection approach. 
-    We used a lasso penalty for sparsity and a group-fused lasso penalty for clustering the variables. 
+    The method is based on solving a convex optimization problem combining a Lasso and fused-group Lasso penalties.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -22,7 +22,6 @@ Imports:
     R.utils,
     reticulate,
     stats,
-    vegan
 Config/reticulate:
   list(
     packages = list(
