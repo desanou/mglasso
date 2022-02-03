@@ -1,24 +1,46 @@
-#' Multiscale Graphical lasso
+#' Inference of Multiscale Gaussian Graphical Model.
 #'
-#' Estimates a graphical model structure using Lasso and fused-group Lasso penalties.
-#' Belongs to neighborhood selection inference methods.
+#' Estimates a gaussian graphical model structure while hierarchically grouping
+#' variables.
 #'
-#' @param x n by p numeric matrix. p-multivariate normal sample with n independent observations.
-#' @param lambda1 positive numeric scalar. Lasso penalty.
-#' @param fuse_thresh positive numeric scalar. Threshold for cluster fusion.
-#' @param maxit integer scalar. Maximum number of iterations.
-#' @param distance character. Distance between regression vectors. Default euclidean;
-#' @param lambda2_start numeric scalar. starting value for fused-group Lasso penalty (clustering penalty).
-#' @param lambda2_factor numeric scalar. Step used to update fused-group Lasso penalty. `lambda2_factor*lambda2_start`.
-#' @param precision precision of estimation algorithm.
-#' @param weights_ matrix of weights
-#' @param type if "initial" use classical version of MGLasso without weights.
-#' @param compact if TRUE, only save results when previous clusters are different from current
+#' Estimates a gaussian graphical model structure while hierarchically grouping
+#' variables by optimizing a pseudo-likelihood function combining Lasso and
+#' fuse-group Lasso penalties. The problem is solved via the \emph{COntinuation
+#' with NEsterov smoothing in a Shrinkage-Thresholding Algorithm} (Hadj-selem et
+#' al. 2018). Varying the parameter \eqn{\lambda_2} in a multiplicative fashion
+#' allow to uncover a seemingly hierarchical clustering structure. For
+#' \eqn{\lambda_2 = 0}, the approach is theoretically equivalent to the
+#' Meinshausen-BÜhlmann (2006) \emph{neighborhood selection} as resuming to the
+#' optimization of \emph{pseudo-likelihood} function with \eqn{\ell_1} penalty
+#' (Rocha et al., 2008). The algorithm stops when all the variables have merged
+#' into one cluster. The criterion used to merge clusters is the
+#' \eqn{\ell_2}-norm distance between regression vectors.
 #'
-#' @return A list.
-#' \item{out}{list with matrix of regression vectors and clusters for each level.
-#' Each element of the list contains two elements: `beta` and `clusters`}
-#' \item{tree}{clustering tree}
+#' @param x Numeric matrix (\eqn{n \times p}). Multivariate normal sample with
+#'   \eqn{n} independent observations.
+#' @param lambda1 Positive numeric scalar. Lasso penalty.
+#' @param fuse_thresh Positive numeric scalar. Threshold for clusters fusion.
+#' @param maxit Integer scalar. Maximum number of iterations.
+#' @param distance Character. Distance between regression vectors with
+#'   permutation on symmetric coefficients.
+#' @param lambda2_start Numeric scalar. Starting value for fused-group Lasso
+#'   penalty (clustering penalty).
+#' @param lambda2_factor Numeric scalar. Step used to update fused-group Lasso
+#'   penalty in a multuplicative way..
+#' @param precision Precision of estimation algorithm.
+#' @param weights_ Matrix of weights.
+#' @param type If "initial" use classical version of \bold{MGLasso} without
+#'   weights.
+#' @param compact Logical scalar. If TRUE, only save results when previous
+#'   clusters are different from current.
+#'
+#' @return A list. \item{out}{list with matrix of regression vectors and
+#'   clusters for each level. Each element of the list contains two elements:
+#'   \code{beta} and \code{clusters}}. \item{\eqn{\ell_1}}{the sparsity
+#'   penalty}.
+#'
+#' @seealso \code{\link{conesta}} for the problem solver,
+#'   \code{\link{plot.mglasso}} for plotting the output of \code{mglasso}.
 #'
 #' @examples
 #' \dontrun{
@@ -45,9 +67,9 @@
 #' res$out[[1]]$beta
 #' }
 
-mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
-                    distance = "euclidean", lambda2_start = 1e-04, lambda2_factor = 1.5,
-                    precision = 0.01, weights_ = NULL, type = "initial", compact = TRUE) {
+mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
+                    distance = c("euclidean", "relative"), lambda2_start = 1e-4, lambda2_factor = 1.5,
+                    precision = 1e-2, weights_ = NULL, type = c("initial"), compact = TRUE) {
   p <- ncol(x)
   x <- scale(x)
   clusters <- 1:p
@@ -56,6 +78,8 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
   iter <- 0
   out <- list()
   clusters_prev <- NULL
+  distance = match.arg(distance)
+  type = match.arg(type)
 
   ## Loop until all the variables merged
   while (length(unique(clusters)) > 1) {
@@ -69,8 +93,8 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 10^-3, maxit = NULL,
       lambda2 <- lambda2_start
     }
 
-    beta <- conesta_rwrapper(x, lambda1, lambda2, beta_old, prec_ = precision,
-                             type_ = type, W_ = weights_)
+    beta <- conesta(x, lambda1, lambda2, beta_old, prec_ = precision,
+                    type_ = type, W_ = weights_)
     print(lambda1)
     beta_old <- beta_to_vector(beta)
 

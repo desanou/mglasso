@@ -1,0 +1,51 @@
+#' CONESTA solver.
+#'
+#' Solve the MGLasso optimization problem using CONESTA algorithm. Interface to
+#' the pylearn.parsimony python library.
+#'
+#' \emph{COntinuation with NEsterov smoothing in a Shrinkage-Thresholding Algorithm}
+#' (CONESTA, Hadj-selem et al. 2018) is an algorithm design for solving
+#' optimization problems including group-wise penalties. This function is a
+#' wrapper for the python code calling the optimization function.
+#'
+#' @param X Data matrix.
+#' @param lam1 Sparsity penalty.
+#' @param lam2 Total variation penalty.
+#' @param beta_warm Warm initialization vector.
+#' @param type_ Character scalar. By default set to initial version which don't
+#'   use weights
+#' @param W_ Weights matrix.
+#' @param mean_ Logical scalar. If TRUE weights the optimization function by the
+#'   inverse of sample size.
+#' @param max_iter_ Numeric scalar. Maximum number of iterations.
+#' @param prec_ Numeric scalar. Precision.
+#'
+#' @return Matrix of regression coefficients.
+#' @export
+#'
+#' @seealso \code{\link{mglasso}} for the MGLasso model estimation.
+#'
+#' @examples
+#' \dontrun{
+#' n = 30
+#' K = 2
+#' p = 4
+#' rho = 0.85
+#' blocs <- list()
+#' for (j in 1:K) {
+#'   bloc <- matrix(rho, nrow = p/K, ncol = p/K)
+#'   for(i in 1:(p/K)) { bloc[i,i] <- 1 }
+#'   blocs[[j]] <- bloc
+#' }
+#'
+#' mat.covariance <- Matrix::bdiag(blocs)
+#' mat.covariance
+#' set.seed(11)
+#' X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
+#' X <- scale(X)
+#' res <- conesta(X, 0.1, 0.1)
+#' }
+#'
+conesta <- function(X, lam1, lam2, beta_warm, type_, W_, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
+
+}
