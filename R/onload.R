@@ -3,30 +3,13 @@
 #' conesta_rwrapper
 #conesta_rwrapper <- NULL
 
-#' Install necessary libraries for conesta python algorithm
+#' Install necessary libraries for CONESTA algorithm
 install_libs <- function() {
-  if (!reticulate::py_module_available("scipy")) {
-    message('scipy module not found. Installing scipy.')
-    reticulate::py_install("scipy", method = "auto",
-                           conda = "auto", pip=TRUE, envname = "r-reticulate")
-  }
 
-  if (!reticulate::py_module_available("pandas")) {
-    message('pandas module not found. Installing pandas')
-    reticulate::py_install("pandas", method = "auto",
-                           conda = "auto", pip=TRUE, envname = "r-reticulate")
-  }
+  library_list <- c("scipy", "pandas", "scikit-learn", "six")
 
-  if (!reticulate::py_module_available("scikit-learn")) {
-    message('scikit-learn module not found. Installing scikit-learn.')
-    reticulate::py_install("scikit-learn", method = "auto",
-                           conda = "auto", pip=TRUE, envname = "r-reticulate")
-  }
-
-  if (!reticulate::py_module_available("six")) {
-    message('Six module not found. Installing six.')
-    system("pip install six")
-  }
+  reticulate::py_install(library_list, method = "auto",
+                         conda = "auto", pip=TRUE, envname = "r-reticulate")
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
     message('Installing parsimony.estimators')
@@ -63,6 +46,5 @@ install_libs <- function() {
   packageStartupMessage("Welcome to MGLasso.")
 }
 
-# git submodule add https://github.com/neurospin/pylearn-parsimony.git ./inst/python/pylearn-parsimony
 # https://github.com/rstudio/tensorflow/blob/701d402efa78fea25c95c1b3394c22b27aabd466/R/install.R
 # source https://github.com/Azure/azureml-sdk-for-r/blob/master/R/install.R

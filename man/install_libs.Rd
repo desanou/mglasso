@@ -3,11 +3,11 @@
 \name{install_libs}
 \alias{install_libs}
 \title{conesta_rwrapper
-Install necessary libraries for conesta python algorithm}
+Install necessary libraries for CONESTA algorithm}
 \usage{
 install_libs()
 }
 \description{
 conesta_rwrapper
-Install necessary libraries for conesta python algorithm
+Install necessary libraries for CONESTA algorithm
 }
