@@ -8,14 +8,18 @@ install_libs <- function() {
 
   library_list <- c("scipy", "pandas", "scikit-learn", "six")
 
-  reticulate::py_install(library_list, method = "auto",
-                         conda = "auto", pip=TRUE, envname = "r-reticulate")
+  reticulate::py_install(library_list,
+                         method = "auto",
+                         conda = "auto",
+                         pip=TRUE,
+                         envname = "r-reticulate")
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
     message('Installing parsimony.estimators')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master"
     system(text)
   }
+
 }
 
 .onLoad <- function(libname, pkgname) {
