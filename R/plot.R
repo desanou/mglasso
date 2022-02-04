@@ -1,11 +1,13 @@
-#'Plot \code{mglasso} function output.
+#' Plot \code{mglasso} function output.
 #'
-#'Plot the object returned by the \code{mglasso} function.
+#' Plot the object returned by the \code{mglasso} function.
 #'
-#'@param mglasso_ Object of class \code{mglasso}.
-#'@param levels_ Character vector. Selected levels for which estimated matrices
-#'  will be plot. If NULL plot all levels.
-plot.mglasso <- function(mglasso_, levels_ = NULL) {
+#' @param mglasso_ Object of class \code{mglasso}.
+#' @param levels_ Character vector. Selected levels for which estimated matrices
+#'   will be plot. If NULL plot all levels.
+#'
+#' @export
+plot_mglasso <- function(mglasso_, levels_ = NULL) {
 
   stopifnot(class(mglasso_) == "mglasso")
 

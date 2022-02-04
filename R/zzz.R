@@ -17,7 +17,7 @@
   reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
   #reticulate::py_config()
 
-  library_list <- c("scipy", "pandas", "scikit-learn", "six")
+  library_list <- c("scipy", "scikit-learn", "numpy")
 
   reticulate::py_install(library_list,
                          method = "auto",
@@ -27,11 +27,11 @@
 
   if (!reticulate::py_module_available("parsimony.estimators")) {
     message('Installing parsimony.estimators')
-    text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master"
+    text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
     system(text)
   }
 
-  the_module <- reticulate::import_from_path("conesta_solver", path = path)
+  the_module <- reticulate::import_from_path("conesta_solver", path = path, delay_load = TRUE)
   conesta <<- the_module$conesta
 }
 

@@ -10,8 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  cache = TRUE
+  comment = "#>"
 )
 ```
 Inference of Multiscale Gaussian Graphical Models.  
@@ -61,7 +60,7 @@ X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 
 
 2. Launch algorithm  
-```{r cache = TRUE}
+```{r}
 X <- scale(X)    
 res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
 ```
@@ -69,7 +68,7 @@ res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
 
 3.1 Estimated regression vectors
 ```{r fig.width=10, fig.height=10}
-mglasso::plot.mglasso(res)
+plot_mglasso(res)
 ```
 
 `level9` denotes a partition with `9` clusters.

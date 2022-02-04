@@ -35,7 +35,7 @@ Solve the MGLasso optimization problem using CONESTA algorithm. Interface to
 the pylearn.parsimony python library.
 }
 \details{
-COntinuation with NEsterov smoothing in a Shrinkage-Thresholding Algorithm
+\emph{COntinuation with NEsterov smoothing in a Shrinkage-Thresholding Algorithm}
 (CONESTA, Hadj-selem et al. 2018) is an algorithm design for solving
 optimization problems including group-wise penalties. This function is a
 wrapper for the python code calling the optimization function.

@@ -1,10 +1,7 @@
 from scipy import sparse
-import pandas
 import numpy as np
-from matplotlib import pyplot as plt
-import parsimony.estimators as estimators
-import parsimony.algorithms as algorithms
-import parsimony.functions.nesterov.tv as tv
+import parsimony.estimators 
+import parsimony.algorithms 
 import sklearn.preprocessing 
 
 def conesta(X, lam1, lam2, beta_warm, type_, W_, mean_ = False, max_iter_=1e4, prec_=1e-2):
@@ -19,11 +16,11 @@ def conesta(X, lam1, lam2, beta_warm, type_, W_, mean_ = False, max_iter_=1e4, p
   
   if beta_warm is not None:
     beta_warm = np.array(beta_warm)
-    hgmm = estimators.LinearRegressionL1L2TV(l1 = lam1, l2 = 0.0, tv = lam2, A = A_, start_vector=beta_warm,
-                                           algorithm=algorithms.proximal.CONESTA(max_iter=max_iter_, eps=prec_), mean=mean_)
+    hgmm = parsimony.estimators.LinearRegressionL1L2TV(l1 = lam1, l2 = 0.0, tv = lam2, A = A_, start_vector=beta_warm,
+                                           algorithm=parsimony.algorithms.proximal.CONESTA(max_iter=max_iter_, eps=prec_), mean=mean_)
   if beta_warm is None:
     hgmm = estimators.LinearRegressionL1L2TV(l1 = lam1, l2 = 0.0, tv = lam2, A = A_,
-                                           algorithm=algorithms.proximal.CONESTA(max_iter=max_iter_, eps=prec_), mean=mean_)
+                                           algorithm=parsimony.algorithms.proximal.CONESTA(max_iter=max_iter_, eps=prec_), mean=mean_)
   res = hgmm.fit(Xvec,y)
   Beta=beta2Beta(res.beta,p)
 

@@ -19,8 +19,8 @@ mglasso(
 )
 }
 \arguments{
-\item{x}{Numeric matrix (nxp). Multivariate normal sample with n independent
-observations.}
+\item{x}{Numeric matrix (\eqn{n \times p}). Multivariate normal sample with
+\eqn{n} independent observations.}
 
 \item{lambda1}{Positive numeric scalar. Lasso penalty.}
 
@@ -35,23 +35,23 @@ permutation on symmetric coefficients.}
 penalty (clustering penalty).}
 
 \item{lambda2_factor}{Numeric scalar. Step used to update fused-group Lasso
-penalty. `lambda2_factor*lambda2_start`.}
+penalty in a multuplicative way..}
 
 \item{precision}{Precision of estimation algorithm.}
 
 \item{weights_}{Matrix of weights.}
 
-\item{type}{If "initial" use classical version of MGLasso without weights.}
+\item{type}{If "initial" use classical version of \bold{MGLasso} without
+weights.}
 
 \item{compact}{Logical scalar. If TRUE, only save results when previous
 clusters are different from current.}
 }
 \value{
-A list.
- \item{out}{list with matrix of regression vectors and
+A list. \item{out}{list with matrix of regression vectors and
   clusters for each level. Each element of the list contains two elements:
-  \code{beta} and \code{clusters}}.
- \item{l1}{the sparsity penalty}.
+  \code{beta} and \code{clusters}}. \item{\eqn{\ell_1}}{the sparsity
+  penalty}.
 }
 \description{
 Estimates a gaussian graphical model structure while hierarchically grouping
@@ -60,15 +60,16 @@ variables.
 \details{
 Estimates a gaussian graphical model structure while hierarchically grouping
 variables by optimizing a pseudo-likelihood function combining Lasso and
-fuse-group Lasso penalties. The problem is solved via the COntinuation with
-NEsterov smoothing in a Shrinkage- Thresholding Algorithm (Hadj-selem et al.
-2018). Varying the parameter lambda_2 in a multiplicative fashion allow to
-uncover a seemingly hierarchical clustering structure. For \eqn{\lambda_2 = 0}, the
-approach is theoretically equivalent to the Meinshausen-BÜhlmann (2006)
-neighborhood selection as resuming to the optimization of pseudo-likelihood
-function with l1 penalty (Rocha et al., 2008). The algorithm stops when all
-the variables have merged into one cluster. The criterion used to merge
-clusters is the l2-norm distance between regression vectors.
+fuse-group Lasso penalties. The problem is solved via the \emph{COntinuation
+with NEsterov smoothing in a Shrinkage-Thresholding Algorithm} (Hadj-selem et
+al. 2018). Varying the parameter \eqn{\lambda_2} in a multiplicative fashion
+allow to uncover a seemingly hierarchical clustering structure. For
+\eqn{\lambda_2 = 0}, the approach is theoretically equivalent to the
+Meinshausen-BÜhlmann (2006) \emph{neighborhood selection} as resuming to the
+optimization of \emph{pseudo-likelihood} function with \eqn{\ell_1} penalty
+(Rocha et al., 2008). The algorithm stops when all the variables have merged
+into one cluster. The criterion used to merge clusters is the
+\eqn{\ell_2}-norm distance between regression vectors.
 }
 \examples{
 \dontrun{

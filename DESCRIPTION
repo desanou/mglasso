@@ -11,7 +11,6 @@ Description: Inference of multiscale graphical models with neighborhood selectio
     The method is based on solving a convex optimization problem combining a Lasso and fused-group Lasso penalties.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 ByteCompile: true
 Imports:
     corpcor,
@@ -25,7 +24,7 @@ Imports:
 Config/reticulate:
   list(
     packages = list(
-      list(package = c("pandas", "numpy", "scipy", "matplotlib", "six", "scikit-learn"))
+      list(package = c("numpy", "scipy", "scikit-learn"))
     )
   )
 Suggests: 

@@ -7,3 +7,5 @@
 ^README\.md$
 ^doc$
 ^Meta$
+^README\.Rmd$
+^README_files$
