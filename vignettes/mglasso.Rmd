@@ -3,7 +3,7 @@ title: "Multiscale Glasso"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Multiscale Glasso}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -20,8 +20,10 @@ Inference of Multiscale Gaussian Graphical Models.
 remotes::install_github("desanou/mglasso")
 library(mglasso)
 ```
+
 ```{r}
 library(mglasso)
+install_conesta()
 ```
 
 

@@ -2,6 +2,8 @@ testthat::test_that("conesta returns a matrix.", {
 
   print("Testing conesta solver on a block diagonal model ..")
 
+  install_conesta()
+
   n = 30
   K = 2
   p = 4
@@ -18,7 +20,7 @@ testthat::test_that("conesta returns a matrix.", {
   X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
   X <- scale(X)
 
-  res <- conesta(X = X, lam1 = 0.1, lam2 = 0.1, beta_warm = NULL, type_ = "initial", W_ = NULL)
+  res <- conesta(X = X, lam1 = 0.1, lam2 = 0.1)
 
   testthat::expect_true(is.matrix(res))
 })

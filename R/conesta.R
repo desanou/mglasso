@@ -46,6 +46,7 @@
 #' res <- conesta(X, 0.1, 0.1)
 #' }
 #'
-conesta <- function(X, lam1, lam2, beta_warm, type_, W_, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
-
+conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
+  the_module()$conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm,
+                     type_=type_, W_=W_, mean_ = FALSE, max_iter_=1e4, prec_=1e-2)
 }

@@ -4,7 +4,17 @@
 \alias{conesta}
 \title{CONESTA solver.}
 \usage{
-conesta(...)
+conesta(
+  X,
+  lam1,
+  lam2,
+  beta_warm = c(0),
+  type_ = "initial",
+  W_ = NULL,
+  mean_ = FALSE,
+  max_iter_ = 10000,
+  prec_ = 0.01
+)
 }
 \arguments{
 \item{X}{Data matrix.}

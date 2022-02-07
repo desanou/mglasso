@@ -2,5 +2,6 @@
 
 export(conesta)
 export(fun_lines)
+export(install_conesta)
 export(mglasso)
 export(plot_mglasso)

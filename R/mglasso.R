@@ -42,7 +42,7 @@
 #' @export
 #'
 #' @seealso \code{\link{conesta}} for the problem solver,
-#'   \code{\link{plot.mglasso}} for plotting the output of \code{mglasso}.
+#'   \code{\link{plot_mglasso}} for plotting the output of \code{mglasso}.
 #'
 #' @examples
 #' \dontrun{
