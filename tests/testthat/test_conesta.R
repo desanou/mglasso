@@ -1,6 +1,6 @@
 testthat::test_that("conesta returns a matrix.", {
 
-  print("Testing conesta solver on a block diagonal model ..")
+  print("Testing conesta solver on a block diagonal model ...")
 
   install_conesta()
 
