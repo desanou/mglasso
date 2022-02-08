@@ -2,6 +2,8 @@ testthat::test_that("conesta returns a matrix.", {
 
   print("Testing conesta solver on a block diagonal model ...")
 
+  print(conda_list())
+
   install_conesta()
 
   n = 30
