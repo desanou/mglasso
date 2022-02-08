@@ -42,7 +42,6 @@ install_conesta <- function(extra_pack = c("scipy", "scikit-learn", "numpy")) {
     system(text)
   }
 
-  print(reticulate::py_list_packages())
   print(reticulate::py_list_packages("r-reticulate"))
 
   message("pylearn-parsimony is installed.")
