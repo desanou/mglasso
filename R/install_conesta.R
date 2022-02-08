@@ -1,4 +1,3 @@
-
 #' Install mglasso
 #'
 #' @param extra_pack Character vector. Extra-packages to be installed.
@@ -21,7 +20,7 @@ install_conesta <- function(extra_pack = c("scipy", "scikit-learn", "numpy")) {
   }
 
   reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
-  reticulate::py_config()
+  #reticulate::py_config()
 
   check_install <- sapply(extra_pack, reticulate::py_module_available)
 
@@ -36,13 +35,10 @@ install_conesta <- function(extra_pack = c("scipy", "scikit-learn", "numpy")) {
   }
 
   if (!reticulate::py_module_available("pylearn-parsimony")) {
-    reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
     message('Installing pylearn-parsimony')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
     system(text)
   }
-
-  print(reticulate::py_list_packages("r-reticulate"))
 
   message("pylearn-parsimony is installed.")
 }

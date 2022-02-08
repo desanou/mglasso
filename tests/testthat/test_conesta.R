@@ -2,9 +2,6 @@ testthat::test_that("conesta returns a matrix.", {
 
   print("Testing conesta solver on a block diagonal model ...")
 
-  reticulate::conda_create(envname = 'r-reticulate')
-  reticulate::use_condaenv(condaenv = 'r-reticulate')
-
   print(reticulate::conda_list())
 
   install_conesta()
