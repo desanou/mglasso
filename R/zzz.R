@@ -17,7 +17,7 @@
   reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
   #reticulate::py_config()
 
-  library_list <- c("scipy", "scikit-learn", "numpy")
+  library_list <- c("scipy", "scikit-learn", "numpy", "six")
 
   reticulate::py_install(library_list,
                          method = "auto",
