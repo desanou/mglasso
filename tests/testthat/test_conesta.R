@@ -29,10 +29,11 @@ testthat::test_that("conesta returns a matrix.", {
   X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
   X <- scale(X)
 
-  reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
-  reticulate::py_config()
+  reticulate::use_condaenv(condaenv = 'mglasso', required = TRUE)
+  py_config()
+  import("numpy")
 
-  print(reticulate::py_list_packages("r-reticulate"))
+  print(reticulate::py_list_packages("mglasso"))
   print(reticulate::py_list_packages())
 
   res <- conesta(X = X, lam1 = 0.1, lam2 = 0.1)
