@@ -39,7 +39,6 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
     reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
     message('Installing pylearn-parsimony')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
-    system("pip install numpy")
     system(text)
   }
 

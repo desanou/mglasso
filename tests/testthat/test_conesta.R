@@ -30,6 +30,8 @@ testthat::test_that("conesta returns a matrix.", {
   X <- scale(X)
 
   reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
+  reticulate::py_config()
+
   print(reticulate::py_list_packages("r-reticulate"))
   print(reticulate::py_list_packages())
 
