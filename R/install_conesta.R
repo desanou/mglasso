@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy")) {
+install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six")) {
   # conestaa <- NULL
 
   if (is.null(reticulate::conda_binary())) { # Check for anaconda
