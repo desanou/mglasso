@@ -4,7 +4,7 @@
 \alias{install_conesta}
 \title{Install mglasso}
 \usage{
-install_conesta(extra_pack = c("scipy", "scikit-learn", "numpy"))
+install_conesta(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy"))
 }
 \arguments{
 \item{extra_pack}{Character vector. Extra-packages to be installed.}

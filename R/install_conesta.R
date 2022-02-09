@@ -4,7 +4,8 @@
 #'
 #' @export
 #'
-install_conesta <- function(extra_pack = c("scipy", "scikit-learn", "numpy")) {
+install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy")) {
+  # conestaa <- NULL
 
   if (is.null(reticulate::conda_binary())) { # Check for anaconda
     stop("You need to install Anaconda or add it in the system path.")
@@ -35,10 +36,14 @@ install_conesta <- function(extra_pack = c("scipy", "scikit-learn", "numpy")) {
   }
 
   if (!reticulate::py_module_available("pylearn-parsimony")) {
+    reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
     message('Installing pylearn-parsimony')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
     system(text)
   }
+
+  # the_module <- reticulate::import_from_path("conesta_solver", path = path_python(), delay_load = TRUE)
+  # conestaa <<- the_module$conesta
 
   message("pylearn-parsimony is installed.")
 }
