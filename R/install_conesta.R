@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six")) {
+install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy >= 1.6", "six")) {
   # conestaa <- NULL
 
   if (is.null(reticulate::conda_binary())) { # Check for anaconda
@@ -42,7 +42,7 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
     system(text)
   }
 
-  print(the_module())
+  the_module()
 
   # the_module <- reticulate::import_from_path("conesta_solver", path = path_python(), delay_load = TRUE)
   # conestaa <<- the_module$conesta
