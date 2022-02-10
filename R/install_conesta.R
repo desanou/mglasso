@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy >= 1.6", "six")) {
+install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy >= 1.6", "six", "passlib==1.7.2")) {
   # conestaa <- NULL
 
   is_rreticulate_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE),
