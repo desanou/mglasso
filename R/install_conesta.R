@@ -1,4 +1,4 @@
-#' Install mglasso
+#' Install conesta
 #'
 #' @param extra_pack Character vector. Extra-packages to be installed.
 #'
@@ -7,26 +7,17 @@
 install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy >= 1.6", "six")) {
   # conestaa <- NULL
 
-  miniconda = TRUE
-
-  if (miniconda) {
-    message("Checking if miniconda is installed...")
-    tryCatch(reticulate::install_miniconda(), error = function(e) {
-      return()
-    })
-  }
-
-  is_mglasso_env_installed = tryCatch(reticulate::use_miniconda(condaenv = 'mglasso', required = TRUE),
+  is_rreticulate_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE),
                                           error = function (e) {'not installed'})
 
   # setup environment
-  if (!is.null(is_mglasso_env_installed)) {
-    packageStartupMessage('MGLasso requires the mglasso conda environment. Attempting to create...')
-    reticulate::conda_create(envname = 'mglasso', python_version = '3.8')
+  if (!is.null(is_rreticulate_env_installed)) {
+    packageStartupMessage('mglasso requires the r-reticulate conda environment. Attempting to create...')
+    reticulate::conda_create(envname = 'r-reticulate')
   }
 
-  reticulate::use_miniconda(condaenv = 'mglasso', required = TRUE)
-  reticulate::py_config()
+  reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
+  #reticulate::py_config()
 
   check_install <- sapply(extra_pack, reticulate::py_module_available)
 
@@ -35,16 +26,16 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
   if(!identical(pack_to_install, character(0))){
     reticulate::py_install(pack_to_install,
                            pip=TRUE,
-                           envname = "mglasso")
+                           envname = "r-reticulate")
   }
 
 
 
   if (!reticulate::py_module_available("pylearn-parsimony")) {
     reticulate::py_install("https://github.com/neurospin/pylearn-parsimony/releases/download/v0.3.1/pylearn-parsimony-0.3.1.tar.gz",
-                           envname = "mglasso",
+                           envname = "r-reticulate",
                            pip = TRUE)
-    # reticulate::use_condaenv(condaenv = 'mglasso', required = TRUE)
+    # reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
     # message('Installing pylearn-parsimony')
     # text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
     # system(text)
