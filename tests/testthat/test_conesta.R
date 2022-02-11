@@ -10,6 +10,8 @@ testthat::test_that("conesta returns a matrix.", {
 
   print("Testing the effective load")
   print(path_python())
+  print(reticulate::import_from_path("conesta_solver", path = path_python()))
+  print(the_module())
 
   n = 30
   K = 2
