@@ -5,7 +5,7 @@
 \title{Install conesta}
 \usage{
 install_conesta(
-  extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy >= 1.6", "six")
+  extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "matplotlib")
 )
 }
 \arguments{
