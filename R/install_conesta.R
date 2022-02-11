@@ -44,7 +44,7 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
     # system("python3 -m pip install numpy")
   }
 
-  the_module() ## TO DO : try remove
+  #the_module() ## TO DO : try remove
 
   # the_module <- reticulate::import_from_path("conesta_solver", path = path_python(), delay_load = TRUE)
   # conestaa <<- the_module$conesta
