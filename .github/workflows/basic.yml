@@ -32,6 +32,11 @@ jobs:
         http-user-agent: ${{ matrix.config.http-user-agent }}
         use-public-rspm: true
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        pyhton-version: "3.7"
+
     - name: Check dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
