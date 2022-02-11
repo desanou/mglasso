@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy >= 1.6", "six", "passlib >= 1.7.4",
+install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "passlib >= 1.7.4",
                                            "matplotlib")) {
   # conestaa <- NULL
 
