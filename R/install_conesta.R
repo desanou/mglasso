@@ -13,7 +13,7 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
   # setup environment
   if (!is.null(is_rreticulate_env_installed)) {
     packageStartupMessage('mglasso requires the r-reticulate conda environment. Attempting to create...')
-    reticulate::conda_create(envname = 'r-reticulate')
+    reticulate::conda_create(envname = 'r-reticulate', python_version = "3.0")
   }
 
   reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE)
