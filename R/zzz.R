@@ -1,5 +1,6 @@
 numpy <- NULL
 .onLoad <- function(libname, pkgname) {
+  reticulate::py_install("numpy")
   numpy <<- reticulate::import("numpy")
 }
 
