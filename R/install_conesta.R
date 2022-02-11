@@ -7,7 +7,7 @@
 install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "passlib >= 1.7.4",
                                            "matplotlib")) {
   # conestaa <- NULL
-  .rs.restartR()
+  rstudioapi::restartSession()
 
   is_rreticulate_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE),
                                           error = function (e) {'not installed'})
