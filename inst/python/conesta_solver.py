@@ -20,7 +20,7 @@ def conesta(X, lam1, lam2):
   g = lam2 
   
   hgmm = estimators.LinearRegressionL1L2TV(l, k, g, A, mu=1e-8,
-                                           algorithm=algorithms.proximal.CONESTA(max_iter=100, eps=1e-10), mean=False)
+                                           algorithm=algorithms.proximal.CONESTA(max_iter=100, eps=1e-2), mean=False)
   res = hgmm.fit(Xvec,y)
   Beta=beta2Beta(res.beta,p)
   #print(res.score(Xvec, y))
