@@ -37,6 +37,10 @@ jobs:
       with:
         python-version: "3.7"
 
+    - name: Setup r-reticulate env
+      run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
+      shell: Rscript {0}
+
     - name: Check dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
