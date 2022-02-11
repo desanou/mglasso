@@ -6,6 +6,7 @@
 #'
 install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "passlib >= 1.7.4",
                                            "matplotlib")) {
+
   # conestaa <- NULL
 
   is_rreticulate_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'r-reticulate', required = TRUE),
@@ -43,10 +44,10 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
     # system("python3 -m pip install numpy")
   }
 
-  # the_module()
+  the_module()
 
-  the_module <- reticulate::import_from_path("conesta_solver", path = path_python())
-  conestaa <<- the_module$conesta
+  # the_module <- reticulate::import_from_path("conesta_solver", path = path_python(), delay_load = TRUE)
+  # conestaa <<- the_module$conesta
 
   message("pylearn-parsimony is installed.")
 }
@@ -55,4 +56,4 @@ path_python <- function(){
   system.file("python", package = "mglasso")
 }
 
-# the_module <- function() try(reticulate::import_from_path("conesta_solver", path = path_python()), silent = TRUE)
+the_module <- function() try(reticulate::import_from_path("conesta_solver", path = path_python()), silent = TRUE)
