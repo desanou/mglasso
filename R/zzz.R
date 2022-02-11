@@ -1,4 +1,6 @@
+numpy <- NULL
 .onLoad <- function(libname, pkgname) {
+  numpy <<- reticulate::import("numpy")
 }
 
 .onAttach <- function(libname, pkgname) {
