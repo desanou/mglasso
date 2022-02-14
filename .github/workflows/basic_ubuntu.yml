@@ -32,11 +32,20 @@ jobs:
         http-user-agent: ${{ matrix.config.http-user-agent }}
         use-public-rspm: true
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.8"
+
     - name: Check dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
         extra-packages: rcmdcheck
 
+    - name: Setup r-reticulate env
+      run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
+      shell: Rscript {0}
+
     - name: Check
-      run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error")
+      run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--ignore-vignettes", "--no-vignettes"), build_args = c("--no-manual", "--no-build-vignettes"), error_on = "error")
       shell: Rscript {0}
