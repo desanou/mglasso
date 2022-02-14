@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [verified]
 
-name: R-CMD-check-minimal
+name: R-CMD-check-ubuntu
 
 jobs:
   R-CMD-check:
@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

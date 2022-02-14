@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [verified]
 
-name: R-CMD-check-minimal
+name: R-CMD-check-windows
 
 jobs:
   R-CMD-check:
