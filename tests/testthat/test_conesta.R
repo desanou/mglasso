@@ -2,16 +2,7 @@ testthat::test_that("conesta returns a matrix.", {
 
   print("Testing conesta solver on a block diagonal model ...")
 
-  print(reticulate::conda_list())
-
   install_conesta()
-
-  print(reticulate::conda_list())
-
-  print("Testing the effective load")
-  print(path_python())
-  print(reticulate::import_from_path("conesta_solver", path = path_python()))
-  print(the_module())
 
   n = 30
   K = 2
@@ -30,9 +21,6 @@ testthat::test_that("conesta returns a matrix.", {
   X <- scale(X)
 
   reticulate::use_virtualenv(virtualenv = 'r-reticulate', required = TRUE)
-
-  print(reticulate::py_list_packages("r-reticulate"))
-  print(reticulate::py_list_packages())
 
   res <- conesta(X = X, lam1 = 0.1, lam2 = 0.1)
 

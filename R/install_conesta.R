@@ -7,8 +7,6 @@
 install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six",
                                            "matplotlib")) {
 
-  # conestaa <- NULL
-
   is_rreticulate_env_installed = tryCatch(reticulate::use_virtualenv(envname = 'r-reticulate', required = TRUE),
                                           error = function (e) {'not installed'})
 
@@ -19,7 +17,6 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
   }
 
   reticulate::use_virtualenv(virtualenv = 'r-reticulate', required = TRUE)
-  #reticulate::py_config()
 
   check_install <- sapply(extra_pack, reticulate::py_module_available)
 
@@ -31,23 +28,12 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
                            envname = "r-reticulate")
   }
 
-
-
   if (!reticulate::py_module_available("pylearn-parsimony")) {
-    # reticulate::py_install("https://github.com/neurospin/pylearn-parsimony/releases/download/v0.3.1/pylearn-parsimony-0.3.1.tar.gz",
-    #                        envname = "r-reticulate",
-    #                        pip = TRUE)
     reticulate::use_virtualenv(virtualenv = 'r-reticulate', required = TRUE)
     message('Installing pylearn-parsimony')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
     system(text)
-    # system("python3 -m pip install numpy")
   }
-
-  #the_module() ## TO DO : try remove
-
-  # the_module <- reticulate::import_from_path("conesta_solver", path = path_python(), delay_load = TRUE)
-  # conestaa <<- the_module$conesta
 
   message("pylearn-parsimony is installed.")
 }
