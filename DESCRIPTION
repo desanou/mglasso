@@ -1,37 +1,39 @@
-Package: mglasso
 Type: Package
+Package: mglasso
 Title: Multiscale Graphical Lasso
-Version: 0.1.0
-Authors@R: c(person("Edmond", "Sanou", 
-                    email = "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
-          person("Tung","Lee", role = "ctb"),
-          person("Christophe", "Ambroise", role = "ths"),
-          person("Geneviève", "Robin", role = "ths"))
-Description: Inference of multiscale graphical models with neighborhood selection approach. 
-    The method is based on solving a convex optimization problem combining a Lasso and fused-group Lasso penalties.
-    This allows to infer simultaneously a conditional independence graph and a clustering partition. The optimization is 
-    based on the CONESTA solver (Hadj-Selem et al. 2018) implemented in python.
+Version: 0.1.1
+Authors@R: c(
+    person("Edmond", "Sanou", , "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
+    person("Tung", "Lee", role = "ctb"),
+    person("Christophe", "Ambroise", role = "ths"),
+    person("Geneviève", "Robin", role = "ths")
+  )
+Description: Inference of Multiscale graphical models with neighborhood
+    selection approach.  The method is based on solving a convex
+    optimization problem combining a Lasso and fused-group Lasso
+    penalties.  This allows to infer simultaneously a conditional
+    independence graph and a clustering partition. The optimization is
+    based on the Continuation with Nesterov smoothing in a
+    Shrinkage-Thresholding Algorithm solver (Hadj-Selem et al. 2018)
+    <doi:10.1109/TMI.2018.2829802> implemented in python.
 License: MIT + file LICENSE
-Encoding: UTF-8
-ByteCompile: true
 Imports:
     corpcor,
     gridExtra,
     Matrix,
     methods,
-    mvtnorm,
     R.utils,
     reticulate,
-    stats,
-Config/reticulate:
-  list(
-    packages = list(
-      list(package = c(""))
-    )
-  )
+    stats
 Suggests: 
     knitr,
+    mvtnorm,
     rmarkdown,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+ByteCompile: true
+Config/reticulate: list( packages = list( list(package = c("")) ) )
+Encoding: UTF-8
+Language: en-US
 RoxygenNote: 7.1.2
-VignetteBuilder: knitr
