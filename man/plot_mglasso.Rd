@@ -12,6 +12,9 @@ plot_mglasso(mglasso_, levels_ = NULL)
 \item{levels_}{Character vector. Selected levels for which estimated matrices
 will be plot. If NULL plot all levels.}
 }
+\value{
+No return value.
+}
 \description{
 Plot the object returned by the \code{mglasso} function.
 }

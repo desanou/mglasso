@@ -2,15 +2,21 @@
 % Please edit documentation in R/install_conesta.R
 \name{install_conesta}
 \alias{install_conesta}
-\title{Install conesta}
+\title{Install CONESTA solver}
 \usage{
 install_conesta(
-  extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "matplotlib")
+  extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "matplotlib"),
+  py_version = "3.8.0"
 )
 }
 \arguments{
 \item{extra_pack}{Character vector. Extra-packages to be installed.}
+
+\item{py_version}{Character. Python version.}
+}
+\value{
+No return value.
 }
 \description{
-Install conesta
+Install CONESTA solver
 }

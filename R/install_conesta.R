@@ -1,19 +1,21 @@
-#' Install conesta
+#' Install CONESTA solver
 #'
 #' @param extra_pack Character vector. Extra-packages to be installed.
+#' @param py_version Character. Python version.
 #'
+#' @return No return value.
 #' @export
 #'
 install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six",
-                                           "matplotlib")) {
+                                           "matplotlib"), py_version = '3.8.0') {
 
   is_rreticulate_env_installed = tryCatch(reticulate::use_virtualenv(envname = 'r-reticulate', required = TRUE),
                                           error = function (e) {'not installed'})
 
   # setup environment
   if (!is.null(is_rreticulate_env_installed)) {
-    packageStartupMessage('mglasso requires the r-reticulate conda environment. Attempting to create...')
-    reticulate::virtualenv_create(envname = 'r-reticulate', version = "3.8")
+    packageStartupMessage('mglasso requires the r-reticulate virtual environment. Attempting to create...')
+    reticulate::virtualenv_create(envname = 'r-reticulate', python = py_version)
   }
 
   reticulate::use_virtualenv(virtualenv = 'r-reticulate', required = TRUE)

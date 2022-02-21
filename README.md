@@ -12,8 +12,14 @@ library(mglasso)
 
 ``` r
 library(mglasso)
-#> Checking if miniconda is installed...
+#> Welcome to MGLasso.
+#> Run install_conesta() to finalize the package python dependencies installation.
+install_conesta()
+#> mglasso requires the r-reticulate conda environment. Attempting to create...
+#> virtualenv: r-reticulate
 #> Using virtual environment 'r-reticulate' ...
+#> Using virtual environment 'r-reticulate' ...
+#> pylearn-parsimony is installed.
 ```
 
 ## Basic Usage
@@ -40,14 +46,14 @@ Matrix::image(mat.covariance)
 
 <img src="README_files/figure-gfm/unnamed-chunk-3-1.png" width="100%" />
 
-1.1 True cluster parition
+1.1 True cluster partition
 
 ``` r
 rep(1:3, each = 3)
 #> [1] 1 1 1 2 2 2 3 3 3
 ```
 
-2.  Simulate gaussian data from the covariance matrix
+1.2. Simulate gaussian data from the covariance matrix
 
 ``` r
 set.seed(11)
@@ -66,15 +72,15 @@ res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
 #> [1] 0.1
 #> nclusters = 9 lambda2 0.15 cost = 85.98468 
 #> [1] 0.1
-#> nclusters = 9 lambda2 0.225 cost = 86.45846 
+#> nclusters = 9 lambda2 0.225 cost = 86.45847 
 #> [1] 0.1
 #> nclusters = 9 lambda2 0.3375 cost = 87.3288 
 #> [1] 0.1
-#> nclusters = 9 lambda2 0.50625 cost = 88.86085 
+#> nclusters = 9 lambda2 0.50625 cost = 88.86088 
 #> [1] 0.1
 #> nclusters = 9 lambda2 0.759375 cost = 91.41304 
 #> [1] 0.1
-#> nclusters = 9 lambda2 1.139063 cost = 95.42646 
+#> nclusters = 9 lambda2 1.139063 cost = 95.42645 
 #> [1] 0.1
 #> nclusters = 9 lambda2 1.708594 cost = 101.5021 
 #> [1] 0.1
@@ -95,7 +101,7 @@ res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
 3.1 Estimated regression vectors
 
 ``` r
-mglasso::plot.mglasso(res)
+plot_mglasso(res)
 ```
 
 <img src="README_files/figure-gfm/unnamed-chunk-7-1.png" width="100%" />
@@ -124,4 +130,6 @@ hierarchical partition under some constraints.
 
 # Reference
 
-Inference of Multiscale Gaussian Graphical Model, preprint
+Edmond, Sanou; Christophe, Ambroise; Geneviève, Robin; (2022): Inference
+of Multiscale Gaussian Graphical Model. ArXiv. Preprint.
+<https://doi.org/10.48550/arXiv.2202.05775>

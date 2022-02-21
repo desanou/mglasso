@@ -9,6 +9,9 @@ beta_to_vector(beta_mat)
 \arguments{
 \item{beta_mat}{matrix of regressions vectors}
 }
+\value{
+A numeric vector of all regression coefficients.
+}
 \description{
 Transform a matrix of regression coefficients to vector removing the diagonal
 }

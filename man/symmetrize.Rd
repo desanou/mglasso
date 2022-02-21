@@ -11,6 +11,9 @@ symmetrize(mat, rule = "and")
 
 \item{rule}{"and" or "or" rule}
 }
+\value{
+A numeric matrix.
+}
 \description{
 Apply symmetrization on estimated graph
 }

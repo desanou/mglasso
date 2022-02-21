@@ -11,6 +11,9 @@ dist_beta(beta, distance = "euclidean")
 
 \item{distance}{euclidean or relative distance}
 }
+\value{
+A numeric matrix of distances.
+}
 \description{
 Compute distance matrix between regression vectors
 }

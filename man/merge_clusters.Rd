@@ -11,6 +11,9 @@ merge_clusters(pairs_to_merge, clusters)
 
 \item{clusters}{numeric vector. By default 1:p where p is the number of variables}
 }
+\value{
+A numeric vector.
+}
 \description{
 compute clusters partition from pairs of variables to merge
 }

@@ -3,11 +3,11 @@
 #' `fun_lines` applies function `fun` to regression vectors while reordering the coefficients,
 #' such that the `j`-th coefficient in `beta[j, ]` is permuted with the `i`-th coefficient.
 #'
-#' @param i integer scalar. Indice of the first vector.
-#' @param j integer scalar. Indice of the second vector.
+#' @param i integer scalar. Index of the first vector.
+#' @param j integer scalar. Index of the second vector.
 #' @param fun function. Applied on lines.
 #' @param ni integer scalar. Weight for vector `i`.
-#' @param nj integer scalar. Wweight for vector `j`.
+#' @param nj integer scalar. Weight for vector `j`.
 #' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.
 #'
 #' @export

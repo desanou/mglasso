@@ -1,22 +1,31 @@
 #' Inference of Multiscale Gaussian Graphical Model.
 #'
-#' Estimates a gaussian graphical model structure while hierarchically grouping
-#' variables.
+#' Cluster variables using L2 fusion penalty and simultaneously estimates a
+#' gaussian graphical model structure with the addition of L1 sparsity penalty.
 #'
 #' Estimates a gaussian graphical model structure while hierarchically grouping
 #' variables by optimizing a pseudo-likelihood function combining Lasso and
 #' fuse-group Lasso penalties. The problem is solved via the \emph{COntinuation
-#' with NEsterov smoothing in a Shrinkage-Thresholding Algorithm} (Hadj-selem et
-#' al. 2018). Varying the parameter \eqn{\lambda_2} in a multiplicative fashion
-#' allow to uncover a seemingly hierarchical clustering structure. For
+#' with NEsterov smoothing in a Shrinkage-Thresholding Algorithm} (Hadj-Selem et
+#' al. 2018). Varying the fusion penalty \eqn{\lambda_2} in a multiplicative
+#' fashion allow to uncover a seemingly hierarchical clustering structure. For
 #' \eqn{\lambda_2 = 0}, the approach is theoretically equivalent to the
-#' Meinshausen-BÜhlmann (2006) \emph{neighborhood selection} as resuming to the
+#' Meinshausen-Bühlmann (2006) \emph{neighborhood selection} as resuming to the
 #' optimization of \emph{pseudo-likelihood} function with \eqn{\ell_1} penalty
 #' (Rocha et al., 2008). The algorithm stops when all the variables have merged
 #' into one cluster. The criterion used to merge clusters is the
 #' \eqn{\ell_2}-norm distance between regression vectors.
 #'
-#' @param x Numeric matrix (\eqn{n \times p}). Multivariate normal sample with
+#' For each iteration of the algorithm, the following function is optimized :
+#' \deqn{1/2 \sum_{i=1}^p || X^i - X^{\ i} \beta^i ||_2 ^2  + \lambda_1 \sum_{i
+#' = 1}^p || \beta^i ||_1 + \lambda_2 \sum_{i < j} || \beta^i -
+#' \tau_{ij}(\beta^j) ||_2.}
+#'
+#' where \eqn{\beta^i} is the vector of coefficients obtained after regression
+#' \eqn{X^i} on the others and \eqn{\tau_{ij}} is a permutation exchanging
+#' \eqn{\beta_j^i} with \eqn{\beta_i^j}.
+#'
+#' @param x Numeric matrix (\eqn{n x p}). Multivariate normal sample with
 #'   \eqn{n} independent observations.
 #' @param lambda1 Positive numeric scalar. Lasso penalty.
 #' @param fuse_thresh Positive numeric scalar. Threshold for clusters fusion.
@@ -26,7 +35,7 @@
 #' @param lambda2_start Numeric scalar. Starting value for fused-group Lasso
 #'   penalty (clustering penalty).
 #' @param lambda2_factor Numeric scalar. Step used to update fused-group Lasso
-#'   penalty in a multuplicative way..
+#'   penalty in a multiplicative way..
 #' @param precision Precision of estimation algorithm.
 #' @param weights_ Matrix of weights.
 #' @param type If "initial" use classical version of \bold{MGLasso} without
@@ -34,10 +43,15 @@
 #' @param compact Logical scalar. If TRUE, only save results when previous
 #'   clusters are different from current.
 #'
-#' @return A list. \item{out}{list with matrix of regression vectors and
-#'   clusters for each level. Each element of the list contains two elements:
-#'   \code{beta} and \code{clusters}}. \item{\eqn{\ell_1}}{the sparsity
-#'   penalty}.
+#' @return A list-like object of class \code{mglasso} is returned.
+#'   \item{out}{List of lists. Each element of the list corresponds to a
+#'   clustering level. An element named \code{levelk} contains the regression
+#'   matrix \code{beta} and clusters vector \code{clusters} for a clustering in
+#'   \code{k} clusters. When \code{compact = TRUE} \code{out} has as many
+#'   elements as the number of unique partitions. When set to \code{FALSE}, the
+#'   function returns as many items as the the range of values taken by
+#'   \code{lambda2}.} \item{l1}{the sparsity penalty \code{lambda1} used in the
+#'   problem solving.}
 #'
 #' @export
 #'
@@ -45,7 +59,8 @@
 #'   \code{\link{plot_mglasso}} for plotting the output of \code{mglasso}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' install_conesta
 #' n = 50
 #' K = 3
 #' p = 9

@@ -7,6 +7,7 @@
 #'   will be plot. If NULL plot all levels.
 #'
 #' @export
+#' @return No return value.
 plot_mglasso <- function(mglasso_, levels_ = NULL) {
 
   stopifnot(class(mglasso_) == "mglasso")

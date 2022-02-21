@@ -7,7 +7,7 @@
 cost(beta, x, lambda1 = 0, lambda2 = 0)
 }
 \arguments{
-\item{beta}{p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.}
+\item{beta}{p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. \code{diag(beta) = 0}.}
 
 \item{x}{n by p numeric matrix. Data with variables in columns.}
 

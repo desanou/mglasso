@@ -9,6 +9,9 @@ beta_ols(X)
 \arguments{
 \item{X}{data}
 }
+\value{
+A zero-diagonal matrix of regression vectors.
+}
 \description{
 Initialize regression matrix
 }

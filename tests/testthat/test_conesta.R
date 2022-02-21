@@ -1,5 +1,7 @@
 testthat::test_that("conesta returns a matrix.", {
 
+  skip('Skip test')
+
   print("Testing conesta solver on a block diagonal model ...")
 
   install_conesta()
@@ -26,3 +28,5 @@ testthat::test_that("conesta returns a matrix.", {
 
   testthat::expect_true(is.matrix(res))
 })
+
+

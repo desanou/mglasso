@@ -2,7 +2,7 @@
 #'
 #' `cost` computes the cost function of `Mglasso` method.
 #'
-#' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.
+#' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. \code{diag(beta) = 0}.
 #' @param x n by p numeric matrix. Data with variables in columns.
 #' @param lambda1 numeric scalar. Lasso penalization parameter.
 #' @param lambda2 numeric scalar. Fused-group Lasso penalization parameter.
@@ -37,6 +37,7 @@ cost <- function(beta, x, lambda1 = 0, lambda2 = 0) {
 #'
 #' @param mat graph or precision matrix
 #' @param rule "and" or "or" rule
+#' @return A numeric matrix.
 symmetrize <- function(mat, rule = "and") {
     diag(mat) <- 0
     if (rule == "and") {
@@ -48,9 +49,10 @@ symmetrize <- function(mat, rule = "and") {
     return(mat)
 }
 
-#' Compute precison matrix from regression vectors
+#' Compute precision matrix from regression vectors
 #'
 #' @param K precision matrix
+#' @return A numeric matrix.
 precision_to_regression <- function(K) {
     p <- ncol(K)
     mat <- matrix(0, p, p)
@@ -69,6 +71,7 @@ precision_to_regression <- function(K) {
 #' Transform a matrix of regression coefficients to vector removing the diagonal
 #'
 #' @param beta_mat matrix of regressions vectors
+#' @return A numeric vector of all regression coefficients.
 beta_to_vector <- function(beta_mat){
   beta_mat <- as.matrix(beta_mat)
   diag(beta_mat) <- NA
@@ -80,6 +83,7 @@ beta_to_vector <- function(beta_mat){
 #' Initialize regression matrix
 #'
 #' @param X data
+#' @return A zero-diagonal matrix of regression vectors.
 beta_ols <- function(X){
   X <- as.matrix(X)
   p <- ncol(X)
@@ -102,6 +106,7 @@ beta_ols <- function(X){
 #' @param main_ title
 #' @param sub_ subtitle
 #' @param col_names columns names
+#' @return No return value.
 image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
   main_ <- paste0(c(sub_, main_), collapse = " ")
 
@@ -120,12 +125,12 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
   plt
 }
 
-
 # CLUSTERING --------------------------------------------------------------
 #' Compute distance matrix between regression vectors
 #'
 #' @param beta matrix of regression vectors
 #' @param distance euclidean or relative distance
+#' @return A numeric matrix of distances.
 dist_beta <- function(beta, distance = "euclidean") {
   k <- ncol(beta)
 
@@ -157,6 +162,7 @@ dist_beta <- function(beta, distance = "euclidean") {
 #' compute clusters partition from pairs of variables to merge
 #' @param pairs_to_merge table of the indices of variables to be merge
 #' @param clusters numeric vector. By default 1:p where p is the number of variables
+#' @return A numeric vector.
 merge_clusters <- function(pairs_to_merge, clusters) {
 
   for (l in 1:nrow(pairs_to_merge)) {

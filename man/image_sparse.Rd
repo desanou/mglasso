@@ -15,6 +15,9 @@ image_sparse(matrix, main_ = "", sub_ = "", col_names = FALSE)
 
 \item{col_names}{columns names}
 }
+\value{
+No return value.
+}
 \description{
 Plot the image of a matrix
 }

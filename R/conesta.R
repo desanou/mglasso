@@ -3,12 +3,16 @@
 #' Solve the MGLasso optimization problem using CONESTA algorithm. Interface to
 #' the pylearn.parsimony python library.
 #'
-#' \emph{COntinuation with NEsterov smoothing in a Shrinkage-Thresholding Algorithm}
-#' (CONESTA, Hadj-selem et al. 2018) is an algorithm design for solving
-#' optimization problems including group-wise penalties. This function is a
-#' wrapper for the python code calling the optimization function.
+#' \emph{COntinuation with NEsterov smoothing in a Shrinkage-Thresholding
+#' Algorithm} (CONESTA, Hadj-Selem et al. 2018) <doi:10.1109/TMI.2018.2829802>
+#' is an algorithm design for solving optimization problems including group-wise
+#' penalties. This function is an interface with the python solver. The MGLasso
+#' problem is first reformulated in a problem of the form \deqn{argmin 1/2 ||Y -
+#' \tilde{X} \tilde{\beta}||_2^2 + \lambda_1 ||\tilde{\beta}||_1 + \lambda_2
+#' \sum_{i<j} ||\boldsymbol A_{ij} \tilde{\beta}||_2} where vector \eqn{Y} is
+#' the vectorized form of matrix \eqn{X}.
 #'
-#' @param X Data matrix.
+#' @param X Data matrix nxp.
 #' @param lam1 Sparsity penalty.
 #' @param lam2 Total variation penalty.
 #' @param beta_warm Warm initialization vector.
@@ -20,13 +24,17 @@
 #' @param max_iter_ Numeric scalar. Maximum number of iterations.
 #' @param prec_ Numeric scalar. Precision.
 #'
-#' @return Matrix of regression coefficients.
+#' @return Numeric matrix of size pxp. Line \code{k} of the matrix represents
+#'   the coefficients obtained from the L1-L2 penalized regression of variable
+#'   \code{k} on the others.
+#'
 #' @export
 #'
 #' @seealso \code{\link{mglasso}} for the MGLasso model estimation.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' install_conesta()
 #' n = 30
 #' K = 2
 #' p = 4

@@ -7,9 +7,9 @@
 fun_lines(i, j, beta, fun = `-`, ni = 1, nj = 1)
 }
 \arguments{
-\item{i}{integer scalar. Indice of the first vector.}
+\item{i}{integer scalar. Index of the first vector.}
 
-\item{j}{integer scalar. Indice of the second vector.}
+\item{j}{integer scalar. Index of the second vector.}
 
 \item{beta}{p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.}
 
@@ -17,7 +17,7 @@ fun_lines(i, j, beta, fun = `-`, ni = 1, nj = 1)
 
 \item{ni}{integer scalar. Weight for vector `i`.}
 
-\item{nj}{integer scalar. Wweight for vector `j`.}
+\item{nj}{integer scalar. Weight for vector `j`.}
 }
 \value{
 numeric vector

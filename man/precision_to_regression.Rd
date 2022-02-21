@@ -2,13 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{precision_to_regression}
 \alias{precision_to_regression}
-\title{Compute precison matrix from regression vectors}
+\title{Compute precision matrix from regression vectors}
 \usage{
 precision_to_regression(K)
 }
 \arguments{
 \item{K}{precision matrix}
 }
+\value{
+A numeric matrix.
+}
 \description{
-Compute precison matrix from regression vectors
+Compute precision matrix from regression vectors
 }
