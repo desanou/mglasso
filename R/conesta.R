@@ -16,13 +16,13 @@
 #' @param lam1 Sparsity penalty.
 #' @param lam2 Total variation penalty.
 #' @param beta_warm Warm initialization vector.
-#' @param type_ Character scalar. By default set to initial version which don't
+#' @param type_ Character scalar. By default set to initial version which doesn't
 #'   use weights
-#' @param W_ Weights matrix.
+#' @param W_ Weights matrix for total variation penalties.
 #' @param mean_ Logical scalar. If TRUE weights the optimization function by the
 #'   inverse of sample size.
 #' @param max_iter_ Numeric scalar. Maximum number of iterations.
-#' @param prec_ Numeric scalar. Precision.
+#' @param prec_ Numeric scalar. Tolerance for the stopping criterion (duality gap).
 #'
 #' @return Numeric matrix of size pxp. Line \code{k} of the matrix represents
 #'   the coefficients obtained from the L1-L2 penalized regression of variable

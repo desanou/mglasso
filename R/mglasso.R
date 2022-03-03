@@ -3,7 +3,6 @@
 ###           path (list of adjacency mats), beta (list of betas l1 fixed)
 ### input :: symmetrization rule for path
 ### make maxit visible
-### Intégrer suggestions Antoine
 
 #' Inference of Multiscale Gaussian Graphical Model.
 #'
@@ -43,7 +42,7 @@
 #'   penalty (clustering penalty).
 #' @param lambda2_factor Numeric scalar. Step used to update fused-group Lasso
 #'   penalty in a multiplicative way..
-#' @param precision Precision of estimation algorithm.
+#' @param precision Tolerance for the stopping criterion (duality gap).
 #' @param weights_ Matrix of weights.
 #' @param type If "initial" use classical version of \bold{MGLasso} without
 #'   weights.
