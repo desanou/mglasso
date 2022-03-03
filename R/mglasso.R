@@ -1,5 +1,9 @@
 ### TODO
-
+### return :: penalties (l1 tv), sparsity, n_edges for each model varying tv
+###           path (list of adjacency mats), beta (list of betas l1 fixed)
+### input :: symmetrization rule for path
+### make maxit visible
+### Intégrer suggestions Antoine
 
 #' Inference of Multiscale Gaussian Graphical Model.
 #'
@@ -115,7 +119,7 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
 
     beta <- conesta(x, lambda1, lambda2, beta_old, prec_ = precision,
                     type_ = type, W_ = weights_)
-    print(lambda1)
+    cat(lambda1)
     beta_old <- beta_to_vector(beta)
 
     diffs <- dist_beta(beta, distance = distance)  ## Update distance matrix
