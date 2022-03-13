@@ -2,10 +2,6 @@
 output: github_document
 ---
 
-[![R-CMD-check](https://github.com/desanou/mglasso/actions/workflows/basic.yml/badge.svg)](https://github.com/desanou/mglasso/actions/workflows/basic.yml)
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -14,21 +10,79 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Installation  
+[![R-CMD-check](https://github.com/desanou/mglasso/actions/workflows/basic.yml/badge.svg)](https://github.com/desanou/mglasso/actions/workflows/basic.yml)
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+## Method 
+
+This repository provides an implementation of the `MGLasso` (Multiscale Graphical Lasso) algorithm: a novel approach for estimating sparse Gaussian Graphical Models with the addition of a group-fused Lasso penalty.
+
+`MGLasso` is described in the paper [Inference of Multiscale Gaussian Graphical Model](https://desanou.github.io/multiscale_glasso/). `MGLasso` has three major contributions:
+
+-   We simultaneously infer a network and estimate a clustering structure.
+
+-   We use a continuation with Nesterov smoothing in a shrinkage-thresholding algorithm ([`CONESTA`](https://arxiv.org/abs/1605.09658), Hadj-Selem et al. 2018) to solve the optimization problem .
+
+-   We show numerically that `MGLasso` performs better than [`GLasso`](https://arxiv.org/abs/0708.3517)(Friedman et al. 2007) in terms of support recovery.
+
+`MGLasso` package available on [CRAN](https://CRAN.R-project.org/package=mglasso) is based on the python implementation of the solver `CONESTA` available in [pylearn-parsimony](https://github.com/neurospin/pylearn-parsimony) library.
+
+
+## Package requirements  
+
+-   Install the `reticulate` package.
+
+```{r eval = FALSE}
+install.packages('reticulate')
+```
+
+-   Check if Python engine is available on the system  
+
+```{r eval = FALSE}
+reticulate::py_available()
+```
+
+  + If not available   
+
+```{r eval = FALSE}
+reticulate::install_miniconda()
+```
+
+-   Install `MGLasso`  
+
+```{r eval = FALSE}
+install.packages('mglasso')
+```
+
+-   Install `MGLasso` python dependencies  
+
+```{r eval = FALSE}
+mglasso::install_conesta()
+```
+
+An example of use is given below.
+
+
+## Vignette 
+
+### Installation
+
 ```{r eval = FALSE}
 remotes::install_github("desanou/mglasso")
 library(mglasso)
 ```
+
 ```{r}
 library(mglasso)
 install_conesta()
 ```
 
-
-## Basic Usage
+### Basic Usage
 
 1. Simulate some block diagonal model  
-```{r}
+
+```{r  }
 library(Matrix)
 n = 50
 K = 3
@@ -46,45 +100,48 @@ mat.covariance <- Matrix::bdiag(blocs)
 Matrix::image(mat.covariance)
 ```
 
-1.1 True cluster partition
+  + True cluster partition  
+
 ```{r}
 rep(1:3, each = 3)
 ```
 
+  + Simulate gaussian data from the covariance matrix  
 
-1.2. Simulate gaussian data from the covariance matrix 
 ```{r}
 set.seed(11)
 X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 ```
 
+2. Launch algorithm    
 
-2. Launch algorithm  
 ```{r}
 X <- scale(X)    
 res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
 ```
-3. Plot results compact version
 
-3.1 Estimated regression vectors
+3. Plot results compact version   
+
+  + Estimated regression vectors  
+
 ```{r fig.width=10, fig.height=10}
 plot_mglasso(res)
 ```
 
-`level9` denotes a partition with `9` clusters.
-We observe a shrinkage effect in the estimated coefficients due to the fuse-group lasso penalty parameter.
+`level9` denotes a partition with `9` clusters. We observe a shrinkage effect in the estimated coefficients due to the fuse-group lasso penalty parameter.
 
-3.2 Estimated clustering partitions  
-```{r}
+  + Estimated clustering partitions  
+
+```{r  }
 res$out$level9$clusters
 res$out$level7$clusters
 res$out$level4$clusters
 res$out$level3$clusters
 res$out$level1$clusters
 ```
+
 The uncovered partition obtained while increasing $\lambda_2$ is a hierarchical partition under some constraints.
 
-# Reference 
-Edmond, Sanou; Christophe, Ambroise; Geneviève, Robin; (2022): Inference of Multiscale Gaussian Graphical Model. ArXiv. Preprint. https://doi.org/10.48550/arXiv.2202.05775
+## Reference
 
-
+Edmond, Sanou; Christophe, Ambroise; Geneviève, Robin; (2022): Inference of Multiscale Gaussian Graphical Model. ArXiv. Preprint. <https://doi.org/10.48550/arXiv.2202.05775>
