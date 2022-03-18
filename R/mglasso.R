@@ -48,6 +48,7 @@
 #'   weights.
 #' @param compact Logical scalar. If TRUE, only save results when previous
 #'   clusters are different from current.
+#' @param verbose Logical scalar. Print trace. Default value is FALSE.
 #'
 #' @return A list-like object of class \code{mglasso} is returned.
 #'   \item{out}{List of lists. Each element of the list corresponds to a
@@ -92,7 +93,8 @@
 
 mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
                     distance = c("euclidean", "relative"), lambda2_start = 1e-4, lambda2_factor = 1.5,
-                    precision = 1e-2, weights_ = NULL, type = c("initial"), compact = TRUE) {
+                    precision = 1e-2, weights_ = NULL, type = c("initial"), compact = TRUE,
+                    verbose = FALSE) {
   p <- ncol(x)
   x <- scale(x)
   clusters <- 1:p
@@ -118,7 +120,7 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
 
     beta <- conesta(x, lambda1, lambda2, beta_old, prec_ = precision,
                     type_ = type, W_ = weights_)
-    cat(lambda1)
+    if(verbose) cat(lambda1)
     beta_old <- beta_to_vector(beta)
 
     diffs <- dist_beta(beta, distance = distance)  ## Update distance matrix
@@ -130,7 +132,7 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
     }  ## Clustering ends here
 
     cost_ <- cost(beta, x)
-    cat("nclusters =", length(unique(clusters)), "lambda2", lambda2,
+    if(verbose) cat("nclusters =", length(unique(clusters)), "lambda2", lambda2,
         "cost =", cost_, "\n")
 
     if (compact) {
@@ -151,7 +153,7 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
   }
 
   result <- list(out = out, lambda1 = lambda1)
-  cat("niter == ", iter)
+  if(verbose) cat("niter == ", iter)
 
   class(result) <- "mglasso"
 
