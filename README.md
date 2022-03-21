@@ -15,7 +15,11 @@ Graphical Model](https://desanou.github.io/multiscale_glasso/).
 `MGLasso` has three major contributions:
 
 -   We simultaneously infer a network and estimate a clustering
-    structure.
+    structure by combining the [neighborhood
+    selection](https://arxiv.org/abs/math/0608017) approach (Meinshausen
+    and Bühlman, 2006) and [convex
+    clustering](https://www.di.ens.fr/~fbach/419_icmlpaper.pdf) (Hocking
+    et al. 2011).
 
 -   We use a continuation with Nesterov smoothing in a
     shrinkage-thresholding algorithm
@@ -24,7 +28,15 @@ Graphical Model](https://desanou.github.io/multiscale_glasso/).
 
 -   We show numerically that `MGLasso` performs better than
     [`GLasso`](https://arxiv.org/abs/0708.3517)(Friedman et al. 2007) in
-    terms of support recovery.
+    terms of support recovery. The clustering performances of `MGLasso`
+    can be improved by the addition of a weight term to calibrate the
+    variable fusion regularizer.
+
+To solve the `MGLasso` problem, we seek the regression vectors
+*β*<sup>*i*</sup> that minimize
+$$
+J\_{\\lambda_1, \\lambda_2}(\\boldsymbol{\\beta}; \\mathbf{X} ) = \\frac{1}{2} \\sum\_{i=1}^p \\left \\lVert \\mathbf{X}^i - \\mathbf{X}^{\\setminus i} \\boldsymbol{\\beta}^i \\right \\rVert_2 ^2  + \\lambda_1 \\sum\_{i = 1}^p  \\left \\lVert \\boldsymbol{\\beta}^i \\right \\rVert_1 + \\lambda_2 \\sum\_{i \< j} \\left \\lVert \\boldsymbol{\\beta}^i - \\tau\_{ij}(\\boldsymbol{\\beta}^j) \\right \\rVert_2.
+$$
 
 `MGLasso` package available on
 [CRAN](https://CRAN.R-project.org/package=mglasso) is based on the
@@ -66,7 +78,7 @@ mglasso::install_conesta()
 
 An example of use is given below.
 
-## Vignette
+## Illustration on a simple model
 
 ### Installation
 
@@ -87,9 +99,11 @@ install_conesta()
 #> pylearn-parsimony is installed.
 ```
 
-### Basic Usage
+### Simulate a block diagonal model
 
-1.  Simulate some block diagonal model
+We simulate a 3-block diagonal model where each block contains 3
+variables. The intra-block correlation level is set to 0.85 while the
+correlations outside the blocks are kept to 0.
 
 ``` r
 library(Matrix)
@@ -105,93 +119,57 @@ for (j in 1:K) {
   blocs[[j]] <- bloc
 }
 
-mat.covariance <- Matrix::bdiag(blocs)
-Matrix::image(mat.covariance)
+mat.correlation <- Matrix::bdiag(blocs)
+corrplot::corrplot(as.matrix(mat.correlation), method = "color", tl.col="black")
 ```
 
 <img src="README_files/figure-gfm/unnamed-chunk-8-1.png" width="100%" />
 
--   True cluster partition
-
-``` r
-rep(1:3, each = 3)
-#> [1] 1 1 1 2 2 2 3 3 3
-```
-
--   Simulate gaussian data from the covariance matrix
+#### Simulate gaussian data from the covariance matrix
 
 ``` r
 set.seed(11)
-X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
+X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.correlation))
+colnames(X) <- LETTERS[1:9]
 ```
 
-2.  Launch algorithm
+### Run `mglasso()`
+
+We set the sparsity level *λ*<sub>1</sub> to 0.2 and rescaled it with
+the size of the sample.
 
 ``` r
 X <- scale(X)    
-res <- mglasso(X, lambda1 = 0.1, lambda2_start = 0.1, fuse_thresh = 1e-3)
-#> [1] 0.1
-#> nclusters = 9 lambda2 0 cost = 85.41681 
-#> [1] 0.1
-#> nclusters = 9 lambda2 0.1 cost = 85.73135 
-#> [1] 0.1
-#> nclusters = 9 lambda2 0.15 cost = 85.98468 
-#> [1] 0.1
-#> nclusters = 9 lambda2 0.225 cost = 86.45847 
-#> [1] 0.1
-#> nclusters = 9 lambda2 0.3375 cost = 87.3288 
-#> [1] 0.1
-#> nclusters = 9 lambda2 0.50625 cost = 88.86085 
-#> [1] 0.1
-#> nclusters = 9 lambda2 0.759375 cost = 91.41304 
-#> [1] 0.1
-#> nclusters = 9 lambda2 1.139063 cost = 95.42645 
-#> [1] 0.1
-#> nclusters = 9 lambda2 1.708594 cost = 101.5021 
-#> [1] 0.1
-#> nclusters = 9 lambda2 2.562891 cost = 111.5274 
-#> [1] 0.1
-#> nclusters = 7 lambda2 3.844336 cost = 130.5629 
-#> [1] 0.1
-#> nclusters = 4 lambda2 5.766504 cost = 170.3529 
-#> [1] 0.1
-#> nclusters = 3 lambda2 8.649756 cost = 254.4898 
-#> [1] 0.1
-#> nclusters = 1 lambda2 12.97463 cost = 380.9522 
-#> niter ==  14
+res <- mglasso(X, lambda1 = 0.2*n, lambda2_start = 0.1, fuse_thresh = 1e-3, verbose = FALSE)
 ```
 
-3.  Plot results compact version
+To launch a unique run of the objective function call the `conesta`
+function.
 
--   Estimated regression vectors
+``` r
+temp <- mglasso::conesta(X, lam1 = 0.2*n, lam2 = 0.1)
+```
+
+#### Estimated clustering path
+
+We plot the clustering path of `mglasso` method on the 2 principal
+components axis of *X*. The path is drawn on the predicted *X*’s.
+
+``` r
+library(ggplot2)
+library(ggrepel)
+mglasso:::plot_clusterpath(as.matrix(X), res)
+```
+
+<img src="README_files/figure-gfm/unnamed-chunk-12-1.png" width="100%" />
+
+#### Estimated adjacency matrices along the clustering path
 
 ``` r
 plot_mglasso(res)
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-12-1.png" width="100%" />
-
-`level9` denotes a partition with `9` clusters. We observe a shrinkage
-effect in the estimated coefficients due to the fuse-group lasso penalty
-parameter.
-
--   Estimated clustering partitions
-
-``` r
-res$out$level9$clusters
-#> [1] 1 2 3 4 5 6 7 8 9
-res$out$level7$clusters
-#> [1] 1 2 3 4 5 6 7 7 7
-res$out$level4$clusters
-#> [1] 1 1 1 2 3 2 4 4 4
-res$out$level3$clusters
-#> [1] 1 1 1 2 2 2 3 3 3
-res$out$level1$clusters
-#> [1] 1 1 1 1 1 1 1 1 1
-```
-
-The uncovered partition obtained while increasing *λ*<sub>2</sub> is a
-hierarchical partition under some constraints.
+<img src="README_files/figure-gfm/unnamed-chunk-13-1.png" width="100%" />
 
 ## Reference
 
