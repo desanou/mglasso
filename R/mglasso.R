@@ -109,7 +109,6 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
   out <- list()
   clusters_prev <- NULL
 
-
   ## Loop until all the variables merged
   while (length(unique(clusters)) > 1) {
     clusters <- 1:p
@@ -124,7 +123,7 @@ mglasso <- function(x, lambda1 = 0, fuse_thresh = 1e-3, maxit = NULL,
 
     beta <- conesta(x, lambda1, lambda2, beta_old, prec_ = precision,
                     type_ = type, W_ = weights_)
-    if(verbose) cat(lambda1)
+    if(verbose) cat("lambda1 = ", lambda1, " ")
     beta_old <- beta_to_vector(beta) ## For warm start
 
     diffs <- dist_beta(beta, distance = distance)  ## Update distance matrix
