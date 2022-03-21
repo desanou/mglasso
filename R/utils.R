@@ -49,6 +49,8 @@ symmetrize <- function(mat, rule = "and") {
     return(mat)
 }
 
+
+
 #' Compute precision matrix from regression vectors
 #'
 #' @param K precision matrix
@@ -109,20 +111,29 @@ beta_ols <- function(X){
 #' @return No return value.
 image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
   main_ <- paste0(c(sub_, main_), collapse = " ")
+  matrix <- adj_mat(matrix)
 
-  nn <- 100
   plt <- Matrix::image(methods::as(matrix, "sparseMatrix"), main = main_, sub = "",
-                       xlab = "", ylab = "", useAbs = FALSE)
-
-  nn <- rownames(matrix)
-  nn <- c(nn[length(nn)], nn)
-  nn <- nn[1:(length(nn) - 1)]
-  labs <- c(nn, nn)
-  if (col_names) {
-    stats::update(plt, scales = list(labels = labs))
-  }
+                       xlab = "", ylab = "")
 
   plt
+}
+
+#' Adjacency matrix
+#'
+#' @param mat
+#' @param sym_rule
+#'
+#' @return
+#' @export
+#'
+#' @examples
+adj_mat <- function(mat, sym_rule = "and") {
+  mat <- symmetrize(mat, rule = sym_rule)
+  mat[ abs(mat) < 1e-10] <- 0
+  mat[mat != 0] <- 1
+  mat <- as(mat, "sparseMatrix")
+  return(mat)
 }
 
 # CLUSTERING --------------------------------------------------------------
