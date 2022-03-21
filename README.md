@@ -19,7 +19,7 @@ Graphical Model](https://desanou.github.io/multiscale_glasso/).
     selection](https://arxiv.org/abs/math/0608017) approach (Meinshausen
     and Bühlman, 2006) and [convex
     clustering](https://www.di.ens.fr/~fbach/419_icmlpaper.pdf) (Hocking
-    et al. 2011).
+    et al.2011).
 
 -   We use a continuation with Nesterov smoothing in a
     shrinkage-thresholding algorithm
