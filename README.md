@@ -34,8 +34,23 @@ Graphical Model](https://desanou.github.io/multiscale_glasso/).
 
 To solve the `MGLasso` problem, we seek the regression vectors
 *β*<sup>*i*</sup> that minimize
+
 $$
-J\_{\\lambda_1, \\lambda_2}(\\boldsymbol{\\beta}; \\mathbf{X} ) = \\frac{1}{2} \\sum\_{i=1}^p \\left \\lVert \\mathbf{X}^i - \\mathbf{X}^{\\setminus i} \\boldsymbol{\\beta}^i \\right \\rVert_2 ^2  + \\lambda_1 \\sum\_{i = 1}^p  \\left \\lVert \\boldsymbol{\\beta}^i \\right \\rVert_1 + \\lambda_2 \\sum\_{i \< j} \\left \\lVert \\boldsymbol{\\beta}^i - \\tau\_{ij}(\\boldsymbol{\\beta}^j) \\right \\rVert_2.
+J\_{\\lambda_1, \\lambda_2}(\\boldsymbol{\\beta}; \\mathbf{X} ) = 
+  \\frac{1}{2} 
+     \\sum\_{i=1}^p 
+        \\left \\lVert 
+            \\mathbf{X}^i - \\mathbf{X}^{\\setminus i} \\boldsymbol{\\beta}^i 
+        \\right \\rVert_2 ^2  + 
+  \\lambda_1 
+    \\sum\_{i = 1}^p  
+      \\left \\lVert 
+         \\boldsymbol{\\beta}^i \\right \\rVert_1 + 
+  \\lambda_2 
+     \\sum\_{i \< j} 
+        \\left \\lVert 
+           \\boldsymbol{\\beta}^i - \\tau\_{ij}(\\boldsymbol{\\beta}^j) 
+        \\right \\rVert_2.
 $$
 
 `MGLasso` package available on
@@ -164,6 +179,9 @@ mglasso:::plot_clusterpath(as.matrix(X), res)
 <img src="README_files/figure-gfm/unnamed-chunk-12-1.png" width="100%" />
 
 #### Estimated adjacency matrices along the clustering path
+
+As the the fusion penalty increases from `level9` to `level1` we observe
+a progressive fusion of adjacent edges.
 
 ``` r
 plot_mglasso(res)
