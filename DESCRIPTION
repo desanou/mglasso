@@ -37,3 +37,4 @@ Config/reticulate: list( packages = list( list(package = c("")) ) )
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.2
+URL: https://desanou.github.io/mglasso/
