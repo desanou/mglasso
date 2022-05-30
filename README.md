@@ -28,7 +28,7 @@ Graphical Model](https://desanou.github.io/multiscale_glasso/).
 
 -   We show numerically that `MGLasso` performs better than
     [`GLasso`](https://arxiv.org/abs/0708.3517)(Meinshausen and Bühlman, 2006; Friedman et al. 2007) in
-    terms of support recovery. The clustering performances of `MGLasso`
+    terms of support recovery in a block diagonal model with few sparsity inside blocks. The clustering performances of `MGLasso`
     can be improved by the addition of a weight term to calibrate the
     variable fusion regularizer.
 
