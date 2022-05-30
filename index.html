@@ -76,7 +76,7 @@
 <ul>
 <li><p>We simultaneously infer a network and estimate a clustering structure by combining the <a href="https://arxiv.org/abs/math/0608017" class="external-link">neighborhood selection</a> approach (Meinshausen and Bühlman, 2006) and <a href="https://www.di.ens.fr/~fbach/419_icmlpaper.pdf" class="external-link">convex clustering</a> (Hocking et al.2011).</p></li>
 <li><p>We use a continuation with Nesterov smoothing in a shrinkage-thresholding algorithm (<a href="https://arxiv.org/abs/1605.09658" class="external-link"><code>CONESTA</code></a>, Hadj-Selem et al. 2018) to solve the optimization problem .</p></li>
-<li><p>We show numerically that <code>MGLasso</code> performs better than <a href="https://arxiv.org/abs/0708.3517" class="external-link"><code>GLasso</code></a>(Meinshausen and Bühlman, 2006; Friedman et al. 2007) in terms of support recovery. The clustering performances of <code>MGLasso</code> can be improved by the addition of a weight term to calibrate the variable fusion regularizer.</p></li>
+<li><p>We show numerically that <code>MGLasso</code> performs better than <a href="https://arxiv.org/abs/0708.3517" class="external-link"><code>GLasso</code></a>(Meinshausen and Bühlman, 2006; Friedman et al. 2007) in terms of support recovery in a block diagonal model with few sparsity inside blocks. The clustering performances of <code>MGLasso</code> can be improved by the addition of a weight term to calibrate the variable fusion regularizer.</p></li>
 </ul>
 <p>To solve the <code>MGLasso</code> problem, we seek the regression vectors <em>β</em><sup><em>i</em></sup> that minimize</p>
 <p><br><span class="math display">$$
