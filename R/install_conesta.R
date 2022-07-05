@@ -35,9 +35,9 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
     message('Installing pylearn-parsimony')
     text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
     system(text)
-  }
 
-  message("pylearn-parsimony is installed.")
+    message("pylearn-parsimony is installed.")
+  }
 }
 
 path_python <- function(){
