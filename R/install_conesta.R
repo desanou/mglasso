@@ -33,7 +33,7 @@ install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "nu
   if (!reticulate::py_module_available("pylearn-parsimony")) {
     reticulate::use_virtualenv(virtualenv = 'r-reticulate', required = TRUE)
     message('Installing pylearn-parsimony')
-    text <- "pip install git+git://github.com/neurospin/pylearn-parsimony.git@master --quiet"
+    text <- "pip install git+https://github.com/neurospin/pylearn-parsimony.git"
     system(text)
 
     message("pylearn-parsimony is installed.")
