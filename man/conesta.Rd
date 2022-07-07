@@ -25,17 +25,17 @@ conesta(
 
 \item{beta_warm}{Warm initialization vector.}
 
-\item{type_}{Character scalar. By default set to initial version which don't
+\item{type_}{Character scalar. By default set to initial version which doesn't
 use weights}
 
-\item{W_}{Weights matrix.}
+\item{W_}{Weights matrix for total variation penalties.}
 
 \item{mean_}{Logical scalar. If TRUE weights the optimization function by the
 inverse of sample size.}
 
 \item{max_iter_}{Numeric scalar. Maximum number of iterations.}
 
-\item{prec_}{Numeric scalar. Precision.}
+\item{prec_}{Numeric scalar. Tolerance for the stopping criterion (duality gap).}
 }
 \value{
 Numeric matrix of size pxp. Line \code{k} of the matrix represents

@@ -1,3 +1,6 @@
+# Global variables
+utils::globalVariables(c("group", "Name"))
+
 #' `Mglasso` cost function
 #'
 #' `cost` computes the cost function of `Mglasso` method.
@@ -121,18 +124,16 @@ image_sparse <- function(matrix, main_ = "", sub_ = "", col_names = FALSE) {
 
 #' Adjacency matrix
 #'
-#' @param mat
-#' @param sym_rule
+#' @param mat matrix of regression coefficients
+#' @param sym_rule symmetrization rule, either AND or OR
 #'
-#' @return
+#' @return adjacency matrix
 #' @export
-#'
-#' @examples
 adj_mat <- function(mat, sym_rule = "and") {
   mat <- symmetrize(mat, rule = sym_rule)
   mat[ abs(mat) < 1e-10] <- 0
   mat[mat != 0] <- 1
-  mat <- as(mat, "sparseMatrix")
+  mat <- methods::as(mat, "sparseMatrix")
   return(mat)
 }
 
