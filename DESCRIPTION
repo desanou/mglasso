@@ -19,6 +19,8 @@ Description: Inference of Multiscale graphical models with neighborhood
 License: MIT + file LICENSE
 Imports:
     corpcor,
+    ggplot2,
+    ggrepel,
     gridExtra,
     Matrix,
     methods,
