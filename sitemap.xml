@@ -22,6 +22,9 @@
     <loc>https://desanou.github.io/mglasso/index.html</loc>
   </url>
   <url>
+    <loc>https://desanou.github.io/mglasso/reference/adj_mat.html</loc>
+  </url>
+  <url>
     <loc>https://desanou.github.io/mglasso/reference/beta_ols.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>https://desanou.github.io/mglasso/reference/mglasso.html</loc>
+  </url>
+  <url>
+    <loc>https://desanou.github.io/mglasso/reference/plot_clusterpath.html</loc>
   </url>
   <url>
     <loc>https://desanou.github.io/mglasso/reference/plot_mglasso.html</loc>

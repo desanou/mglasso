@@ -40,7 +40,7 @@
     
     <a class="navbar-brand me-2" href="index.html">mglasso</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,28 +74,14 @@
 <p>This repository provides an implementation of the <code>MGLasso</code> (Multiscale Graphical Lasso) algorithm: a novel approach for estimating sparse Gaussian Graphical Models with the addition of a group-fused Lasso penalty.</p>
 <p><code>MGLasso</code> is described in the paper <a href="https://desanou.github.io/multiscale_glasso/" class="external-link">Inference of Multiscale Gaussian Graphical Model</a>. <code>MGLasso</code> has three major contributions:</p>
 <ul>
-<li><p>We simultaneously infer a network and estimate a clustering structure by combining the <a href="https://arxiv.org/abs/math/0608017" class="external-link">neighborhood selection</a> approach (Meinshausen and Bühlman, 2006) and <a href="https://www.di.ens.fr/~fbach/419_icmlpaper.pdf" class="external-link">convex clustering</a> (Hocking et al.2011).</p></li>
+<li><p>We simultaneously infer a network and estimate a clustering structure by combining the <a href="https://arxiv.org/abs/math/0608017" class="external-link">neighborhood selection</a> approach (Meinshausen and Bühlman, 2006) and <a href="https://www.di.ens.fr/~fbach/419_icmlpaper.pdf" class="external-link">convex clustering</a> (Hocking et al. 2011).</p></li>
 <li><p>We use a continuation with Nesterov smoothing in a shrinkage-thresholding algorithm (<a href="https://arxiv.org/abs/1605.09658" class="external-link"><code>CONESTA</code></a>, Hadj-Selem et al. 2018) to solve the optimization problem .</p></li>
 <li><p>We show numerically that <code>MGLasso</code> performs better than <a href="https://arxiv.org/abs/0708.3517" class="external-link"><code>GLasso</code></a>(Meinshausen and Bühlman, 2006; Friedman et al. 2007) in terms of support recovery in a block diagonal model with few sparsity inside blocks. The clustering performances of <code>MGLasso</code> can be improved by the addition of a weight term to calibrate the variable fusion regularizer.</p></li>
 </ul>
-<p>To solve the <code>MGLasso</code> problem, we seek the regression vectors <em>β</em><sup><em>i</em></sup> that minimize</p>
-<p><br><span class="math display">$$
-J\_{\\lambda_1, \\lambda_2}(\\boldsymbol{\\beta}; \\mathbf{X} ) = 
-  \\frac{1}{2} 
-     \\sum\_{i=1}^p 
-        \\left \\lVert 
-            \\mathbf{X}^i - \\mathbf{X}^{\\setminus i} \\boldsymbol{\\beta}^i 
-        \\right \\rVert_2 ^2  + 
-  \\lambda_1 
-    \\sum\_{i = 1}^p  
-      \\left \\lVert 
-         \\boldsymbol{\\beta}^i \\right \\rVert_1 + 
-  \\lambda_2 
-     \\sum\_{i \&lt; j} 
-        \\left \\lVert 
-           \\boldsymbol{\\beta}^i - \\tau\_{ij}(\\boldsymbol{\\beta}^j) 
-        \\right \\rVert_2.
-$$</span><br></p>
+<p>To solve the <code>MGLasso</code> problem, we seek the regression vectors <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;%5Cbeta%5Ei" title="\beta^i" alt="\beta^i"> that minimize</p>
+<div class="figure">
+<img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;J_%7B%5Clambda_1%2C%20%5Clambda_2%7D%28%5Cboldsymbol%7B%5Cbeta%7D%3B%20%5Cmathbf%7BX%7D%20%29%20%3D%20%20%5Cfrac%7B1%7D%7B2%7D%20%20%5Csum_%7Bi%3D1%7D%5Ep%20%20%5Cleft%20%5ClVert%20%20%5Cmathbf%7BX%7D%5Ei%20-%20%5Cmathbf%7BX%7D%5E%7B%5Csetminus%20i%7D%20%5Cboldsymbol%7B%5Cbeta%7D%5Ei%20%20%5Cright%20%5CrVert_2%20%5E2%20%2B%20%20%5Clambda_1%20%20%5Csum_%7Bi%20%3D%201%7D%5Ep%20%20%5Cleft%20%5ClVert%20%20%5Cboldsymbol%7B%5Cbeta%7D%5Ei%20%5Cright%20%5CrVert_1%20%2B%20%20%5Clambda_2%20%20%5Csum_%7Bi%20%3C%20j%7D%20%20%5Cleft%20%5ClVert%20%20%5Cboldsymbol%7B%5Cbeta%7D%5Ei%20-%20%5Ctau_%7Bij%7D%28%5Cboldsymbol%7B%5Cbeta%7D%5Ej%29%20%20%5Cright%20%5CrVert_2." title="J_{\lambda_1, \lambda_2}(\boldsymbol{\beta}; \mathbf{X} ) = \frac{1}{2} \sum_{i=1}^p \left \lVert \mathbf{X}^i - \mathbf{X}^{\setminus i} \boldsymbol{\beta}^i \right \rVert_2 ^2 + \lambda_1 \sum_{i = 1}^p \left \lVert \boldsymbol{\beta}^i \right \rVert_1 + \lambda_2 \sum_{i &lt; j} \left \lVert \boldsymbol{\beta}^i - \tau_{ij}(\boldsymbol{\beta}^j) \right \rVert_2." alt=""><p class="caption">J_{\lambda_1, \lambda_2}(\boldsymbol{\beta}; \mathbf{X} ) = \frac{1}{2} \sum_{i=1}^p \left \lVert \mathbf{X}^i - \mathbf{X}^{\setminus i} \boldsymbol{\beta}^i \right \rVert_2 ^2 + \lambda_1 \sum_{i = 1}^p \left \lVert \boldsymbol{\beta}^i \right \rVert_1 + \lambda_2 \sum_{i &lt; j} \left \lVert \boldsymbol{\beta}^i - \tau_{ij}(\boldsymbol{\beta}^j) \right \rVert_2.</p>
+</div>
 <p><code>MGLasso</code> package available on <a href="https://CRAN.R-project.org/package=mglasso" class="external-link">CRAN</a> is based on the python implementation of the solver <code>CONESTA</code> available in <a href="https://github.com/neurospin/pylearn-parsimony" class="external-link">pylearn-parsimony</a> library.</p>
 </div>
 <div class="section level2">
@@ -103,20 +89,20 @@ $$</span><br></p>
 </h2>
 <ul><li>Install the <code>reticulate</code> package.</li></ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'reticulate'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'reticulate'</span><span class="op">)</span></span></code></pre></div>
 <ul><li>Check if Python engine is available on the system</li></ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_available.html" class="external-link">py_available</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_available.html" class="external-link">py_available</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul><li>If not available</li></ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/install_miniconda.html" class="external-link">install_miniconda</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/install_miniconda.html" class="external-link">install_miniconda</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul><li>Install <code>MGLasso</code>
 </li></ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'mglasso'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'mglasso'</span><span class="op">)</span></span></code></pre></div>
 <ul><li>Install <code>MGLasso</code> python dependencies</li></ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">mglasso</span><span class="fu">::</span><span class="fu"><a href="reference/install_conesta.html">install_conesta</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">mglasso</span><span class="fu">::</span><span class="fu"><a href="reference/install_conesta.html">install_conesta</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>An example of use is given below.</p>
 </div>
 <div class="section level2">
@@ -126,68 +112,69 @@ $$</span><br></p>
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"desanou/mglasso"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://desanou.github.io/mglasso/">mglasso</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"desanou/mglasso"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://desanou.github.io/mglasso/">mglasso</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://desanou.github.io/mglasso/">mglasso</a></span><span class="op">)</span>
-<span class="co">#&gt; Welcome to MGLasso.</span>
-<span class="co">#&gt; Run install_conesta() to finalize the package python dependencies installation.</span>
-<span class="fu"><a href="reference/install_conesta.html">install_conesta</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; mglasso requires the r-reticulate virtual environment. Attempting to create...</span>
-<span class="co">#&gt; virtualenv: r-reticulate</span>
-<span class="co">#&gt; Using virtual environment 'r-reticulate' ...</span>
-<span class="co">#&gt; Installing pylearn-parsimony</span>
-<span class="co">#&gt; pylearn-parsimony is installed.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://desanou.github.io/mglasso/">mglasso</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Welcome to MGLasso.</span></span>
+<span><span class="co">#&gt; Run install_conesta() to finalize the package python dependencies installation.</span></span>
+<span><span class="fu"><a href="reference/install_conesta.html">install_conesta</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; mglasso requires the r-reticulate virtual environment. Attempting to create...</span></span>
+<span><span class="co">#&gt; virtualenv: r-reticulate</span></span>
+<span><span class="co">#&gt; Using virtual environment 'r-reticulate' ...</span></span>
+<span><span class="co">#&gt; + '/Users/doedmond.sanou/.virtualenvs/r-reticulate/bin/python' -m pip install --upgrade 'scipy == 1.7.1' 'scikit-learn'</span></span>
+<span><span class="co">#&gt; Installing pylearn-parsimony</span></span>
+<span><span class="co">#&gt; pylearn-parsimony is installed.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="simulate-a-block-diagonal-model">Simulate a block diagonal model<a class="anchor" aria-label="anchor" href="#simulate-a-block-diagonal-model"></a>
 </h3>
-<p>We simulate a 3-block diagonal model where each block contains 3 variables. The intra-block correlation level is set to 0.85 while the correlations outside the blocks are kept to 0.</p>
+<p>We simulate a <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;3" title="3" alt="3">-block diagonal model where each block contains <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;3" title="3" alt="3"> variables. The intra-block correlation level is set to <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;0.85" title="0.85" alt="0.85"> while the correlations outside the blocks are kept to <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;0" title="0" alt="0">.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span>
-<span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>
-<span class="va">K</span> <span class="op">=</span> <span class="fl">3</span>
-<span class="va">p</span> <span class="op">=</span> <span class="fl">9</span>
-<span class="va">rho</span> <span class="op">=</span> <span class="fl">0.85</span>
-<span class="va">blocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">K</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">bloc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">rho</span>, nrow <span class="op">=</span> <span class="va">p</span><span class="op">/</span><span class="va">K</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">/</span><span class="va">K</span><span class="op">)</span>
-  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">p</span><span class="op">/</span><span class="va">K</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span> <span class="va">bloc</span><span class="op">[</span><span class="va">i</span>,<span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">}</span>
-  <span class="va">blocs</span><span class="op">[[</span><span class="va">j</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">bloc</span>
-<span class="op">}</span>
-
-<span class="va">mat.correlation</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/bdiag.html" class="external-link">bdiag</a></span><span class="op">(</span><span class="va">blocs</span><span class="op">)</span>
-<span class="fu">corrplot</span><span class="fu">::</span><span class="fu">corrplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">mat.correlation</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"color"</span>, tl.col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">=</span> <span class="fl">50</span></span>
+<span><span class="va">K</span> <span class="op">=</span> <span class="fl">3</span></span>
+<span><span class="va">p</span> <span class="op">=</span> <span class="fl">9</span></span>
+<span><span class="va">rho</span> <span class="op">=</span> <span class="fl">0.85</span></span>
+<span><span class="va">blocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">K</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">bloc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">rho</span>, nrow <span class="op">=</span> <span class="va">p</span><span class="op">/</span><span class="va">K</span>, ncol <span class="op">=</span> <span class="va">p</span><span class="op">/</span><span class="va">K</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">p</span><span class="op">/</span><span class="va">K</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span> <span class="va">bloc</span><span class="op">[</span><span class="va">i</span>,<span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">}</span></span>
+<span>  <span class="va">blocs</span><span class="op">[[</span><span class="va">j</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">bloc</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">mat.correlation</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/bdiag.html" class="external-link">bdiag</a></span><span class="op">(</span><span class="va">blocs</span><span class="op">)</span></span>
+<span><span class="fu">corrplot</span><span class="fu">::</span><span class="fu">corrplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">mat.correlation</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"color"</span>, tl.col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-8-1.png" width="100%"></p>
 <div class="section level4">
 <h4 id="simulate-gaussian-data-from-the-covariance-matrix">Simulate gaussian data from the covariance matrix<a class="anchor" aria-label="anchor" href="#simulate-gaussian-data-from-the-covariance-matrix"></a>
 </h4>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span>
-<span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">mvtnorm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html" class="external-link">rmvnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">p</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">mat.correlation</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">mvtnorm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html" class="external-link">rmvnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">p</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">mat.correlation</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="run-mglasso">Run <code>mglasso()</code>
 <a class="anchor" aria-label="anchor" href="#run-mglasso"></a>
 </h3>
-<p>We set the sparsity level <em>λ</em><sub>1</sub> to 0.2 and rescaled it with the size of the sample.</p>
+<p>We set the sparsity level <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;%5Clambda_1" title="\lambda_1" alt="\lambda_1"> to <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;0.2" title="0.2" alt="0.2"> and rescaled it with the size of the sample.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>    
-<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mglasso.html">mglasso</a></span><span class="op">(</span><span class="va">X</span>, lambda1 <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span><span class="va">n</span>, lambda2_start <span class="op">=</span> <span class="fl">0.1</span>, fuse_thresh <span class="op">=</span> <span class="fl">1e-3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>    </span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mglasso.html">mglasso</a></span><span class="op">(</span><span class="va">X</span>, lambda1 <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span><span class="va">n</span>, lambda2_start <span class="op">=</span> <span class="fl">0.1</span>, fuse_thresh <span class="op">=</span> <span class="fl">1e-3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>To launch a unique run of the objective function call the <code>conesta</code> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu">mglasso</span><span class="fu">::</span><span class="fu"><a href="reference/conesta.html">conesta</a></span><span class="op">(</span><span class="va">X</span>, lam1 <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span><span class="va">n</span>, lam2 <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu">mglasso</span><span class="fu">::</span><span class="fu"><a href="reference/conesta.html">conesta</a></span><span class="op">(</span><span class="va">X</span>, lam1 <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span><span class="va">n</span>, lam2 <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="estimated-clustering-path">Estimated clustering path<a class="anchor" aria-label="anchor" href="#estimated-clustering-path"></a>
 </h4>
-<p>We plot the clustering path of <code>mglasso</code> method on the 2 principal components axis of <em>X</em>. The path is drawn on the predicted <em>X</em>’s.</p>
+<p>We plot the clustering path of <code>mglasso</code> method on the 2 principal components axis of <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;X" title="X" alt="X">. The path is drawn on the predicted <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;X" title="X" alt="X">’s.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/slowkow/ggrepel" class="external-link">ggrepel</a></span><span class="op">)</span>
-<span class="fu">mglasso</span><span class="fu">:::</span><span class="fu">plot_clusterpath</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="va">res</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/slowkow/ggrepel" class="external-link">ggrepel</a></span><span class="op">)</span></span>
+<span><span class="fu">mglasso</span><span class="fu">:::</span><span class="fu"><a href="reference/plot_clusterpath.html">plot_clusterpath</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 <div class="section level4">
@@ -195,7 +182,7 @@ $$</span><br></p>
 </h4>
 <p>As the the fusion penalty increases from <code>level9</code> to <code>level1</code> we observe a progressive fusion of adjacent edges.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/plot_mglasso.html">plot_mglasso</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_mglasso.html">plot_mglasso</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png" width="100%"></p>
 </div>
 </div>
@@ -255,7 +242,7 @@ $$</span><br></p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>
