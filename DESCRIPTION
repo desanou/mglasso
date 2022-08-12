@@ -1,7 +1,7 @@
 Type: Package
 Package: mglasso
 Title: Multiscale Graphical Lasso
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Edmond", "Sanou", , "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
     person("Tung", "Le", role = "ctb"),
@@ -19,6 +19,8 @@ Description: Inference of Multiscale graphical models with neighborhood
 License: MIT + file LICENSE
 Imports:
     corpcor,
+    ggplot2,
+    ggrepel,
     gridExtra,
     Matrix,
     methods,

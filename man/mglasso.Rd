@@ -15,7 +15,8 @@ mglasso(
   precision = 0.01,
   weights_ = NULL,
   type = c("initial"),
-  compact = TRUE
+  compact = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -37,7 +38,7 @@ penalty (clustering penalty).}
 \item{lambda2_factor}{Numeric scalar. Step used to update fused-group Lasso
 penalty in a multiplicative way..}
 
-\item{precision}{Precision of estimation algorithm.}
+\item{precision}{Tolerance for the stopping criterion (duality gap).}
 
 \item{weights_}{Matrix of weights.}
 
@@ -46,6 +47,8 @@ weights.}
 
 \item{compact}{Logical scalar. If TRUE, only save results when previous
 clusters are different from current.}
+
+\item{verbose}{Logical scalar. Print trace. Default value is FALSE.}
 }
 \value{
 A list-like object of class \code{mglasso} is returned.

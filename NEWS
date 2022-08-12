@@ -1,0 +1,7 @@
+mglasso v0.1.2 (Release date: 2022-07-07)
+==============
+
+Changes:
+
+* Changed python library pylearn-parsimony installation process
+* Add function plot_clusterpath() for plotting clustering path
