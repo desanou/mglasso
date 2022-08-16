@@ -25,8 +25,7 @@ Imports:
     Matrix,
     methods,
     R.utils,
-    reticulate,
-    stats
+    reticulate
 Suggests: 
     knitr,
     mvtnorm,
