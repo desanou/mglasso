@@ -6,7 +6,7 @@
 \usage{
 install_conesta(
   extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "matplotlib"),
-  py_version = "3.8.0"
+  py_version = "3.8"
 )
 }
 \arguments{

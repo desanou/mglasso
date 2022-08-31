@@ -59,6 +59,10 @@ the vectorized form of matrix \eqn{X}.
 \examples{
 \donttest{
 install_conesta()
+rstudioapi::restartSession()
+library(reticulate)
+reticulate::use_condaenv("rmglasso")
+reticulate::py_discover_config()
 n = 30
 K = 2
 p = 4
