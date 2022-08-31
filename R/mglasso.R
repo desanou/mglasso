@@ -67,7 +67,7 @@
 #'
 #' @examples
 #' \donttest{
-#' install_conesta()
+#' #install_conesta()
 #' n = 50
 #' K = 3
 #' p = 9
