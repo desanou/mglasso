@@ -2,7 +2,13 @@
 output: github_document
 ---
 
+<!-- badges: start -->
+[![CRAN Status](https://www.r-pkg.org/badges/version/text)](https://CRAN.R-project.org/package=mglasso)
 [![R-CMD-check](https://github.com/desanou/mglasso/actions/workflows/basic.yml/badge.svg)](https://github.com/desanou/mglasso/actions/workflows/basic.yml)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+`r lifecycle::badge("maturing")`
+<!-- badges: end -->
+
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -14,7 +20,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-<!-- a -->
 
 ## Method 
 
