@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{cost}
 \alias{cost}
-\title{`Mglasso` cost function}
+\title{\code{Mglasso} cost function}
 \usage{
 cost(beta, x, lambda1 = 0, lambda2 = 0)
 }
@@ -19,5 +19,5 @@ cost(beta, x, lambda1 = 0, lambda2 = 0)
 numeric scalar. The cost.
 }
 \description{
-`cost` computes the cost function of `Mglasso` method.
+\code{cost} computes the cost function of \code{Mglasso} method.
 }

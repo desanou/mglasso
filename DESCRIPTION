@@ -39,3 +39,4 @@ Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.2.1
 URL: https://desanou.github.io/mglasso/
+Roxygen: list(markdown = TRUE)

@@ -3,8 +3,8 @@
 #' Solve the MGLasso optimization problem using CONESTA algorithm. Interface to
 #' the pylearn.parsimony python library.
 #'
-#' \emph{COntinuation with NEsterov smoothing in a Shrinkage-Thresholding
-#' Algorithm} (CONESTA, Hadj-Selem et al. 2018) <doi:10.1109/TMI.2018.2829802>
+#' *COntinuation with NEsterov smoothing in a Shrinkage-Thresholding
+#' Algorithm* (CONESTA, Hadj-Selem et al. 2018) <doi:10.1109/TMI.2018.2829802>
 #' is an algorithm design for solving optimization problems including group-wise
 #' penalties. This function is an interface with the python solver. The MGLasso
 #' problem is first reformulated in a problem of the form \deqn{argmin 1/2 ||Y -
@@ -24,13 +24,13 @@
 #' @param max_iter_ Numeric scalar. Maximum number of iterations.
 #' @param prec_ Numeric scalar. Tolerance for the stopping criterion (duality gap).
 #'
-#' @return Numeric matrix of size pxp. Line \code{k} of the matrix represents
+#' @return Numeric matrix of size pxp. Line `k` of the matrix represents
 #'   the coefficients obtained from the L1-L2 penalized regression of variable
-#'   \code{k} on the others.
+#'   `k` on the others.
 #'
 #' @export
 #'
-#' @seealso \code{\link{mglasso}} for the MGLasso model estimation.
+#' @seealso [mglasso()] for the MGLasso model estimation.
 #'
 #' @examples
 #' \donttest{

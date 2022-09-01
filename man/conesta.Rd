@@ -39,8 +39,8 @@ inverse of sample size.}
 }
 \value{
 Numeric matrix of size pxp. Line \code{k} of the matrix represents
-  the coefficients obtained from the L1-L2 penalized regression of variable
-  \code{k} on the others.
+the coefficients obtained from the L1-L2 penalized regression of variable
+\code{k} on the others.
 }
 \description{
 Solve the MGLasso optimization problem using CONESTA algorithm. Interface to
@@ -48,7 +48,7 @@ the pylearn.parsimony python library.
 }
 \details{
 \emph{COntinuation with NEsterov smoothing in a Shrinkage-Thresholding
-Algorithm} (CONESTA, Hadj-Selem et al. 2018) <doi:10.1109/TMI.2018.2829802>
+Algorithm} (CONESTA, Hadj-Selem et al. 2018) \url{doi:10.1109/TMI.2018.2829802}
 is an algorithm design for solving optimization problems including group-wise
 penalties. This function is an interface with the python solver. The MGLasso
 problem is first reformulated in a problem of the form \deqn{argmin 1/2 ||Y -
@@ -59,7 +59,6 @@ the vectorized form of matrix \eqn{X}.
 \examples{
 \donttest{
 install_conesta()
-rstudioapi::restartSession()
 library(reticulate)
 reticulate::use_condaenv("rmglasso")
 reticulate::py_discover_config()
@@ -84,5 +83,5 @@ res <- conesta(X, 0.1, 0.1)
 
 }
 \seealso{
-\code{\link{mglasso}} for the MGLasso model estimation.
+\code{\link[=mglasso]{mglasso()}} for the MGLasso model estimation.
 }

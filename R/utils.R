@@ -5,7 +5,7 @@ utils::globalVariables(c("group", "Name"))
 #'
 #' `cost` computes the cost function of `Mglasso` method.
 #'
-#' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. \code{diag(beta) = 0}.
+#' @param beta p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.
 #' @param x n by p numeric matrix. Data with variables in columns.
 #' @param lambda1 numeric scalar. Lasso penalization parameter.
 #' @param lambda2 numeric scalar. Fused-group Lasso penalization parameter.

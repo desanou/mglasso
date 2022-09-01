@@ -1,8 +1,8 @@
-#' Plot \code{mglasso} function output.
+#' Plot `mglasso` function output.
 #'
-#' Plot the object returned by the \code{mglasso} function.
+#' Plot the object returned by the `mglasso` function.
 #'
-#' @param mglasso_ Object of class \code{mglasso}.
+#' @param mglasso_ Object of class `mglasso`.
 #' @param levels_ Character vector. Selected levels for which estimated matrices
 #'   will be plot. If NULL plot all levels.
 #'
@@ -34,7 +34,7 @@ plot_mglasso <- function(mglasso_, levels_ = NULL) {
 #' Plot MGLasso Clusterpath
 #'
 #' @param X numeric matrix
-#' @param mglasso_res object of class \code{mglasso}
+#' @param mglasso_res object of class `mglasso`
 #' @param colnames_ columns labels
 #'
 #' @details This function plot the clustering path of mglasso method on the 2 principal components

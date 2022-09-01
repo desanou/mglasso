@@ -11,13 +11,13 @@
 #'
 #' Estimates a gaussian graphical model structure while hierarchically grouping
 #' variables by optimizing a pseudo-likelihood function combining Lasso and
-#' fuse-group Lasso penalties. The problem is solved via the \emph{COntinuation
-#' with NEsterov smoothing in a Shrinkage-Thresholding Algorithm} (Hadj-Selem et
+#' fuse-group Lasso penalties. The problem is solved via the *COntinuation
+#' with NEsterov smoothing in a Shrinkage-Thresholding Algorithm* (Hadj-Selem et
 #' al. 2018). Varying the fusion penalty \eqn{\lambda_2} in a multiplicative
 #' fashion allow to uncover a seemingly hierarchical clustering structure. For
 #' \eqn{\lambda_2 = 0}, the approach is theoretically equivalent to the
-#' Meinshausen-Bühlmann (2006) \emph{neighborhood selection} as resuming to the
-#' optimization of \emph{pseudo-likelihood} function with \eqn{\ell_1} penalty
+#' Meinshausen-Bühlmann (2006) *neighborhood selection* as resuming to the
+#' optimization of *pseudo-likelihood* function with \eqn{\ell_1} penalty
 #' (Rocha et al., 2008). The algorithm stops when all the variables have merged
 #' into one cluster. The criterion used to merge clusters is the
 #' \eqn{\ell_2}-norm distance between regression vectors.
@@ -44,26 +44,26 @@
 #'   penalty in a multiplicative way..
 #' @param precision Tolerance for the stopping criterion (duality gap).
 #' @param weights_ Matrix of weights.
-#' @param type If "initial" use classical version of \bold{MGLasso} without
+#' @param type If "initial" use classical version of **MGLasso** without
 #'   weights.
 #' @param compact Logical scalar. If TRUE, only save results when previous
 #'   clusters are different from current.
 #' @param verbose Logical scalar. Print trace. Default value is FALSE.
 #'
-#' @return A list-like object of class \code{mglasso} is returned.
+#' @return A list-like object of class `mglasso` is returned.
 #'   \item{out}{List of lists. Each element of the list corresponds to a
-#'   clustering level. An element named \code{levelk} contains the regression
-#'   matrix \code{beta} and clusters vector \code{clusters} for a clustering in
-#'   \code{k} clusters. When \code{compact = TRUE} \code{out} has as many
-#'   elements as the number of unique partitions. When set to \code{FALSE}, the
+#'   clustering level. An element named `levelk` contains the regression
+#'   matrix `beta` and clusters vector `clusters` for a clustering in
+#'   `k` clusters. When `compact = TRUE` `out` has as many
+#'   elements as the number of unique partitions. When set to `FALSE`, the
 #'   function returns as many items as the the range of values taken by
-#'   \code{lambda2}.} \item{l1}{the sparsity penalty \code{lambda1} used in the
+#'   `lambda2`.} \item{l1}{the sparsity penalty `lambda1` used in the
 #'   problem solving.}
 #'
 #' @export
 #'
-#' @seealso \code{\link{conesta}} for the problem solver,
-#'   \code{\link{plot_mglasso}} for plotting the output of \code{mglasso}.
+#' @seealso [conesta()] for the problem solver,
+#'   [plot_mglasso()] for plotting the output of `mglasso`.
 #'
 #' @examples
 #' \donttest{

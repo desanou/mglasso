@@ -11,20 +11,20 @@ fun_lines(i, j, beta, fun = `-`, ni = 1, nj = 1)
 
 \item{j}{integer scalar. Index of the second vector.}
 
-\item{beta}{p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. `diag(beta) = 0`.}
+\item{beta}{p by p numeric matrix. In rows, regression vectors coefficients after node-wise regression. \code{diag(beta) = 0}.}
 
 \item{fun}{function. Applied on lines.}
 
-\item{ni}{integer scalar. Weight for vector `i`.}
+\item{ni}{integer scalar. Weight for vector \code{i}.}
 
-\item{nj}{integer scalar. Weight for vector `j`.}
+\item{nj}{integer scalar. Weight for vector \code{j}.}
 }
 \value{
 numeric vector
 }
 \description{
-`fun_lines` applies function `fun` to regression vectors while reordering the coefficients,
-such that the `j`-th coefficient in `beta[j, ]` is permuted with the `i`-th coefficient.
+\code{fun_lines} applies function \code{fun} to regression vectors while reordering the coefficients,
+such that the \code{j}-th coefficient in \code{beta[j, ]} is permuted with the \code{i}-th coefficient.
 }
 \examples{
 beta <- matrix(round(rnorm(9),2), ncol = 3)

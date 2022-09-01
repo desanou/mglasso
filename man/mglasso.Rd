@@ -42,7 +42,7 @@ penalty in a multiplicative way..}
 
 \item{weights_}{Matrix of weights.}
 
-\item{type}{If "initial" use classical version of \bold{MGLasso} without
+\item{type}{If "initial" use classical version of \strong{MGLasso} without
 weights.}
 
 \item{compact}{Logical scalar. If TRUE, only save results when previous
@@ -52,14 +52,14 @@ clusters are different from current.}
 }
 \value{
 A list-like object of class \code{mglasso} is returned.
-  \item{out}{List of lists. Each element of the list corresponds to a
-  clustering level. An element named \code{levelk} contains the regression
-  matrix \code{beta} and clusters vector \code{clusters} for a clustering in
-  \code{k} clusters. When \code{compact = TRUE} \code{out} has as many
-  elements as the number of unique partitions. When set to \code{FALSE}, the
-  function returns as many items as the the range of values taken by
-  \code{lambda2}.} \item{l1}{the sparsity penalty \code{lambda1} used in the
-  problem solving.}
+\item{out}{List of lists. Each element of the list corresponds to a
+clustering level. An element named \code{levelk} contains the regression
+matrix \code{beta} and clusters vector \code{clusters} for a clustering in
+\code{k} clusters. When \code{compact = TRUE} \code{out} has as many
+elements as the number of unique partitions. When set to \code{FALSE}, the
+function returns as many items as the the range of values taken by
+\code{lambda2}.} \item{l1}{the sparsity penalty \code{lambda1} used in the
+problem solving.}
 }
 \description{
 Cluster variables using L2 fusion penalty and simultaneously estimates a
@@ -115,6 +115,6 @@ res$out[[1]]$beta
 }
 }
 \seealso{
-\code{\link{conesta}} for the problem solver,
-  \code{\link{plot_mglasso}} for plotting the output of \code{mglasso}.
+\code{\link[=conesta]{conesta()}} for the problem solver,
+\code{\link[=plot_mglasso]{plot_mglasso()}} for plotting the output of \code{mglasso}.
 }
