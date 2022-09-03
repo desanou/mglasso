@@ -6,13 +6,15 @@ conda_args <- reticulate:::conda_args
 #'
 #' pylearn-parsimony contains the solver CONESTA used for the mglasso problem.
 #'
+#' @param conda Character. Path to conda executable. "auto" finds the path automatically.
 #' @param extra_pack Character vector. Extra-packages to be installed.
 #' @param py_version Character. Python version.
 #'
 #' @return No return value.
 #' @export
 #'
-install_conesta <- function(extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six",
+install_conesta <- function(conda = "auto",
+                            extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six",
                                            "matplotlib"), py_version = '3.8') {
 
   is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
