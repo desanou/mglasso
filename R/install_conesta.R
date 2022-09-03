@@ -1,8 +1,6 @@
 # Inspired from https://github.com/OscarKjell/text/blob/master/R/0_0_text_install.R and
 # https://github.com/OscarKjell/text/blob/master/R/0_0_1_text_initialize.R
 
-conesta_py <<- NULL
-
 #' Install the python library pylearn-parsimony and other required libraries
 #'
 #' pylearn-parsimony contains the solver CONESTA used for the mglasso problem
@@ -77,13 +75,13 @@ install_conesta <- function(conda = "auto",
   }
 }
 
-# the_module <- function()
-#   try(reticulate::import_from_path("conesta_solver",
-#                                    path = path_python()), silent = TRUE)
-#
-# path_python <- function(){
-#   system.file("python", package = "mglasso")
-# }
+the_module <- function()
+  try(reticulate::import_from_path("conesta_solver",
+                                   path = path_python()), silent = TRUE)
+
+path_python <- function(){
+  system.file("python", package = "mglasso")
+}
 
 #' Initialize mglasso required python packages
 #'
@@ -95,10 +93,12 @@ mglasso_initialize <- function(condaenv = "rmglasso") {
 
   reticulate::use_condaenv(condaenv, required = TRUE)
 
-  reticulate::source_python(system.file("python",
-                                        "conesta_solver.py",
-                                        package = "mglasso",
-                                        mustWork = TRUE))
+  # reticulate::source_python(system.file("python",
+  #                                       "conesta_solver.py",
+  #                                       package = "mglasso",
+  #                                       mustWork = TRUE))
+
+  the_module()
 
   message("Successfully initialized mglasso required python packages.")
 }
