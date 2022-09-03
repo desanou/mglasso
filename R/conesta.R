@@ -35,9 +35,10 @@
 #' @examples
 #' \donttest{
 #' install_conesta()
-#' library(reticulate)
-#' reticulate::use_condaenv("rmglasso")
-#' reticulate::py_discover_config()
+#' mglasso_initialize()
+#' #library(reticulate)
+#' #reticulate::use_condaenv("rmglasso")
+#' #reticulate::py_discover_config()
 #' n = 30
 #' K = 2
 #' p = 4

@@ -68,6 +68,7 @@
 #' @examples
 #' \donttest{
 #' #install_conesta()
+#' mglasso_initialize()
 #' n = 50
 #' K = 3
 #' p = 9
