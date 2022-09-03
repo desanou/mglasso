@@ -2,21 +2,28 @@
 % Please edit documentation in R/install_conesta.R
 \name{install_conesta}
 \alias{install_conesta}
-\title{Install CONESTA solver}
+\title{Install the python library pylearn-parsimony and other required libraries}
 \usage{
 install_conesta(
-  extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six", "matplotlib"),
+  conda = "auto",
+  extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy == 1.22.4", "six",
+    "matplotlib"),
   py_version = "3.8"
 )
 }
 \arguments{
+\item{conda}{Character. Path to conda executable. "auto" finds the path automatically.}
+
 \item{extra_pack}{Character vector. Extra-packages to be installed.}
 
-\item{py_version}{Character. Python version.}
+\item{py_version}{Character. Python version. It is advised to use a version ">=3.7,<3.10".
+The latest version under which mglasso was developped is scipy 1.7.1 which is based on python ">=3.7,<3.10".
+In turn, this version of scipy can only be associated with a version of numpy ">=1.16.5,<1.23.0"}
 }
 \value{
 No return value.
 }
 \description{
-Install CONESTA solver
+pylearn-parsimony contains the solver CONESTA used for the mglasso problem
+and is available on github at https://github.com/neurospin/pylearn-parsimony
 }
