@@ -1,3 +1,6 @@
+# Inspired from https://github.com/OscarKjell/text/blob/master/R/0_0_text_install.R
+
+
 #' Install CONESTA solver
 #'
 #' @param extra_pack Character vector. Extra-packages to be installed.
