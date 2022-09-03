@@ -43,7 +43,7 @@ install_conesta <- function(conda = "auto",
   }
 
   # setup environment
-  is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
+  is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE),
                                        error = function (e) {'not installed'})
   if (!is.null(is_rmglasso_env_installed)) {
     packageStartupMessage('mglasso requires the rmglasso conda environment. Attempting to create...')
