@@ -94,9 +94,7 @@ install_conesta <- function(conda = "auto",
 #' @return NULL
 #' @param condaenv character. conda virtual environment name
 #' @export
-mglasso_initialize <- function(
-                               condaenv = "rmglasso",
-                               ) {
+mglasso_initialize <- function(condaenv = "rmglasso") {
 
   reticulate::use_condaenv(condaenv, required = TRUE)
 
