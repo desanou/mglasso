@@ -6,6 +6,7 @@ conda_args <- reticulate:::conda_args
 #'
 #' pylearn-parsimony contains the solver CONESTA used for the mglasso problem.
 #'
+#'
 #' @param conda Character. Path to conda executable. "auto" finds the path automatically.
 #' @param extra_pack Character vector. Extra-packages to be installed.
 #' @param py_version Character. Python version. It is advised to use a version ">=3.7,<3.10".
@@ -32,16 +33,15 @@ install_conesta <- function(conda = "auto",
     # validate that we have conda
     if (!have_conda) {
       cat("No conda was found in the system. ")
-      ans <- utils::menu(c("No", "Yes"), title = "Do you want mglassp to download
+      ans <- utils::menu(c("No", "Yes"), title = "Do you want mglasso to download
                            miniconda using reticulate::install_miniconda()?")
       if (ans == 2) {
-        reticulate::install_miniconda(update = update_conda)
+        reticulate::install_miniconda()
         conda <- tryCatch(reticulate::conda_binary("auto"), error = function(e) NULL)
       } else {
         stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
       }
     }
-    # Windows installation
   }
 
   # setup environment
