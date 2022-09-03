@@ -87,5 +87,7 @@ path_python <- function(){
   system.file("python", package = "mglasso")
 }
 
+mglasso_initialize <- function() {
 
+}
 
