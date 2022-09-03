@@ -22,7 +22,6 @@ Imports:
     ggplot2,
     ggrepel,
     gridExtra,
-    lifecycle,
     Matrix,
     methods,
     R.utils,

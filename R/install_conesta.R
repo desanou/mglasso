@@ -26,9 +26,6 @@ install_conesta <- function(conda = "auto",
                                            "matplotlib"),
                             py_version = '3.8') {
 
-  is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
-                                       error = function (e) {'not installed'})
-
   # Check if conda available on the system
   conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
   have_conda <- !is.null(conda)
@@ -46,6 +43,8 @@ install_conesta <- function(conda = "auto",
   }
 
   # setup environment
+  is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
+                                       error = function (e) {'not installed'})
   if (!is.null(is_rmglasso_env_installed)) {
     packageStartupMessage('mglasso requires the rmglasso conda environment. Attempting to create...')
     #reticulate::use_condaenv(envname = 'rmglasso', python = py_version)
@@ -63,20 +62,20 @@ install_conesta <- function(conda = "auto",
     reticulate::py_install(pack_to_install,
                            envname = "rmglasso",
                            python_version = py_version)
+  }else{
+    message("required packages are already available.")
   }
 
   if (!reticulate::py_module_available("pylearn-parsimony")) {
-    # message('Installing pylearn-parsimony')
-    message('Configuring the env')
+    message('Installing pylearn-parsimony')
     reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE)
 
 
     config <- reticulate::py_config()
-    message('Rmglasso env configured ')
     system2(config$python, c("-m", "pip", "install",
                              shQuote("git+https://github.com/neurospin/pylearn-parsimony.git")))
-
-    message("pylearn-parsimony is installed.")
+  }else{
+    message("pylearn-parsimony is already available")
   }
 }
 
