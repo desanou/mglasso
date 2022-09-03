@@ -8,13 +8,15 @@ conda_args <- reticulate:::conda_args
 #'
 #' @param conda Character. Path to conda executable. "auto" finds the path automatically.
 #' @param extra_pack Character vector. Extra-packages to be installed.
-#' @param py_version Character. Python version.
+#' @param py_version Character. Python version. It is advised to use a version ">=3.7,<3.10".
+#' The latest version under which mglasso was developped is scipy 1.7.1 which is based on python ">=3.7,<3.10".
+#' In turn, this version of scipy can only be associated with a version of numpy ">=1.16.5,<1.23.0"
 #'
 #' @return No return value.
 #' @export
 #'
 install_conesta <- function(conda = "auto",
-                            extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy", "six",
+                            extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy == 1.22.4", "six",
                                            "matplotlib"), py_version = '3.8') {
 
   is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
