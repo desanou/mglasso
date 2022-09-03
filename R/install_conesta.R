@@ -66,10 +66,8 @@ install_conesta <- function(conda = "auto",
     message("required packages are already available.")
   }
 
-  if (!reticulate::py_module_available("pylearn-parsimony")) {
+  if (!reticulate::py_module_available("parsimony")) {
     message('Installing pylearn-parsimony')
-    reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE)
-
 
     config <- reticulate::py_config()
     system2(config$python, c("-m", "pip", "install",
