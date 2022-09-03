@@ -4,7 +4,8 @@ conda_args <- reticulate:::conda_args
 
 #' Install the python library pylearn-parsimony and other required libraries
 #'
-#' pylearn-parsimony contains the solver CONESTA used for the mglasso problem.
+#' pylearn-parsimony contains the solver CONESTA used for the mglasso problem
+#' and is available on github at https://github.com/neurospin/pylearn-parsimony
 #'
 #'
 #' @param conda Character. Path to conda executable. "auto" finds the path automatically.
@@ -17,8 +18,12 @@ conda_args <- reticulate:::conda_args
 #' @export
 #'
 install_conesta <- function(conda = "auto",
-                            extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy == 1.22.4", "six",
-                                           "matplotlib"), py_version = '3.8') {
+                            extra_pack = c("scipy == 1.7.1",
+                                           "scikit-learn",
+                                           "numpy == 1.22.4",
+                                           "six",
+                                           "matplotlib"),
+                            py_version = '3.8') {
 
   is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
                                        error = function (e) {'not installed'})
@@ -27,10 +32,6 @@ install_conesta <- function(conda = "auto",
   conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
   have_conda <- !is.null(conda)
 
-  # Mac and linux
-  if (is_unix()) {
-    # check for explicit conda method
-    # validate that we have conda
     if (!have_conda) {
       cat("No conda was found in the system. ")
       ans <- utils::menu(c("No", "Yes"), title = "Do you want mglasso to download
@@ -42,7 +43,6 @@ install_conesta <- function(conda = "auto",
         stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
       }
     }
-  }
 
   # setup environment
   if (!is.null(is_rmglasso_env_installed)) {
