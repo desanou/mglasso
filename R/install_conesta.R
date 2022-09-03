@@ -1,4 +1,5 @@
-# Inspired from https://github.com/OscarKjell/text/blob/master/R/0_0_text_install.R
+# Inspired from https://github.com/OscarKjell/text/blob/master/R/0_0_text_install.R and
+# https://github.com/OscarKjell/text/blob/master/R/0_0_1_text_initialize.R
 
 conda_args <- reticulate:::conda_args
 
@@ -32,17 +33,17 @@ install_conesta <- function(conda = "auto",
   conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
   have_conda <- !is.null(conda)
 
-    if (!have_conda) {
-      cat("No conda was found in the system. ")
-      ans <- utils::menu(c("No", "Yes"), title = "Do you want mglasso to download
+  if (!have_conda) {
+    cat("No conda was found in the system. ")
+    ans <- utils::menu(c("No", "Yes"), title = "Do you want mglasso to download
                            miniconda using reticulate::install_miniconda()?")
-      if (ans == 2) {
-        reticulate::install_miniconda()
-        conda <- tryCatch(reticulate::conda_binary("auto"), error = function(e) NULL)
-      } else {
-        stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
-      }
+    if (ans == 2) {
+      reticulate::install_miniconda()
+      conda <- tryCatch(reticulate::conda_binary("auto"), error = function(e) NULL)
+    } else {
+      stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
     }
+  }
 
   # setup environment
   if (!is.null(is_rmglasso_env_installed)) {
@@ -87,7 +88,22 @@ path_python <- function(){
   system.file("python", package = "mglasso")
 }
 
-mglasso_initialize <- function() {
+#' Initialize mglasso required python packages
+#'
+#' Initialize mglasso required python packages to call from R.
+#' @return NULL
+#' @param condaenv character. conda virtual environment name
+#' @export
+mglasso_initialize <- function(
+                               condaenv = "rmglasso",
+                               ) {
 
+  reticulate::use_condaenv(condaenv, required = TRUE)
+
+  reticulate::source_python(system.file("python",
+                                        "conesta_solver.py",
+                                        package = "mglasso",
+                                        mustWork = TRUE))
+
+  message("Successfully initialized mglasso required python packages.")
 }
-
