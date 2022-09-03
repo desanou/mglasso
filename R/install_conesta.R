@@ -55,11 +55,11 @@ install_conesta <- function(conda = "auto",
 
     message("pylearn-parsimony is installed.")
   }
-
-  the_module <- function()
-    try(reticulate::import_from_path("conesta_solver",
-                                     path = path_python()), silent = TRUE)
 }
+
+the_module <- function()
+  try(reticulate::import_from_path("conesta_solver",
+                                   path = path_python()), silent = TRUE)
 
 path_python <- function(){
   system.file("python", package = "mglasso")
