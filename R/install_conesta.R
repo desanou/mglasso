@@ -1,6 +1,8 @@
 # Inspired from https://github.com/OscarKjell/text/blob/master/R/0_0_text_install.R and
 # https://github.com/OscarKjell/text/blob/master/R/0_0_1_text_initialize.R
 
+conesta_py <<- NULL
+
 #' Install the python library pylearn-parsimony and other required libraries
 #'
 #' pylearn-parsimony contains the solver CONESTA used for the mglasso problem
