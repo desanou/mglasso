@@ -7,11 +7,8 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing-1)
-[![CRAN
-Status](https://www.r-pkg.org/badges/version/mglasso)](https://CRAN.R-project.org/package=mglasso)
-[![packageversion](https://img.shields.io/badge/package%20version-x86_64-w64-mingw32,%20x86_64,%20mingw32,%20ucrt,%20x86_64,%20mingw32,%20,%204,%202.1,%202022,%2006,%2023,%2082513,%20R,%20R%20version%204.2.1%20(2022-06-23%20ucrt),%20Funny-Looking%20Kid-orange.svg)](https://github.com/desanou/mglasso/blob/master/DESCRIPTION)
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mglasso)](https://CRAN.R-project.org/package=mglasso)
+<!-- [![CRAN Status](https://www.r-pkg.org/badges/version/mglasso)](https://CRAN.R-project.org/package=mglasso) -->
+<!-- [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mglasso)](https://CRAN.R-project.org/package=mglasso) -->
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
