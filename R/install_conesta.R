@@ -20,7 +20,29 @@ install_conesta <- function(conda = "auto",
                                            "matplotlib"), py_version = '3.8') {
 
   is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(envname = 'rmglasso', required = TRUE),
-                                          error = function (e) {'not installed'})
+                                       error = function (e) {'not installed'})
+
+  # Check if conda available on the system
+  conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
+  have_conda <- !is.null(conda)
+
+  # Mac and linux
+  if (is_unix()) {
+    # check for explicit conda method
+    # validate that we have conda
+    if (!have_conda) {
+      cat("No conda was found in the system. ")
+      ans <- utils::menu(c("No", "Yes"), title = "Do you want mglassp to download
+                           miniconda using reticulate::install_miniconda()?")
+      if (ans == 2) {
+        reticulate::install_miniconda(update = update_conda)
+        conda <- tryCatch(reticulate::conda_binary("auto"), error = function(e) NULL)
+      } else {
+        stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
+      }
+    }
+    # Windows installation
+  }
 
   # setup environment
   if (!is.null(is_rmglasso_env_installed)) {
@@ -64,5 +86,6 @@ the_module <- function()
 path_python <- function(){
   system.file("python", package = "mglasso")
 }
+
 
 
