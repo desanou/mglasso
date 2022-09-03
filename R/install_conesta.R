@@ -80,13 +80,13 @@ install_conesta <- function(conda = "auto",
   }
 }
 
-the_module <- function()
-  try(reticulate::import_from_path("conesta_solver",
-                                   path = path_python()), silent = TRUE)
-
-path_python <- function(){
-  system.file("python", package = "mglasso")
-}
+# the_module <- function()
+#   try(reticulate::import_from_path("conesta_solver",
+#                                    path = path_python()), silent = TRUE)
+#
+# path_python <- function(){
+#   system.file("python", package = "mglasso")
+# }
 
 #' Initialize mglasso required python packages
 #'
