@@ -9,7 +9,7 @@
 #'
 #' @param conda Character. Path to conda executable. "auto" finds the path automatically.
 #' @param extra_pack Character vector. Extra-packages to be installed.
-#' @param py_version Character. Python version. It is advised to use a version ">=3.7,<3.10".
+#' @param conda_py_version Character. Python version. It is advised to use a version ">=3.7,<3.10".
 #' The latest version under which mglasso was developped is scipy 1.7.1 which is based on python ">=3.7,<3.10".
 #' In turn, this version of scipy can only be associated with a version of numpy ">=1.16.5,<1.23.0"
 #'
@@ -22,7 +22,7 @@ install_conesta <- function(conda = "auto",
                                            "numpy == 1.22.4",
                                            "six",
                                            "matplotlib"),
-                            py_version = '3.8') {
+                            conda_py_version = '3.8') {
 
   # Check if conda available on the system
   conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
@@ -45,8 +45,8 @@ install_conesta <- function(conda = "auto",
                                        error = function (e) {'not installed'})
   if (!is.null(is_rmglasso_env_installed)) {
     packageStartupMessage('mglasso requires the rmglasso conda environment. Attempting to create...')
-    #reticulate::use_condaenv(envname = 'rmglasso', python = py_version)
-    reticulate::conda_create(envname = 'rmglasso', python_version = py_version)
+    #reticulate::use_condaenv(envname = 'rmglasso', python = conda_py_version)
+    reticulate::conda_create(envname = 'rmglasso', python_version = conda_py_version)
     message("Env created.")
   }
 
@@ -59,7 +59,7 @@ install_conesta <- function(conda = "auto",
   if(!identical(pack_to_install, character(0))){
     reticulate::py_install(pack_to_install,
                            envname = "rmglasso",
-                           python_version = py_version)
+                           python_version = conda_py_version)
   }else{
     message("required packages are already available.")
   }
@@ -73,6 +73,10 @@ install_conesta <- function(conda = "auto",
   }else{
     message("pylearn-parsimony is already available")
   }
+
+  if (rstudioapi::hasFun("restartSession"))
+    rstudioapi::restartSession()
+
 }
 
 the_module <- function()
