@@ -25,7 +25,8 @@ Imports:
     Matrix,
     methods,
     R.utils,
-    reticulate
+    reticulate,
+    rstudioapi
 Suggests: 
     knitr,
     mvtnorm,
@@ -34,7 +35,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 ByteCompile: true
-Config/reticulate: list( packages = list( list(package = c("")) ) )
+Config/reticulate: list( packages = list( list(package = c()) ) )
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.2.1

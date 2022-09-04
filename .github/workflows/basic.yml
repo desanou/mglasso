@@ -35,18 +35,24 @@ jobs:
         use-public-rspm: true
 
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: "3.8"
 
     - name: Check dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
-        extra-packages: rcmdcheck
+        extra-packages: rcmdcheck reticulate
 
     - name: Setup rmglasso env
-      run: reticulate::conda_create(envname = 'rmglasso', python_version = 3.8)
       shell: Rscript {0}
+      run: |
+          library(reticulate)
+          conda_create(envname = 'rmglasso', python_version = 3.8)
+
+          path_to_python <- conda_python("rmglasso")
+          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
+                     Sys.getenv("GITHUB_ENV"))
 
     - name: Check
       run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--ignore-vignettes", "--no-vignettes"), build_args = c("--no-manual", "--no-build-vignettes"), error_on = "error")

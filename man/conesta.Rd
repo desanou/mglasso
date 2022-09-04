@@ -58,15 +58,24 @@ the vectorized form of matrix \eqn{X}.
 }
 \examples{
 \donttest{
-reticulate::conda_list()
+library(mglasso)
+
+#reticulate::conda_create(envname = 'rmglasso', python_version = 3.8)
+#path_to_python <- reticulate::conda_python("rmglasso")
+#Sys.setenv(RETICULATE_PYTHON = path_to_python)
+
 install_conesta()
-temp <- reticulate::py_discover_config()
-temp
-Sys.setenv(RETICULATE_PYTHON = temp$python)
 reticulate::use_condaenv("rmglasso", required = TRUE)
-#mglasso_initialize()
-reticulate::py_discover_config()
+
 reticulate::conda_list()
+
+#temp <- reticulate::py_discover_config()
+#temp
+#Sys.setenv(RETICULATE_PYTHON = temp$python)
+#mglasso_initialize()
+
+reticulate::py_discover_config()
+
 n = 30
 K = 2
 p = 4

@@ -8,7 +8,8 @@ install_conesta(
   conda = "auto",
   extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy == 1.22.4", "six",
     "matplotlib"),
-  conda_py_version = "3.8"
+  conda_py_version = "3.8",
+  restart_session = T
 )
 }
 \arguments{
