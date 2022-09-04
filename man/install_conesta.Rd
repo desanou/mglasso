@@ -8,7 +8,7 @@ install_conesta(
   conda = "auto",
   extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy == 1.22.4", "six",
     "matplotlib"),
-  py_version = "3.8"
+  conda_py_version = "3.8"
 )
 }
 \arguments{
@@ -16,7 +16,7 @@ install_conesta(
 
 \item{extra_pack}{Character vector. Extra-packages to be installed.}
 
-\item{py_version}{Character. Python version. It is advised to use a version ">=3.7,<3.10".
+\item{conda_py_version}{Character. Python version. It is advised to use a version ">=3.7,<3.10".
 The latest version under which mglasso was developped is scipy 1.7.1 which is based on python ">=3.7,<3.10".
 In turn, this version of scipy can only be associated with a version of numpy ">=1.16.5,<1.23.0"}
 }
@@ -26,4 +26,5 @@ No return value.
 \description{
 pylearn-parsimony contains the solver CONESTA used for the mglasso problem
 and is available on github at https://github.com/neurospin/pylearn-parsimony
+At this stage, we only support conda virtual environments.
 }

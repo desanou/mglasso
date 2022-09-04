@@ -5,6 +5,7 @@
 #'
 #' pylearn-parsimony contains the solver CONESTA used for the mglasso problem
 #' and is available on github at https://github.com/neurospin/pylearn-parsimony
+#' At this stage, we only support conda virtual environments.
 #'
 #'
 #' @param conda Character. Path to conda executable. "auto" finds the path automatically.
@@ -23,32 +24,6 @@ install_conesta <- function(conda = "auto",
                                            "six",
                                            "matplotlib"),
                             conda_py_version = '3.8') {
-
-  # Check if conda available on the system
-  conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
-  have_conda <- !is.null(conda)
-
-  if (!have_conda) {
-    cat("No conda was found in the system. ")
-    ans <- utils::menu(c("No", "Yes"), title = "Do you want mglasso to download
-                           miniconda using reticulate::install_miniconda()?")
-    if (ans == 2) {
-      reticulate::install_miniconda()
-      conda <- tryCatch(reticulate::conda_binary("auto"), error = function(e) NULL)
-    } else {
-      stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
-    }
-  }
-
-  # setup environment
-  is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE),
-                                       error = function (e) {'not installed'})
-  if (!is.null(is_rmglasso_env_installed)) {
-    packageStartupMessage('mglasso requires the rmglasso conda environment. Attempting to create...')
-    #reticulate::use_condaenv(envname = 'rmglasso', python = conda_py_version)
-    reticulate::conda_create(envname = 'rmglasso', python_version = conda_py_version)
-    message("Env created.")
-  }
 
   reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE)
 
@@ -74,8 +49,8 @@ install_conesta <- function(conda = "auto",
     message("pylearn-parsimony is already available")
   }
 
-  if (rstudioapi::hasFun("restartSession"))
-    rstudioapi::restartSession()
+  # if (rstudioapi::hasFun("restartSession"))
+  #   rstudioapi::restartSession()
 
 }
 
