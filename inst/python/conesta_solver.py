@@ -5,7 +5,7 @@ import numpy as np
 import scipy
 from scipy import sparse
 
-def conesta(X, lam1, lam2, beta_warm=None, type_="initial", W_=None, mean_ = False, max_iter_=1e4, prec_=1e-2):
+def conesta_py(X, lam1, lam2, beta_warm=None, type_="initial", W_=None, mean_ = False, max_iter_=1e4, prec_=1e-2):
   X=np.array(X)
   n=X.shape[0]
   p=X.shape[1]
