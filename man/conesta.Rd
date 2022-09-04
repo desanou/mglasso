@@ -61,7 +61,8 @@ the vectorized form of matrix \eqn{X}.
 reticulate::conda_list()
 install_conesta()
 reticulate::py_discover_config()
-mglasso_initialize()
+reticulate::use_condaenv("rmglasso", required = TRUE)
+#mglasso_initialize()
 reticulate::py_discover_config()
 reticulate::conda_list()
 n = 30
