@@ -36,7 +36,9 @@
 #' \donttest{
 #' reticulate::conda_list()
 #' install_conesta()
-#' reticulate::py_discover_config()
+#' temp <- reticulate::py_discover_config()
+#' temp
+#' Sys.setenv(RETICULATE_PYTHON = temp$python)
 #' reticulate::use_condaenv("rmglasso", required = TRUE)
 #' #mglasso_initialize()
 #' reticulate::py_discover_config()
