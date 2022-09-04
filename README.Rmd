@@ -25,15 +25,13 @@ knitr::opts_chunk$set(
 
 ## Method 
 
-This repository provides an implementation of the `MGLasso` (Multiscale Graphical Lasso) algorithm: a novel approach for estimating sparse Gaussian Graphical Models with the addition of a group-fused Lasso penalty. 
+This repository provides an implementation of the `MGLasso` (Multiscale Graphical Lasso) algorithm: an approach for estimating sparse Gaussian Graphical Models with the addition of a group-fused Lasso penalty. 
 
-`MGLasso` is described in the paper [Inference of Multiscale Gaussian Graphical Model](https://desanou.github.io/multiscale_glasso/). `MGLasso` has three major contributions:
+`MGLasso` is described in the paper [Inference of Multiscale Gaussian Graphical Model](https://desanou.github.io/multiscale_glasso/). `MGLasso` has these contributions:
 
 -   We simultaneously infer a network and estimate a clustering structure by combining the [neighborhood selection](https://arxiv.org/abs/math/0608017) approach (Meinshausen and Bühlman, 2006) and [convex clustering](https://www.di.ens.fr/~fbach/419_icmlpaper.pdf) (Hocking et al. 2011).
 
--   We use a continuation with Nesterov smoothing in a shrinkage-thresholding algorithm ([`CONESTA`](https://arxiv.org/abs/1605.09658), Hadj-Selem et al. 2018) to solve the optimization problem .
-
--   We show numerically that `MGLasso` performs better than [`GLasso`](https://arxiv.org/abs/0708.3517)(Friedman et al. 2007) in terms of support recovery. The clustering performances of `MGLasso` can be improved by the addition of a weight term to calibrate the variable fusion regularizer.
+-   We use a continuation with Nesterov smoothing in a shrinkage-thresholding algorithm ([`CONESTA`](https://arxiv.org/abs/1605.09658), Hadj-Selem et al. 2018) to solve the optimization problem.
 
 To solve the `MGLasso` problem, we seek the regression vectors $\beta^i$ that minimize   
 

@@ -36,9 +36,6 @@
 #' \donttest{
 #' install_conesta()
 #' mglasso_initialize()
-#' #library(reticulate)
-#' #reticulate::use_condaenv("rmglasso")
-#' #reticulate::py_discover_config()
 #' n = 30
 #' K = 2
 #' p = 4
@@ -59,8 +56,6 @@
 #' }
 #'
 conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
-  # the_module()$conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
-  #                      max_iter_=1e4, prec_=1e-2)
-  conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
-                               max_iter_=1e4, prec_=1e-2)
+  the_module()$conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
+                       max_iter_=1e4, prec_=1e-2)
 }

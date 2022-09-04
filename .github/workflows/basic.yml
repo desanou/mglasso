@@ -18,7 +18,7 @@ jobs:
         config:
           - {os: macOS-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-#          - {os: windows-latest,   r: 'release'}
+          - {os: windows-latest,   r: 'release'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -44,8 +44,8 @@ jobs:
       with:
         extra-packages: rcmdcheck
 
-    - name: Setup r-reticulate env
-      run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
+    - name: Setup rmglasso env
+      run: reticulate::conda_create(envname = 'rmglasso', python_version = 3.8)
       shell: Rscript {0}
 
     - name: Check

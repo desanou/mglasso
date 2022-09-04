@@ -93,11 +93,6 @@ mglasso_initialize <- function(condaenv = "rmglasso") {
 
   reticulate::use_condaenv(condaenv, required = TRUE)
 
-  # reticulate::source_python(system.file("python",
-  #                                       "conesta_solver.py",
-  #                                       package = "mglasso",
-  #                                       mustWork = TRUE))
-
   the_module()
 
   message("Successfully initialized mglasso required python packages.")
