@@ -33,10 +33,10 @@
 #' @seealso [mglasso()] for the MGLasso model estimation.
 #'
 #' @examples
-#' #dontrun
-#' #mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
-#' #reticulate::use_condaenv("rmglasso", required = TRUE)
-#' #reticulate::py_config()
+#' \dontrun{# because of installation of external packages during checks
+#' mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
+#' reticulate::use_condaenv("rmglasso", required = TRUE)
+#' reticulate::py_config()
 #
 #' n = 30
 #' K = 2
@@ -55,7 +55,7 @@
 #' X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 #' X <- scale(X)
 #' res <- conesta(X, 0.1, 0.1)
-#' #
+#' }
 
 conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
 
