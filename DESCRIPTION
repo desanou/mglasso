@@ -42,11 +42,11 @@ Config/reticulate:
             list(package = "numpy", version = "1.22.4", pip = FALSE),
             list(package = "matplotlib", pip = FALSE),
             list(package = "scikit-learn", pip = FALSE),
-            list(package = "six", pip = FALSE)
+            list(package = "six", pip = FALSE),
+            list(package = "pylearn-parsimony", version = "0.3.1", pip = TRUE)
             )
         )
 Encoding: UTF-8
-Language: en-US
 RoxygenNote: 7.2.1
 URL: https://desanou.github.io/mglasso/
 Roxygen: list(markdown = TRUE)
