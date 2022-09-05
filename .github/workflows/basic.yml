@@ -48,11 +48,23 @@ jobs:
       shell: Rscript {0}
       run: |
           library(reticulate)
-          conda_create(envname = 'rmglasso', python_version = 3.8)
+          extra_pack = c("scipy == 1.7.1", "scikit-learn", "numpy == 1.22.4",
+                          "six", "matplotlib")
+          reticulate::py_install(packages = c("pylearn-parsimony", extra_pack),
+                         envname = "rmglasso",
+                         method = "conda"
+                         conda = "auto",
+                         python_version = 3.8,
+                         pip = TRUE,
+                         pip_options = 'git+https://github.com/neurospin/pylearn-parsimony.git')
+
+          if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::hasFun("restartSession"))
+              rstudioapi::restartSession()
 
           path_to_python <- conda_python("rmglasso")
           writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
                      Sys.getenv("GITHUB_ENV"))
+          reticulate::py_config()
 
     - name: Check
       run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--ignore-vignettes", "--no-vignettes"), build_args = c("--no-manual", "--no-build-vignettes"), error_on = "error")
