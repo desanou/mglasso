@@ -37,15 +37,7 @@
 #' mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
 #' reticulate::use_condaenv("rmglasso", required = TRUE)
 #' reticulate::py_config()
-#'
-#' reticulate::py_discover_config()
-#' reticulate::py_module_available("numpy")
-#' reticulate::py_module_available("scipy")
-#' reticulate::py_module_available("six")
-#' reticulate::py_module_available("matplotlib")
-#' reticulate::py_module_available("sklearn.preprocessing")
-#' "pylearn-parsimony" %in% reticulate::py_list_packages()$package
-#'
+#
 #' n = 30
 #' K = 2
 #' p = 4
@@ -66,13 +58,7 @@
 #' }
 
 conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
-  # the_module()$conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
-  #                      max_iter_=1e4, prec_=1e-2)
 
-  # path_python <-system.file("python", package = "mglasso")
-  # modules <- reticulate::py_run_file(paste0(path_python, "/conesta_solver.py"))
-  # modules <- reticulate::import_from_path("conesta_solver", path = path_python, delay_load = TRUE)
-  # reticulate::source_python(file = paste0(path_python, "/conesta_solver.py"))
   solver_module$conesta_py(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
                        max_iter_=1e4, prec_=1e-2)
 }

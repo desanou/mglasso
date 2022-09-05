@@ -1,5 +1,4 @@
-# Inspired from https://github.com/OscarKjell/text/blob/master/R/0_0_text_install.R and
-# https://github.com/OscarKjell/text/blob/master/R/0_0_1_text_initialize.R
+# Inspired from
 # https://github.com/mrchypark/theeuh/blob/5dbe086967ba46d62f0ef3ca8c8efa9f33dcf66c/R/install.R
 
 #' Install the python library pylearn-parsimony and other required libraries
@@ -53,80 +52,4 @@ install_pylearn_parsimony <- function(method = c("auto", "virtualenv", "conda"),
     rstudioapi::restartSession()
 
   invisible(NULL)
-
-  # Check if conda available on the system
-  # conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
-  # have_conda <- !is.null(conda)
-  #
-  # if (!have_conda) {
-  #   cat("No conda was found in the system. ")
-  #   ans <- utils::menu(c("No", "Yes"), title = "Do you want mglasso to download
-  #                          miniconda using reticulate::install_miniconda()?")
-  #   if (ans == 2) {
-  #     reticulate::install_miniconda()
-  #     conda <- tryCatch(reticulate::conda_binary("auto"), error = function(e) NULL)
-  #   } else {
-  #     stop("Conda environment installation failed (no conda binary found)\n", call. = FALSE)
-  #   }
-  # }
-
-  # setup environment
-  # is_rmglasso_env_installed = tryCatch(reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE),
-  #                                      error = function (e) {'not installed'})
-  # if (!is.null(is_rmglasso_env_installed)) {
-  #   packageStartupMessage('mglasso requires the rmglasso conda environment. Attempting to create...')
-  #   reticulate::conda_create(envname = 'rmglasso', python_version = conda_py_version)
-  #   message("Env created.")
-  # }
-  #
-  # reticulate::use_condaenv(condaenv = 'rmglasso', required = TRUE)
-  #
-  # check_install <- sapply(extra_pack, reticulate::py_module_available)
-  #
-  # pack_to_install <- extra_pack[!check_install]
-  #
-  # if(!identical(pack_to_install, character(0))){
-  #   reticulate::conda_install(envname = "rmglasso",
-  #                             pack_to_install,
-  #                             python_version = conda_py_version)
-  # }else{
-  #   message("required packages are already available.")
-  # }
-  #
-  # if (!reticulate::py_module_available("parsimony")) {
-  #   message('Installing pylearn-parsimony')
-  #
-  #   config <- reticulate::py_discover_config()
-  #   system2(config$python, c("-m", "pip", "install", "--quiet",
-  #                            shQuote("git+https://github.com/neurospin/pylearn-parsimony.git")))
-  # }else{
-  #   message("pylearn-parsimony is already available")
-  # }
-
-  # path_to_python <- reticulate::conda_python("rmglasso")
-  # Sys.setenv(RETICULATE_PYTHON = path_to_python)
-  # writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-  #            Sys.getenv("GITHUB_ENV"))
 }
-
-# the_module <- function()
-#   try(reticulate::import_from_path("conesta_solver",
-#                                    path = path_python(),
-#                                    delay_load = TRUE))
-#
-# path_python <- function(){
-#   system.file("python", package = "mglasso")
-# }
-
-#' Initialize mglasso required python packages
-#'
-#' Initialize mglasso required python packages to call from R.
-#' @return NULL
-#' @param condaenv character. conda virtual environment name
-#' @export
-# mglasso_initialize <- function(condaenv = "rmglasso") {
-#
-#   reticulate::use_condaenv(condaenv, required = TRUE)
-#
-#   message("Successfully initialized mglasso required modules.")
-# }
