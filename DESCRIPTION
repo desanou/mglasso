@@ -50,3 +50,4 @@ Encoding: UTF-8
 RoxygenNote: 7.2.1
 URL: https://desanou.github.io/mglasso/
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3

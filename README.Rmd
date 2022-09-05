@@ -67,13 +67,17 @@ reticulate::install_miniconda()
 ```{r eval = FALSE}
 # install.packages('mglasso')
 remotes::install_github("desanou/mglasso")
-mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
+```
+```{r}
+library(mglasso)
+install_pylearn_parsimony(envname = "rmglasso", method = "conda")
 reticulate::use_condaenv("rmglasso", required = TRUE)
 reticulate::py_config()
 ```
+The `conesta_solver` is delay loaded. See `reticulate::import_from_path` for details.
+
 
 An example of use is given below.
-
 
 ## Illustration on a simple model  
 
@@ -106,24 +110,23 @@ X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.correlation))
 colnames(X) <- LETTERS[1:9]
 ```
 
-### Run `mglasso()`  
+### Run `mglasso()`
 
 We set the sparsity level $\lambda_1$ to $0.2$ and rescaled it with the size of the sample.
 
 ```{r }
-library(mglasso)
 X <- scale(X)    
 res <- mglasso(X, lambda1 = 0.2*n, lambda2_start = 0.1, fuse_thresh = 1e-3, verbose = FALSE)
 ```
 
 To launch a unique run of the objective function call the `conesta` function. 
-```{r eval=FALSE}
+```{r}
 temp <- mglasso::conesta(X, lam1 = 0.2*n, lam2 = 0.1)
 ```
 
 #### Estimated clustering path   
 We plot the clustering path of `mglasso` method on the 2 principal components axis of $X$. The path is drawn on the predicted $X$'s.
-```{r eval=FALSE}
+```{r}
 library(ggplot2)
 library(ggrepel)
 mglasso:::plot_clusterpath(as.matrix(X), res)
@@ -131,7 +134,7 @@ mglasso:::plot_clusterpath(as.matrix(X), res)
 
 #### Estimated adjacency matrices along the clustering path   
 As the the fusion penalty increases from `level9` to `level1` we observe a progressive fusion of adjacent edges.  
-```{r eval=FALSE}
+```{r}
 plot_mglasso(res)
 ```
 

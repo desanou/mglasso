@@ -1,5 +1,5 @@
 # Inspired from
-# https://github.com/mrchypark/theeuh/blob/5dbe086967ba46d62f0ef3ca8c8efa9f33dcf66c/R/install.R
+# https://github.com/rstudio/tensorflow/blob/v2.9.0/R/install.R
 
 #' Install the python library pylearn-parsimony and other required libraries
 #'
