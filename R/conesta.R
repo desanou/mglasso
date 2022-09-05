@@ -76,10 +76,10 @@ conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL,
   # the_module()$conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
   #                      max_iter_=1e4, prec_=1e-2)
 
-  path_python <-system.file("python", package = "mglasso")
+  # path_python <-system.file("python", package = "mglasso")
   # modules <- reticulate::py_run_file(paste0(path_python, "/conesta_solver.py"))
   ##modules <- reticulate::import_from_path("conesta_solver", path = path_python, delay_load = TRUE)
-  reticulate::source_python(file = paste0(path_python, "/conesta_solver.py"))
-  conesta_py(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
+  # reticulate::source_python(file = paste0(path_python, "/conesta_solver.py"))
+  solver_module$conesta_py(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
                        max_iter_=1e4, prec_=1e-2)
 }
