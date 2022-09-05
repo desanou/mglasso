@@ -57,10 +57,10 @@ problem is first reformulated in a problem of the form \deqn{argmin 1/2 ||Y -
 the vectorized form of matrix \eqn{X}.
 }
 \examples{
-#dontrun
-#mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
-#reticulate::use_condaenv("rmglasso", required = TRUE)
-#reticulate::py_config()
+\dontrun{# because of installation of external packages during checks
+mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
+reticulate::use_condaenv("rmglasso", required = TRUE)
+reticulate::py_config()
 n = 30
 K = 2
 p = 4
@@ -78,7 +78,7 @@ set.seed(11)
 X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
 X <- scale(X)
 res <- conesta(X, 0.1, 0.1)
-#
+}
 }
 \seealso{
 \code{\link[=mglasso]{mglasso()}} for the MGLasso model estimation.

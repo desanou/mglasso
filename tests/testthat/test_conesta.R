@@ -4,8 +4,6 @@ testthat::test_that("conesta returns a matrix.", {
 
   print("Testing conesta solver on a block diagonal model ...")
 
-  install_conesta()
-
   n = 30
   K = 2
   p = 4
@@ -21,8 +19,6 @@ testthat::test_that("conesta returns a matrix.", {
   set.seed(11)
   X <- mvtnorm::rmvnorm(n, mean = rep(0,p), sigma = as.matrix(mat.covariance))
   X <- scale(X)
-
-  reticulate::use_virtualenv(virtualenv = 'r-reticulate', required = TRUE)
 
   res <- conesta(X = X, lam1 = 0.1, lam2 = 0.1)
 
