@@ -33,25 +33,18 @@
 #' @seealso [mglasso()] for the MGLasso model estimation.
 #'
 #' @examples
-#' \donttest{
-#'
-#' #library(mglasso)
-#'
-#' #reticulate::conda_create(envname = 'rmglasso', python_version = 3.8)
-#' #path_to_python <- reticulate::conda_python("rmglasso")
-#' #Sys.setenv(RETICULATE_PYTHON = path_to_python)
-#'
-#' #install_conesta()
+#' \dontrun{
+#' mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
 #' reticulate::use_condaenv("rmglasso", required = TRUE)
-#'
-#' reticulate::conda_list()
-#'
-#' #temp <- reticulate::py_discover_config()
-#' #temp
-#' #Sys.setenv(RETICULATE_PYTHON = temp$python)
-#' #mglasso_initialize()
+#' reticulate::py_config()
 #'
 #' reticulate::py_discover_config()
+#' reticulate::py_module_available("numpy")
+#' reticulate::py_module_available("scipy")
+#' reticulate::py_module_available("six")
+#' reticulate::py_module_available("matplotlib")
+#' reticulate::py_module_available("sklearn.preprocessing")
+#' "pylearn-parsimony" %in% reticulate::py_list_packages()$package
 #'
 #' n = 30
 #' K = 2
@@ -59,10 +52,10 @@
 #' rho = 0.85
 #' blocs <- list()
 #' for (j in 1:K) {
-#'   bloc <- matrix(rho, nrow = p/K, ncol = p/K)
-#'   for(i in 1:(p/K)) { bloc[i,i] <- 1 }
-#'   blocs[[j]] <- bloc
-#' }
+#'  bloc <- matrix(rho, nrow = p/K, ncol = p/K)
+#'    for(i in 1:(p/K)) { bloc[i,i] <- 1 }
+#'    blocs[[j]] <- bloc
+#'    }
 #'
 #' mat.covariance <- Matrix::bdiag(blocs)
 #' mat.covariance
@@ -71,14 +64,14 @@
 #' X <- scale(X)
 #' res <- conesta(X, 0.1, 0.1)
 #' }
-#'
+
 conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL, mean_ = FALSE, max_iter_=1e4, prec_=1e-2) {
   # the_module()$conesta(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
   #                      max_iter_=1e4, prec_=1e-2)
 
   # path_python <-system.file("python", package = "mglasso")
   # modules <- reticulate::py_run_file(paste0(path_python, "/conesta_solver.py"))
-  ##modules <- reticulate::import_from_path("conesta_solver", path = path_python, delay_load = TRUE)
+  # modules <- reticulate::import_from_path("conesta_solver", path = path_python, delay_load = TRUE)
   # reticulate::source_python(file = paste0(path_python, "/conesta_solver.py"))
   solver_module$conesta_py(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
                        max_iter_=1e4, prec_=1e-2)
