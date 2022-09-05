@@ -89,9 +89,7 @@ where \eqn{\beta^i} is the vector of coefficients obtained after regression
 \eqn{\beta_j^i} with \eqn{\beta_i^j}.
 }
 \examples{
-\donttest{
-#install_conesta()
-#mglasso_initialize()
+\dontrun{
 reticulate::use_condaenv("rmglasso", required = TRUE)
 n = 50
 K = 3

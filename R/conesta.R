@@ -33,7 +33,7 @@
 #' @seealso [mglasso()] for the MGLasso model estimation.
 #'
 #' @examples
-#' #dontrun{
+#' #dontrun
 #' #mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
 #' #reticulate::use_condaenv("rmglasso", required = TRUE)
 #' #reticulate::py_config()
