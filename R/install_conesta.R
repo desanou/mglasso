@@ -23,8 +23,9 @@ install_conesta <- function(conda = "auto",
                                            "numpy == 1.22.4",
                                            "six",
                                            "matplotlib"),
-                            conda_py_version = '3.8',
-                            restart_session = T) {
+                            conda_py_version = '3.8'
+                            # ,restart_session = F
+                            ) {
 
   # Check if conda available on the system
   conda <- tryCatch(reticulate::conda_binary(conda), error = function(e) NULL)
@@ -69,16 +70,16 @@ install_conesta <- function(conda = "auto",
     message('Installing pylearn-parsimony')
 
     config <- reticulate::py_discover_config()
-    system2(config$python, c("-m", "pip", "install",
+    system2(config$python, c("-m", "pip", "install", "--quiet",
                              shQuote("git+https://github.com/neurospin/pylearn-parsimony.git")))
   }else{
     message("pylearn-parsimony is already available")
   }
 
-  if (restart_session &&
-      requireNamespace("rstudioapi", quietly = TRUE) &&
-      rstudioapi::hasFun("restartSession"))
-    rstudioapi::restartSession()
+  # if (restart_session &&
+  #     requireNamespace("rstudioapi", quietly = TRUE) &&
+  #     rstudioapi::hasFun("restartSession"))
+  #   rstudioapi::restartSession()
 
   # path_to_python <- reticulate::conda_python("rmglasso")
   # Sys.setenv(RETICULATE_PYTHON = path_to_python)

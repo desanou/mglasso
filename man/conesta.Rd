@@ -58,13 +58,13 @@ the vectorized form of matrix \eqn{X}.
 }
 \examples{
 \donttest{
-library(mglasso)
+#library(mglasso)
 
 #reticulate::conda_create(envname = 'rmglasso', python_version = 3.8)
 #path_to_python <- reticulate::conda_python("rmglasso")
 #Sys.setenv(RETICULATE_PYTHON = path_to_python)
 
-install_conesta()
+#install_conesta()
 reticulate::use_condaenv("rmglasso", required = TRUE)
 
 reticulate::conda_list()

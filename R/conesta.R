@@ -34,13 +34,13 @@
 #'
 #' @examples
 #' \donttest{
-#' library(mglasso)
+#' #library(mglasso)
 #'
 #' #reticulate::conda_create(envname = 'rmglasso', python_version = 3.8)
 #' #path_to_python <- reticulate::conda_python("rmglasso")
 #' #Sys.setenv(RETICULATE_PYTHON = path_to_python)
 #'
-#' install_conesta()
+#' #install_conesta()
 #' reticulate::use_condaenv("rmglasso", required = TRUE)
 #'
 #' reticulate::conda_list()
@@ -76,8 +76,9 @@ conesta <- function(X, lam1, lam2, beta_warm = c(0), type_="initial", W_ = NULL,
   #                      max_iter_=1e4, prec_=1e-2)
 
   path_python <-system.file("python", package = "mglasso")
-  modules <- reticulate::py_run_file(paste0(path_python, "/conesta_solver.py"))
+  # modules <- reticulate::py_run_file(paste0(path_python, "/conesta_solver.py"))
   ##modules <- reticulate::import_from_path("conesta_solver", path = path_python, delay_load = TRUE)
-  modules$conesta_py(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
+  reticulate::source_python(file = paste0(path_python, "/conesta_solver.py"))
+  conesta_py(X=X, lam1=lam1, lam2=lam2, beta_warm=beta_warm, type_=type_, W_=W_, mean_ = FALSE,
                        max_iter_=1e4, prec_=1e-2)
 }
