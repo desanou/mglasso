@@ -52,7 +52,7 @@ jobs:
                           "six", "matplotlib")
           reticulate::py_install(packages = c("pylearn-parsimony", extra_pack),
                          envname = "rmglasso",
-                         method = "conda"
+                         method = "conda",
                          conda = "auto",
                          python_version = 3.8,
                          pip = TRUE,
