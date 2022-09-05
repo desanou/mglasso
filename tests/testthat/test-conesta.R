@@ -1,6 +1,6 @@
 testthat::test_that("conesta solver is loaded and works.", {
 
-  skip_if_no_pylearn_parsimony()
+  skip_on_cran()
 
   print("Testing conesta solver on a block diagonal model ...")
 
