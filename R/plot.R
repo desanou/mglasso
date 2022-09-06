@@ -1,3 +1,6 @@
+# Global variables
+globalVariables(c("group", "Name"))
+
 #' Plot `mglasso` function output.
 #'
 #' Plot the object returned by the `mglasso` function.

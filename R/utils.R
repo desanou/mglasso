@@ -1,6 +1,3 @@
-# Global variables
-utils::globalVariables(c("group", "Name"))
-
 #' `Mglasso` cost function
 #'
 #' `cost` computes the cost function of `Mglasso` method.
