@@ -95,3 +95,26 @@ def precision2regression(K):
             if i!=j:
                 M[i,j]= - K[i,j]/K[i,i]
     return(M) 
+
+# function used for numerical experiments 
+def conesta_rwrapper(X, lam1, lam2, beta_warm=None, type_="initial", W_=None, mean_ = False, max_iter_=1e4, prec_=1e-2):
+  X=np.array(X)
+  n=X.shape[0]
+  p=X.shape[1]
+  
+  X=sklearn.preprocessing.scale(X)
+  y=X.reshape(n*p,1,order='F')
+  Xvec=np.delete(np.kron(np.identity(p),X),range(0,p*p,p+1),axis=1)
+  A_=linear_operator_from_num_variables(p, type_, W_)
+  
+  if beta_warm is not None:
+    beta_warm = np.array(beta_warm)
+    hgmm = estimators.LinearRegressionL1L2TV(l1 = lam1, l2 = 0.0, tv = lam2, A = A_, start_vector=beta_warm,
+                                           algorithm=algorithms.proximal.CONESTA(max_iter=max_iter_, eps=prec_), mean=mean_)
+  if beta_warm is None:
+    hgmm = estimators.LinearRegressionL1L2TV(l1 = lam1, l2 = 0.0, tv = lam2, A = A_,
+                                           algorithm=algorithms.proximal.CONESTA(max_iter=max_iter_, eps=prec_), mean=mean_)
+  res = hgmm.fit(Xvec,y)
+  Beta=beta2Beta(res.beta,p)
+
+  return(Beta)

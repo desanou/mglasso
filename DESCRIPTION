@@ -1,7 +1,7 @@
 Type: Package
 Package: mglasso
 Title: Multiscale Graphical Lasso
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person("Edmond", "Sanou", , "doedmond.sanou@univ-evry.fr", role = c("aut", "cre")),
     person("Tung", "Le", role = "ctb"),
@@ -26,7 +26,8 @@ Imports:
     methods,
     R.utils,
     reticulate (>= 1.25),
-    rstudioapi
+    rstudioapi,
+    capushe
 Suggests: 
     knitr,
     mvtnorm,
@@ -47,7 +48,7 @@ Config/reticulate:
             )
         )
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 URL: https://desanou.github.io/mglasso/
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
