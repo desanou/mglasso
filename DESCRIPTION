@@ -27,7 +27,8 @@ Imports:
     R.utils,
     reticulate (>= 1.25),
     rstudioapi,
-    capushe
+    capushe,
+    DescTools
 Suggests: 
     knitr,
     mvtnorm,
