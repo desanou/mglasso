@@ -127,19 +127,7 @@ graph_estimate <- function(rho, X){
          maxit = 1e5)$wi
 }
 
-#' Check first estimate coeffs with glm
-lasso_estimate <- function(response_variable_number, penalty_value){
-  rvn <- response_variable_number
 
-  regression_coeffs <- glmnet(x = X[,-rvn],
-                              y = X[,rvn],
-                              lambda = penalty_value,
-                              intercept = FALSE,
-                              thresh = 1e-7,
-                              maxit =1e5)$beta
-
-  regression_coeffs
-}
 
 #' Mean error from classical regression
 error <- function(Theta, X){

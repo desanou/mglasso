@@ -197,23 +197,6 @@ one_config <- function(n, p, pi, alpha, rho){
   return(list(n = n, p = p, pi  = pi, alpha = alpha, rho = rho))
 }
 
-#' mean of randomly simulated precision matrices in the same configuration
-mean_prec_mat <- function(nrep = 10, config = config_){
-
-  sim_data_lapply <- function(i){
-    sim_data(config_$p, config_$n/config_$p, "block_diagonal",
-             prob_mat = config_$pi,
-             alpha = config_$alpha,
-             rho = config_$rho)$graph
-  }
-
-  list_prec <- lapply(1:nrep, sim_data_lapply)
-
-  mean_mat <- Reduce("+", list_prec) / length(list_prec)
-
-  return(mean_mat = mean_mat)
-}
-
 #'
 tuning_l1 <- function(l1_, dt_, lambda2_start_, lambda2_factor_, version = "no-merge"){
   if(version == "no-merge")
@@ -250,7 +233,7 @@ tuning_l1_all <- function(l1_){
 }
 
 #'@export
-one_simu_ROC <- function(list_ii_rho, verbose = FALSE, model, p, pi, alpha){
+one_simu_ROC <- function(list_ii_rho, verbose = FALSE, model, p, pi, alpha, path_roc){
   ii    = list_ii_rho[1]
   n     = list_ii_rho[2]
   rho   = list_ii_rho[3]
@@ -297,7 +280,7 @@ ROC_mb_readjustment <- function(roc_object, n = 80){
 }
 
 #'@export
-one_simu_extended <- function(list_ii_rho, verbose = FALSE, model = "block_diagonal", p, pi, alpha){
+one_simu_extended <- function(list_ii_rho, verbose = FALSE, model = "block_diagonal", p, pi, alpha, path_extended){
   ii    = list_ii_rho[1]
   n     = list_ii_rho[2]
   rho   = list_ii_rho[3]

@@ -197,20 +197,6 @@ ggplot_roc <- function(omega_hat_list, omega,
     theme_bw()
 }
 
-ggplot_full_roc <- function(mean_mats_roc){
-  pltdt <- reformat_roc_res_for_ggplot(mean_mats_roc)
-
-  ggplot(pltdt, aes(x     = fpr,
-                    y     = tpr,
-                    color = method )) +
-    geom_line() +
-    facet_grid(. ~ tv) +
-    geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "grey") +
-    # scale_x_continuous("False Positive Rate", limits = c(0,1)) +
-    # scale_y_continuous("True Positive Rate", limits = c(0,1)) +
-    scale_colour_grey(start = 0.2, end = 0.6) +
-    theme_bw()
-}
 
 plot_full_roc <- function(mean_mats_roc, l2) {
   nl2 <- length(mean_mats_roc$mean_pf_mglasso)
