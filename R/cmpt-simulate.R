@@ -250,7 +250,7 @@ tuning_l1_all <- function(l1_){
 }
 
 #'@export
-one_simu_ROC <- function(list_ii_rho, verbose = FALSE, model){
+one_simu_ROC <- function(list_ii_rho, verbose = FALSE, model, p, pi, alpha){
   ii    = list_ii_rho[1]
   n     = list_ii_rho[2]
   rho   = list_ii_rho[3]
@@ -297,7 +297,7 @@ ROC_mb_readjustment <- function(roc_object, n = 80){
 }
 
 #'@export
-one_simu_extended <- function(list_ii_rho, verbose = FALSE, model = "block_diagonal"){
+one_simu_extended <- function(list_ii_rho, verbose = FALSE, model = "block_diagonal", p, pi, alpha){
   ii    = list_ii_rho[1]
   n     = list_ii_rho[2]
   rho   = list_ii_rho[3]
