@@ -365,41 +365,6 @@ get_perf_from_raw <- function(criterion, out, thresh_fuse = 1e-7, cah_kmeans_ava
   nclusters_mgl   <- sapply(mgl, function(e){length(unique(get_clusters_mgl(e$selected_Theta, fuse_thresh = thresh_fuse, p = out$config$p)))})
 
 
-  ##### RMSE
-  if (criterion == "rmse") {
-    method <- c("glasso", "cah_gl", "mglasso", "mgl_wr", "mgl_pcor", "mgl_adapt")
-    beta_true <- out$beta_true
-    cahgl     <- out$cah_gl
-
-    nclusters_gl    <- nclusters_cahgl <- 2:out$config$p
-
-    nclusters <- c(nclusters_gl, nclusters_cahgl, nclusters_mgl,
-                   nclusters_wr, nclusters_pcor, nclusters_adapt)
-    vec_rep_num <- c(length(nclusters_gl), length(nclusters_cahgl), length(nclusters_mgl),
-                     length(nclusters_wr), length(nclusters_pcor), length(nclusters_adapt))
-
-    methods <- rep(method, vec_rep_num)
-
-    perfs_gl    <- rep(norm(out$beta_glasso - beta_true, type = "F"), length(nclusters_gl))
-    perfs_cahgl <- sapply(cahgl, function(e){norm(e$beta_cah_glasso - beta_true, type = "F")})
-    perfs_mgl   <- sapply(mgl, function(e){norm(e$selected_Theta - beta_true, type = "F")})
-    perfs_wr    <- sapply(mglwr, function(e){norm(e$selected_Theta - beta_true, type = "F")})
-    perfs_pcor  <- sapply(mglpcor, function(e){norm(e$selected_Theta - beta_true, type = "F")})
-    perfs_adapt <- sapply(mgladapt, function(e){norm(e$selected_Theta - beta_true, type = "F")})
-    perfs       <- c(perfs_gl, perfs_cahgl, perfs_mgl, perfs_wr, perfs_pcor, perfs_adapt)
-
-    res             <- data.frame(perfs)
-    res$simu_label  <- out$simu_label
-    res$crit        <- "rmse"
-    res$np          <- out$config$n/out$config$p
-    res$cor         <- out$config$rho
-    res$dnsty       <- max(out$config$pi)
-
-    res$method    <- methods
-    res$ncluster  <- nclusters
-
-    return(res)
-  }
 
   #### RAND
   if(criterion == "rand") {

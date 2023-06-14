@@ -68,12 +68,12 @@ perf_vec <- function(omega_hat_list, omega){
 #' Compute AUC and partial  AUC
 #'
 #' @import DescTools
-get_auc <- function(omega_hat_list, omega, to = to_){
+get_auc <- function(omega_hat_list, omega, to){
   pf_vec <- perf_vec(omega_hat_list, omega)
   x   <- pf_vec$fpr
   tpr <- pf_vec$tpr
 
-  auc <- AUC(x, tpr, to = to_)
+  auc <- AUC(x, tpr, to = to)
 
   return(auc)
 }
