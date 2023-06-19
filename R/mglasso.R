@@ -67,7 +67,9 @@
 #'
 #' @examples
 #' \dontrun{
+#' mglasso::install_pylearn_parsimony(envname = "rmglasso", method = "conda")
 #' reticulate::use_condaenv("rmglasso", required = TRUE)
+#' reticulate::py_config()
 #' n = 50
 #' K = 3
 #' p = 9
