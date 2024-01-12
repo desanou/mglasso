@@ -50,6 +50,7 @@ Config/reticulate:
         )
 Encoding: UTF-8
 RoxygenNote: 7.2.3
-URL: https://desanou.github.io/mglasso/
+URL: https://desanou.github.io/mglasso/, https://github.com/desanou/mglasso
+BugReports: https://github.com/desanou/mglasso/issues
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
